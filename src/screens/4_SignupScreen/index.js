@@ -8,43 +8,30 @@ import {
   ScrollView,
   Image,
   Button,
+  Pressable,
 } from 'react-native';
 import {styles} from './style';
 import * as Components from '@components';
+import {RadioButton} from 'react-native-paper';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default class LoginScreen extends React.Component {
   constructor() {
     super();
     this.state = {
-      name: '',
+      firstname: '',
+      lastname: '',
       email: '',
       password: '',
       confirmPassword: '',
-      avatarSource:
-        'https://png.pngtree.com/png-clipart/20190604/original/pngtree-creative-company-logo-png-image_1197025.jpg',
+      avatarSource: 'https://brandmark.io/logo-rank/random/bp.png',
+      gender: 'male',
+      phoneno: '',
+      dob: 'Birth',
+      address: '',
+      dobVisibility: false,
     };
   }
-
-  handleNameChange = (inputText) => {
-    console.log(inputText);
-    this.setState({name: inputText.text});
-  };
-
-  handleEmailChange = (inputText) => {
-    console.log(inputText);
-    this.setState({email: inputText.text});
-  };
-
-  handlePasswordChange = (inputText) => {
-    console.log(inputText);
-    this.setState({password: inputText.text});
-  };
-
-  handleConfirmPasswordChange = (inputText) => {
-    console.log(inputText);
-    this.setState({confirmPassword: inputText.text});
-  };
 
   authenticateUser = () => {
     if (this.state.email != 'kj@gmail.com') {
@@ -66,58 +53,110 @@ export default class LoginScreen extends React.Component {
     return (
       <View style={styles.containerMain}>
         <View style={styles.header}>
-          <Image
-            style={styles.imageUpload}
-            source={{uri: this.state.avatarSource}}
-          />
-          <Components.simpleDialog
-            onSuccess={(image) => {
-              console.log(image);
-              this.setState({avatarSource: image});
-            }}
-          />
+          <Text style={styles.headerText}>Sign Up</Text>
+          <View></View>
         </View>
         <View style={styles.footer}>
-          <ScrollView style={{borderWidth: 0}}>
-            <Text style={styles.text_footer}>Name</Text>
+          <ScrollView>
+            <Image
+              style={styles.imageUpload}
+              source={{uri: this.state.avatarSource}}
+            />
+            <Components.simpleDialog
+              onSuccess={(image) => this.setState({avatarSource: image})}
+            />
+
             <View style={styles.field_group}>
-              <FontAwesome name="user-o" color="#05375a" size={20} />
               <Components.textInput
-                placeholder="Full Name"
-                value={this.state.email}
-                onChange={this.handleEmailChange}
+                value={this.state.firstname}
+                iconName="user-o"
+                placeholder="First name"
+                onChange={(text) => this.setState({firstname: text})}
               />
             </View>
 
-            <Text style={styles.text_footer}>Email</Text>
             <View style={styles.field_group}>
-              <FontAwesome name="user-o" color="#05375a" size={20} />
               <Components.textInput
+                value={this.state.lastname}
+                iconName="user-o"
+                placeholder="Last name"
+                onChange={(text) => this.setState({lastname: text})}
+              />
+            </View>
+
+            <View style={styles.field_group}>
+              <Components.textInput
+                value={this.state.email}
+                iconName="envelope"
                 placeholder="Email"
-                value={this.state.email}
-                onChange={this.handleEmailChange}
+                iconSize={16}
+                onChange={(text) => this.setState({email: text})}
               />
             </View>
 
-            <Text style={styles.text_footer}>Password</Text>
             <View style={styles.field_group}>
-              <FontAwesome name="lock" color="#05375a" size={20} />
               <Components.textInput
-                placeholder="password"
                 secureTextEntry={true}
                 value={this.state.password}
-                onChange={this.handlePasswordChange}
+                iconName="lock"
+                placeholder="Password"
+                onChange={(text) => this.setState({password: text})}
               />
             </View>
 
-            <Text style={styles.text_footer}>Confirm password</Text>
             <View style={styles.field_group}>
-              <FontAwesome name="lock" color="#05375a" size={20} />
               <Components.textInput
+                secureTextEntry={true}
+                value={this.state.password}
+                iconName="lock"
                 placeholder="Confirm password"
+                onChange={(text) => this.setState({confirmPassword: text})}
+              />
+            </View>
+
+            <View style={styles.field_group}>
+              <Components.genderRadioButton
+                gender={this.state.gender}
+                onChange={(text) => {
+                  this.setState({gender: text});
+                  console.log(this.state.gender);
+                }}
+              />
+            </View>
+
+            <View style={styles.field_group}>
+              <Components.myDatePicker
+                modeType="date"
+                visible={this.state.dobVisibility}
+                onSuccess={(text) => {
+                  this.setState({dob: text.toString()});
+                  console.log(text);
+                }}
+              />
+              <Text style={{marginLeft: 20, fontSize: 16}}>
+                {this.state.dob}
+              </Text>
+            </View>
+
+            <View style={styles.field_group}>
+              <Components.textInput
                 secureTextEntry={true}
                 value={this.state.password}
-                onChange={this.handlePasswordChange}
+                iconName="phone"
+                placeholder="Phone number"
+                keyboardType={'numeric'}
+                onChange={(text) => this.setState({confirmPassword: text})}
+              />
+            </View>
+
+            <View style={styles.field_group}>
+              <Components.textInput
+                secureTextEntry={true}
+                value={this.state.password}
+                iconName="map-pin"
+                placeholder="Address"
+                keyboardType={'numeric'}
+                onChange={(text) => this.setState({confirmPassword: text})}
               />
             </View>
 
@@ -130,3 +169,10 @@ export default class LoginScreen extends React.Component {
     );
   }
 }
+
+// <Pressable
+//   onPress={() => {
+//     this.setState({dobVisibility: true});
+//     console.log(this.state.dobVisibility);
+//   }}
+//   style={{borderWidth: 1, borderColor: 'red'}}>

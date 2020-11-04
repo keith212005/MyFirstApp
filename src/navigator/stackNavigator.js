@@ -31,7 +31,7 @@ function AppContainer() {
         <Stack.Screen
           name="SIGNUP_SCREEN"
           component={Screen.SignupScreen}
-          options={{title: 'Sign Up'}}
+          options={{title: 'Sign Up', headerShown: false}}
         />
         <Stack.Screen
           name="HOME_SCREEN"

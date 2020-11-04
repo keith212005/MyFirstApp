@@ -9,41 +9,41 @@ const styles = StyleSheet.create({
   },
   header: {
     flex: 1,
-    paddingTop: 20,
-
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingTop: 5,
+    marginLeft: 5,
   },
   headerText: {
     color: '#fff',
-    fontSize: 16,
-    marginBottom: 5,
+    fontSize: 20,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontStyle: 'italic',
   },
   footer: {
-    flex: 2,
+    flex: 11,
     backgroundColor: '#fff',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    paddingVertical: 50,
-    paddingHorizontal: 50,
+    paddingVertical: 20,
+    paddingHorizontal: 20,
   },
-  text_footer: {marginTop: 10},
+
   field_group: {
     flexDirection: 'row',
-    marginTop: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#f2f2f2',
     paddingBottom: 5,
+    alignItems: 'center',
   },
   errorMsg: {
     color: 'red',
   },
   imageUpload: {
-    width: Responsive.widthPercentageToDP('30%'),
-    height: Responsive.widthPercentageToDP('30%'),
+    width: Responsive.widthPercentageToDP('12%'),
+    height: Responsive.widthPercentageToDP('12%'),
     borderRadius: 500,
     borderWidth: 1,
-    borderColor: 'white',
+    borderColor: 'grey',
   },
 });
 

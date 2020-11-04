@@ -63,7 +63,7 @@ export default simpleDialog = ({onSuccess}) => {
       <View style={styles.container}>
         <View>
           <Text style={styles.btnUpload} onPress={() => setVisible(true)}>
-            Choose Image
+            Upload
           </Text>
         </View>
         <Dialog
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   },
   btnUpload: {
     marginTop: 5,
-    color: '#fff',
+    color: 'gray',
     alignItems: 'center',
   },
   dialogContentContainer: {

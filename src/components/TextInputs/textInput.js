@@ -3,6 +3,8 @@ import {StyleSheet, TextInput, View} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default textInput = ({
+  autoFocus,
+  ref,
   value,
   editable,
   iconName,
@@ -22,13 +24,14 @@ export default textInput = ({
       />
 
       <TextInput
+        autoFocus={autoFocus ? true : false}
+        ref={ref}
         style={styles.input}
         placeholder={placeholder}
         onChangeText={(text) => onChange(text)}
         underlineColorAndroid="transparent"
         editable={editable === false ? false : true}
         keyboardType={keyboardType === 'numeric' ? 'numeric' : null}
-        multiline
       />
     </View>
   );

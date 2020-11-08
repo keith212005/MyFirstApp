@@ -2,7 +2,6 @@ import React from 'react';
 import {
   View,
   Text,
-  TextInput,
   TouchableOpacity,
   Alert,
   ScrollView,
@@ -12,12 +11,13 @@ import {
 } from 'react-native';
 import {styles} from './style';
 import * as Components from '@components';
-import {RadioButton} from 'react-native-paper';
+import {RadioButton, TextInput, HelperText} from 'react-native-paper';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-export default class LoginScreen extends React.Component {
-  constructor() {
-    super();
+export default class SignupScreen extends React.Component {
+  constructor(props) {
+    super(props);
+
     this.state = {
       firstname: '',
       lastname: '',
@@ -30,6 +30,8 @@ export default class LoginScreen extends React.Component {
       dob: 'Birth',
       address: '',
       dobVisibility: false,
+      isValidEmail: true,
+      doesPasswordMatch: true,
     };
   }
 
@@ -49,11 +51,44 @@ export default class LoginScreen extends React.Component {
     }
   };
 
+  validateEmail = (text) => {
+    console.log(text);
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (reg.test(text) === false) {
+      console.log('Email is Not Correct');
+      this.setState({email: text, isValidEmail: false});
+      return false;
+    } else {
+      this.setState({email: text, isValidEmail: true});
+      console.log('Email is Correct');
+    }
+  };
+
+  handleEmailChange = (text) => {
+    this.validateEmail(text);
+  };
+
+  handleConfirmPasswordChange = (text) => {
+    this.setState({confirmPassword: text});
+
+    if (this.state.password === text) {
+      this.setState({
+        doesPasswordMatch: true,
+      });
+    } else {
+      this.setState({
+        doesPasswordMatch: false,
+      });
+    }
+  };
+
   render() {
     return (
       <View style={styles.containerMain}>
         <View style={styles.header}>
-          <Text style={styles.headerText}>Sign Up</Text>
+          <Text style={[styles.headerText, {fontFamily: 'Pacifico-Regular'}]}>
+            Sign Up
+          </Text>
           <View></View>
         </View>
         <View style={styles.footer}>
@@ -67,52 +102,108 @@ export default class LoginScreen extends React.Component {
             />
 
             <View style={styles.field_group}>
-              <Components.textInput
+              <TextInput
+                mode="outlined"
+                label="First name"
                 value={this.state.firstname}
-                iconName="user-o"
-                placeholder="First name"
-                onChange={(text) => this.setState({firstname: text})}
+                onChangeText={(text) => this.setState({firstname: text})}
+                left={<TextInput.Icon name="account" />}
+                style={styles.input}
+                theme={{colors: {primary: '#009387'}}}
+                onSubmitEditing={() => {
+                  this.lastnameTextInput.focus();
+                }}
+                blurOnSubmit={false}
               />
             </View>
 
             <View style={styles.field_group}>
-              <Components.textInput
+              <TextInput
+                mode="outlined"
+                label="Last name"
                 value={this.state.lastname}
-                iconName="user-o"
-                placeholder="Last name"
-                onChange={(text) => this.setState({lastname: text})}
+                onChangeText={(text) => this.setState({last: text})}
+                left={<TextInput.Icon name="account" />}
+                style={styles.input}
+                theme={{colors: {primary: '#009387'}}}
+                ref={(input) => {
+                  this.lastnameTextInput = input;
+                }}
+                onSubmitEditing={() => {
+                  this.emailTextInput.focus();
+                }}
+                blurOnSubmit={false}
               />
             </View>
 
             <View style={styles.field_group}>
-              <Components.textInput
+              <TextInput
                 value={this.state.email}
-                iconName="envelope"
-                placeholder="Email"
-                iconSize={16}
-                onChange={(text) => this.setState({email: text})}
+                onChangeText={(text) => this.handleEmailChange(text)}
+                mode="outlined"
+                label="Email"
+                value={this.state.email}
+                left={<TextInput.Icon name="email" />}
+                style={styles.input}
+                theme={{colors: {primary: '#009387'}}}
+                ref={(input) => {
+                  this.emailTextInput = input;
+                }}
+                onSubmitEditing={() => {
+                  this.passwordTextInput.focus();
+                }}
+                blurOnSubmit={false}
+              />
+            </View>
+            {this.state.isValidEmail ? null : (
+              <Text style={styles.errorMsg}>
+                Plase provide a valid email address
+              </Text>
+            )}
+
+            <View style={styles.field_group}>
+              <TextInput
+                mode="outlined"
+                label="Password"
+                secureTextEntry={true}
+                value={this.state.password}
+                onChangeText={(text) => this.setState({password: text})}
+                left={<TextInput.Icon name="lock" />}
+                style={styles.input}
+                theme={{colors: {primary: '#009387'}}}
+                ref={(input) => {
+                  this.passwordTextInput = input;
+                }}
+                onSubmitEditing={() => {
+                  this.confirmPasswordTextInput.focus();
+                }}
+                blurOnSubmit={false}
               />
             </View>
 
             <View style={styles.field_group}>
-              <Components.textInput
+              <TextInput
+                mode="outlined"
+                label="Confirm Password"
+                value={this.state.confirmPassword}
                 secureTextEntry={true}
-                value={this.state.password}
-                iconName="lock"
-                placeholder="Password"
-                onChange={(text) => this.setState({password: text})}
+                onChangeText={(text) => this.handleConfirmPasswordChange(text)}
+                left={<TextInput.Icon name="lock" />}
+                style={styles.input}
+                theme={{colors: {primary: '#009387'}}}
+                ref={(input) => {
+                  this.confirmPasswordTextInput = input;
+                }}
+                onSubmitEditing={() => {
+                  this.phonenoTextInput.focus();
+                }}
+                blurOnSubmit={false}
               />
             </View>
 
-            <View style={styles.field_group}>
-              <Components.textInput
-                secureTextEntry={true}
-                value={this.state.password}
-                iconName="lock"
-                placeholder="Confirm password"
-                onChange={(text) => this.setState({confirmPassword: text})}
-              />
-            </View>
+            {this.state.doesPasswordMatch ? null : (
+              <Text style={styles.errorMsg}>Password does not match</Text>
+            )}
 
             <View style={styles.field_group}>
               <Components.genderRadioButton
@@ -139,24 +230,37 @@ export default class LoginScreen extends React.Component {
             </View>
 
             <View style={styles.field_group}>
-              <Components.textInput
-                secureTextEntry={true}
-                value={this.state.password}
-                iconName="phone"
-                placeholder="Phone number"
+              <TextInput
+                mode="outlined"
+                label="Phone number"
+                value={this.state.phoneno}
+                onChangeText={(text) => this.setState({phoneno: text})}
                 keyboardType={'numeric'}
-                onChange={(text) => this.setState({confirmPassword: text})}
+                left={<TextInput.Icon name="phone" />}
+                style={styles.input}
+                theme={{colors: {primary: '#009387'}}}
+                ref={(input) => {
+                  this.phonenoTextInput = input;
+                }}
+                onSubmitEditing={() => {
+                  this.addressTextInput.focus();
+                }}
+                blurOnSubmit={false}
               />
             </View>
 
             <View style={styles.field_group}>
-              <Components.textInput
-                secureTextEntry={true}
-                value={this.state.password}
-                iconName="map-pin"
-                placeholder="Address"
-                keyboardType={'numeric'}
-                onChange={(text) => this.setState({confirmPassword: text})}
+              <TextInput
+                mode="outlined"
+                label="Address"
+                value={this.state.address}
+                onChangeText={(text) => this.setState({address: text})}
+                left={<TextInput.Icon name="pin" />}
+                style={styles.input}
+                theme={{colors: {primary: '#009387'}}}
+                ref={(input) => {
+                  this.addressTextInput = input;
+                }}
               />
             </View>
 
@@ -169,10 +273,3 @@ export default class LoginScreen extends React.Component {
     );
   }
 }
-
-// <Pressable
-//   onPress={() => {
-//     this.setState({dobVisibility: true});
-//     console.log(this.state.dobVisibility);
-//   }}
-//   style={{borderWidth: 1, borderColor: 'red'}}>

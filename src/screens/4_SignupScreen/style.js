@@ -16,11 +16,9 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 20,
     textAlign: 'center',
-    fontWeight: 'bold',
-    fontStyle: 'italic',
   },
   footer: {
-    flex: 11,
+    flex: 10,
     backgroundColor: '#fff',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
@@ -44,6 +42,9 @@ const styles = StyleSheet.create({
     borderRadius: 500,
     borderWidth: 1,
     borderColor: 'grey',
+  },
+  input: {
+    width: '100%',
   },
 });
 

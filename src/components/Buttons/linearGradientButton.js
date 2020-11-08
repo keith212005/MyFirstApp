@@ -1,26 +1,33 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, Alert, Pressable} from 'react-native';
+import {StyleSheet, Text, Alert, Pressable, View} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 
-export default linearGradientButton = ({title, route}) => {
+export default linearGradientButton = ({title, route, ref}) => {
   const navigation = useNavigation();
   return (
-    <LinearGradient colors={['#08d4c4', '#01ab9d']} style={styles.signIn}>
-      <Text style={styles.textSign}>{title}</Text>
-    </LinearGradient>
+    <View style={styles.container}>
+      <LinearGradient colors={['#08d4c4', '#01ab9d']} style={styles.signIn}>
+        <Text style={styles.textSign} ref={ref}>
+          {title}
+        </Text>
+      </LinearGradient>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    marginBottom: 20,
+  },
   signIn: {
-    padding: 10,
+    padding: 15,
     borderRadius: 5,
-    marginTop: 10,
     alignItems: 'center',
   },
   textSign: {
+    fontFamily: 'Roboto-Regular',
     color: '#fff',
     fontSize: 17,
   },

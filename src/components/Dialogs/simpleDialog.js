@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Text, Image, Button} from 'react-native';
+import {View, StyleSheet, Text, Image} from 'react-native';
 import Dialog, {
   DialogTitle,
   DialogContent,
@@ -11,6 +11,14 @@ import Dialog, {
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import * as Responsive from '@helpers';
 import ImagePicker from 'react-native-image-crop-picker';
+import {
+  IconButton,
+  Avatar,
+  Button,
+  Card,
+  Title,
+  Paragraph,
+} from 'react-native-paper';
 
 export default simpleDialog = ({onSuccess}) => {
   const [visible, setVisible] = useState(false);
@@ -62,9 +70,20 @@ export default simpleDialog = ({onSuccess}) => {
     <>
       <View style={styles.container}>
         <View>
-          <Text style={styles.btnUpload} onPress={() => setVisible(true)}>
-            Upload
-          </Text>
+          <Button
+            compact={true}
+            uppercase={false}
+            icon="upload"
+            mode="contained"
+            style={styles.btnUpload}
+            theme={{
+              colors: {primary: '#007387'},
+              roundness: 10,
+            }}
+            contentStyle={{height: 30}}
+            onPress={() => setVisible(true)}>
+            Image
+          </Button>
         </View>
         <Dialog
           visible={visible}
@@ -78,18 +97,31 @@ export default simpleDialog = ({onSuccess}) => {
           footer={
             <>
               <View style={styles.footerContainer}>
-                <MaterialIcons
-                  name="camera"
-                  size={80}
-                  color="white"
-                  onPress={() => handleCamera()}
-                />
-                <MaterialIcons
-                  name="storage"
-                  size={80}
-                  color="white"
-                  onPress={() => handleStorage()}
-                />
+                <View style={{padding: 10}}>
+                  <Card elevation={20}>
+                    <Card.Actions>
+                      <IconButton
+                        icon="camera-plus-outline"
+                        color={'#009387'}
+                        size={40}
+                        onPress={() => handleCamera()}
+                      />
+                    </Card.Actions>
+                  </Card>
+                </View>
+
+                <View style={{padding: 10}}>
+                  <Card elevation={20}>
+                    <Card.Actions>
+                      <IconButton
+                        icon="folder-multiple-image"
+                        color={'#009387'}
+                        size={40}
+                        onPress={() => handleStorage()}
+                      />
+                    </Card.Actions>
+                  </Card>
+                </View>
 
                 <DialogFooter>
                   <Text></Text>
@@ -102,7 +134,7 @@ export default simpleDialog = ({onSuccess}) => {
             setVisible(false);
           }}>
           <DialogContent style={styles.dialogContentContainer}>
-            <Text style={styles.dialogContentText}>Choose</Text>
+            <Text style={styles.dialogContentText}></Text>
           </DialogContent>
         </Dialog>
       </View>
@@ -116,7 +148,7 @@ const styles = StyleSheet.create({
   },
   footerContainer: {
     flexDirection: 'row',
-    backgroundColor: '#009387',
+    // backgroundColor: '#009387',
     width: Responsive.widthPercentageToDP('70%'),
     justifyContent: 'center',
     alignItems: 'center',
@@ -130,7 +162,7 @@ const styles = StyleSheet.create({
   },
   btnUpload: {
     marginTop: 5,
-    color: 'gray',
+    color: 'white',
     alignItems: 'center',
   },
   dialogContentContainer: {

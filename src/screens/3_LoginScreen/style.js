@@ -13,12 +13,13 @@ const styles = StyleSheet.create({
   },
   footer: {
     flex: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#fff',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    paddingVertical: 50,
-    paddingHorizontal: 50,
   },
+  scrollView: {padding: 20},
   headerTitleText: {
     color: '#fff',
     fontSize: 30,

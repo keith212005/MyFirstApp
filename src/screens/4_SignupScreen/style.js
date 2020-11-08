@@ -8,22 +8,24 @@ const styles = StyleSheet.create({
     backgroundColor: '#009387',
   },
   header: {
-    flex: 1,
-    paddingTop: 5,
-    marginLeft: 5,
+    flex: 2,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
   },
   headerText: {
     color: '#fff',
-    fontSize: 20,
-    textAlign: 'center',
+    fontFamily: 'Pacifico-Regular',
+    fontSize: 40,
   },
   footer: {
-    flex: 10,
+    flex: 6,
     backgroundColor: '#fff',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    paddingVertical: 20,
-    paddingHorizontal: 20,
+  },
+  scrollView: {
+    paddingHorizontal: 35,
+    padding: 10,
   },
 
   field_group: {
@@ -36,12 +38,11 @@ const styles = StyleSheet.create({
   errorMsg: {
     color: 'red',
   },
-  imageUpload: {
-    width: Responsive.widthPercentageToDP('12%'),
-    height: Responsive.widthPercentageToDP('12%'),
-    borderRadius: 500,
-    borderWidth: 1,
-    borderColor: 'grey',
+  imageContainer: {
+    paddingTop: 20,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   input: {
     width: '100%',

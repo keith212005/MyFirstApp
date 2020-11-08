@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import {styles} from './style';
 import * as Components from '@components';
-import {RadioButton, TextInput, HelperText} from 'react-native-paper';
+import {RadioButton, TextInput, HelperText, Avatar} from 'react-native-paper';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default class SignupScreen extends React.Component {
@@ -52,19 +52,19 @@ export default class SignupScreen extends React.Component {
   };
 
   validateEmail = (text) => {
-    console.log(text);
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (reg.test(text) === false) {
-      console.log('Email is Not Correct');
-      this.setState({email: text, isValidEmail: false});
+      this.setState({isValidEmail: false});
       return false;
     } else {
-      this.setState({email: text, isValidEmail: true});
-      console.log('Email is Correct');
+      this.setState({isValidEmail: true});
     }
   };
 
   handleEmailChange = (text) => {
+    this.setState({
+      email: text,
+    });
     this.validateEmail(text);
   };
 
@@ -82,34 +82,50 @@ export default class SignupScreen extends React.Component {
     }
   };
 
+  handleFocus = () => {
+    this.setState({iconColor: 'red'});
+  };
+
   render() {
     return (
       <View style={styles.containerMain}>
         <View style={styles.header}>
-          <Text style={[styles.headerText, {fontFamily: 'Pacifico-Regular'}]}>
-            Sign Up
-          </Text>
-          <View></View>
-        </View>
-        <View style={styles.footer}>
-          <ScrollView>
-            <Image
-              style={styles.imageUpload}
-              source={{uri: this.state.avatarSource}}
-            />
+          <View style={styles.imageContainer}>
+            {this.state.avatarSource == null ? (
+              <Avatar.Text size={50} label="XD" />
+            ) : (
+              <Avatar.Image
+                style={{backgroundColor: 'white'}}
+                size={50}
+                source={{uri: this.state.avatarSource}}
+              />
+            )}
             <Components.simpleDialog
               onSuccess={(image) => this.setState({avatarSource: image})}
             />
+          </View>
+          <View style={{flex: 2, justifyContent: 'center'}}>
+            <Text style={styles.headerText}>Sign Up</Text>
+          </View>
+        </View>
 
+        <View style={styles.footer}>
+          <ScrollView style={styles.scrollView}>
             <View style={styles.field_group}>
               <TextInput
                 mode="outlined"
                 label="First name"
                 value={this.state.firstname}
                 onChangeText={(text) => this.setState({firstname: text})}
-                left={<TextInput.Icon name="account" />}
+                left={
+                  <TextInput.Icon
+                    name="account"
+                    color={'gray'}
+                    theme={{colors: {primary: '#009387'}}}
+                  />
+                }
                 style={styles.input}
-                theme={{colors: {primary: '#009387'}}}
+                theme={{colors: {primary: '#009387'}, roundness: 15}}
                 onSubmitEditing={() => {
                   this.lastnameTextInput.focus();
                 }}
@@ -122,10 +138,10 @@ export default class SignupScreen extends React.Component {
                 mode="outlined"
                 label="Last name"
                 value={this.state.lastname}
-                onChangeText={(text) => this.setState({last: text})}
-                left={<TextInput.Icon name="account" />}
+                onChangeText={(text) => this.setState({lastname: text})}
+                left={<TextInput.Icon name="account" color={'gray'} />}
                 style={styles.input}
-                theme={{colors: {primary: '#009387'}}}
+                theme={{colors: {primary: '#009387'}, roundness: 15}}
                 ref={(input) => {
                   this.lastnameTextInput = input;
                 }}
@@ -136,16 +152,16 @@ export default class SignupScreen extends React.Component {
               />
             </View>
 
-            <View style={styles.field_group}>
+            <View>
               <TextInput
                 value={this.state.email}
                 onChangeText={(text) => this.handleEmailChange(text)}
                 mode="outlined"
                 label="Email"
                 value={this.state.email}
-                left={<TextInput.Icon name="email" />}
+                left={<TextInput.Icon name="email" color={'gray'} />}
                 style={styles.input}
-                theme={{colors: {primary: '#009387'}}}
+                theme={{colors: {primary: '#009387'}, roundness: 15}}
                 ref={(input) => {
                   this.emailTextInput = input;
                 }}
@@ -155,10 +171,9 @@ export default class SignupScreen extends React.Component {
                 blurOnSubmit={false}
               />
             </View>
+
             {this.state.isValidEmail ? null : (
-              <Text style={styles.errorMsg}>
-                Plase provide a valid email address
-              </Text>
+              <Text style={styles.errorMsg}>Email address is invalid!</Text>
             )}
 
             <View style={styles.field_group}>
@@ -168,9 +183,9 @@ export default class SignupScreen extends React.Component {
                 secureTextEntry={true}
                 value={this.state.password}
                 onChangeText={(text) => this.setState({password: text})}
-                left={<TextInput.Icon name="lock" />}
+                left={<TextInput.Icon name="lock" color={'gray'} />}
                 style={styles.input}
-                theme={{colors: {primary: '#009387'}}}
+                theme={{colors: {primary: '#009387'}, roundness: 15}}
                 ref={(input) => {
                   this.passwordTextInput = input;
                 }}
@@ -188,9 +203,11 @@ export default class SignupScreen extends React.Component {
                 value={this.state.confirmPassword}
                 secureTextEntry={true}
                 onChangeText={(text) => this.handleConfirmPasswordChange(text)}
-                left={<TextInput.Icon name="lock" />}
+                onFocus={() => this.setState({iconColor: '#009387'})}
+                onBlur={() => this.setState({iconColor: 'gray'})}
+                left={<TextInput.Icon name="lock" color={'gray'} />}
                 style={styles.input}
-                theme={{colors: {primary: '#009387'}}}
+                theme={{colors: {primary: '#009387'}, roundness: 15}}
                 ref={(input) => {
                   this.confirmPasswordTextInput = input;
                 }}
@@ -235,10 +252,12 @@ export default class SignupScreen extends React.Component {
                 label="Phone number"
                 value={this.state.phoneno}
                 onChangeText={(text) => this.setState({phoneno: text})}
+                onFocus={() => this.setState({iconColor: '#009387'})}
+                onBlur={() => this.setState({iconColor: 'gray'})}
                 keyboardType={'numeric'}
-                left={<TextInput.Icon name="phone" />}
+                left={<TextInput.Icon name="phone" color={'gray'} />}
                 style={styles.input}
-                theme={{colors: {primary: '#009387'}}}
+                theme={{colors: {primary: '#009387'}, roundness: 15}}
                 ref={(input) => {
                   this.phonenoTextInput = input;
                 }}
@@ -255,9 +274,11 @@ export default class SignupScreen extends React.Component {
                 label="Address"
                 value={this.state.address}
                 onChangeText={(text) => this.setState({address: text})}
-                left={<TextInput.Icon name="pin" />}
+                onFocus={() => this.setState({iconColor: '#009387'})}
+                onBlur={() => this.setState({iconColor: 'gray'})}
+                left={<TextInput.Icon name="pin" color={'gray'} />}
                 style={styles.input}
-                theme={{colors: {primary: '#009387'}}}
+                theme={{colors: {primary: '#009387'}, roundness: 15}}
                 ref={(input) => {
                   this.addressTextInput = input;
                 }}

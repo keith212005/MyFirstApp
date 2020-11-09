@@ -52,7 +52,7 @@ export default class LoginScreen extends React.Component {
       this.passwordTextInput.focus();
     }
     if (this.state.email === 'kj@gmail.com' && this.state.password === '1234') {
-      this.props.navigation.replace('HOME_SCREEN');
+      this.props.navigation.replace('HOME');
     }
   };
 
@@ -149,12 +149,7 @@ export default class LoginScreen extends React.Component {
 
               <View style={{marginTop: 15}}>
                 <TouchableOpacity onPress={() => this.authenticateUser()}>
-                  <Components.linearGradientButton
-                    title="Login"
-                    ref={(input) => {
-                      this.loginButton = input;
-                    }}
-                  />
+                  <Components.linearGradientButton title="Login" />
                 </TouchableOpacity>
               </View>
             </ScrollView>

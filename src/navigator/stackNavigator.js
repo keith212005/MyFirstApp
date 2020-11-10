@@ -19,7 +19,7 @@ function AppContainer() {
     <NavigationContainer>
       <AuthStack.Navigator
         screenOptions={{
-          headerStyle: {backgroundColor: '#009387'},
+          headerStyle: {backgroundColor: '#1f65ff'},
           headerTintColor: '#fff',
           headerTitleStyle: {fontWeight: 'bold'},
         }}>
@@ -38,7 +38,7 @@ function AppContainer() {
         <AuthStack.Screen
           name="LOGIN_SCREEN"
           component={Screen.LoginScreen}
-          options={{title: 'Sign In'}}
+          options={{title: 'Sign In', headerShown: false}}
         />
         <AuthStack.Screen
           name="SIGNUP_SCREEN"
@@ -46,11 +46,12 @@ function AppContainer() {
           options={{title: 'Sign Up', headerShown: false}}
         />
         <AuthStack.Screen
-          name="HOME"
+          name="HOME_SCREEN"
           component={homeDrawerNavigator}
           options={({navigation, route}) => ({
             headerTitle: 'Home',
             headerTitleAlign: 'center',
+            headerShown: false,
             headerLeft: () => (
               <IconButton
                 icon="menu"

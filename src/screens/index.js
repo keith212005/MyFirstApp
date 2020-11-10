@@ -4,4 +4,7 @@ export LoginScreen from './3_LoginScreen';
 export SignupScreen from './4_SignupScreen';
 export HomeScreen from './5_HomeScreen';
 export ProfileScreen from './6_ProfileScreen';
-export SettingScreen from './7_SettingScreen';
+export Tab3Screen from './7_Tab3Screen';
+export Tab4Screen from './8_Tab4Screen';
+export Tab5Screen from './9_Tab5Screen';
+export SettingScreen from './10_SettingScreen';

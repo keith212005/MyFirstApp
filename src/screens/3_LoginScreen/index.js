@@ -52,7 +52,7 @@ export default class LoginScreen extends React.Component {
       this.passwordTextInput.focus();
     }
     if (this.state.email === 'kj@gmail.com' && this.state.password === '1234') {
-      this.props.navigation.replace('HOME');
+      this.props.navigation.replace('HOME_SCREEN');
     }
   };
 

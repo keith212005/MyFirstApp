@@ -5,3 +5,4 @@ export myDatePicker from './Buttons/myDatePicker';
 
 export textInput from './TextInputs/textInput';
 export simpleDialog from './Dialogs/simpleDialog';
+export DrawerContent from './Drawer/DrawerContent';

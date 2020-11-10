@@ -12,6 +12,7 @@ import {
   Switch,
 } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Feather from 'react-native-vector-icons/Feather';
 
 export default DrawerContent = (props) => {
   const [isDarkTheme, setDarkTheme] = React.useState(false);
@@ -60,14 +61,18 @@ export default DrawerContent = (props) => {
                 <Icon name="home-outline" color={color} size={size} />
               )}
               label="Home"
-              onPress={() => {}}
+              onPress={() => {
+                props.navigation.navigate('HOME_SCREEN');
+              }}
             />
             <DrawerItem
               icon={({color, size}) => (
                 <Icon name="account-outline" color={color} size={size} />
               )}
               label="Profile"
-              onPress={() => {}}
+              onPress={() => {
+                props.navigation.navigate('PROFILE_SCREEN');
+              }}
             />
             <DrawerItem
               icon={({color, size}) => (
@@ -78,11 +83,7 @@ export default DrawerContent = (props) => {
             />
             <DrawerItem
               icon={({color, size}) => (
-                <Icon
-                  name="account-settings-outline"
-                  color={color}
-                  size={size}
-                />
+                <Feather name="settings" color={color} size={size} />
               )}
               label="Settings"
               onPress={() => {}}

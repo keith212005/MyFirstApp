@@ -19,7 +19,7 @@ export default homeDrawerNavigator = () => {
         itemStyle: {marginVertical: 5},
       }}>
       <Drawer.Screen
-        name="HOME"
+        name="HOME_SCREEN"
         component={homeTabNavigator}
         options={{
           title: 'Home',

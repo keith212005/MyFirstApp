@@ -1,25 +1,25 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 
-import {fontfamily, responsiveHeight, responsiveWidth} from '@resource';
+import {FONTFAMILY, COLORS, responsiveHeight, responsiveWidth} from '@resource';
 
 export const styles = StyleSheet.create({
-  containerMain: {
+  container: {
     flex: 1,
-    backgroundColor: '#009387',
+    backgroundColor: COLORS.primary,
   },
   header: {
     flex: 2,
     flexDirection: 'row',
   },
   headerText: {
-    color: '#fff',
-    fontFamily: fontfamily.PacificoRegular,
+    color: COLORS.white,
+    fontFamily: FONTFAMILY.PacificoRegular,
     fontSize: 40,
   },
   footer: {
     flex: 6,
-    backgroundColor: '#fff',
+    backgroundColor: COLORS.white,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
   },
@@ -34,7 +34,7 @@ export const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   errorMsg: {
-    color: 'red',
+    color: COLORS.errormessage,
   },
   imageContainer: {
     flex: 1,

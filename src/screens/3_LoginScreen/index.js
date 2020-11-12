@@ -88,7 +88,7 @@ export default class LoginScreen extends React.Component {
     };
     return (
       <>
-        <View style={styles.containerMain}>
+        <View style={styles.container}>
           <View style={styles.header}>
             <Text style={styles.headerTitleText}>Welcome!</Text>
           </View>
@@ -110,6 +110,14 @@ export default class LoginScreen extends React.Component {
               {this.state.isValidPassword ? null : (
                 <Text style={styles.errorMsg}>Password Invalid!</Text>
               )}
+
+              <Text
+                style={styles.forgotpasswordtext}
+                onPress={() => {
+                  console.log('forgot password clicked');
+                }}>
+                Forgot password?
+              </Text>
 
               <View style={{marginTop: 15}}>
                 <Components.LinearGradientButton

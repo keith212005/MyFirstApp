@@ -1,4 +1,4 @@
-export const fontfamily = {
+export const FONTFAMILY = {
   RobotoRegular: 'Roboto-Regular',
   PacificoRegular: 'Pacifico-Regular',
   RobotoBlack: 'Roboto-Black',

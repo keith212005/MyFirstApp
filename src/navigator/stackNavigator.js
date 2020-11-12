@@ -10,8 +10,8 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 
 import * as Screen from '@screens';
-import homeTabNavigator from './homeTabNavigator';
-import homeDrawerNavigator from './homeDrawerNavigator';
+import TabNavigator from './tabNavigator';
+import DrawerNavigator from './drawerNavigator';
 
 export default class StackNavigator extends React.Component {
   render() {
@@ -49,7 +49,7 @@ export default class StackNavigator extends React.Component {
           />
           <Stack.Screen
             name="HOME_SCREEN"
-            component={homeDrawerNavigator}
+            component={DrawerNavigator}
             options={({navigation, route}) => ({
               headerTitle: 'Home',
               headerTitleAlign: 'center',

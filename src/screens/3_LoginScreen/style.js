@@ -2,33 +2,38 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 
 import {responsiveWidth} from '@resource';
-import {fontfamily} from '@resource';
+import {FONTFAMILY, COLORS} from '@resource';
 
 export const styles = StyleSheet.create({
-  containerMain: {
+  container: {
     flex: 1,
-    backgroundColor: '#009387',
+    backgroundColor: COLORS.primary,
   },
   header: {
     flex: 1,
     justifyContent: 'center',
     paddingLeft: 10,
   },
+  headerTitleText: {
+    color: COLORS.white,
+    fontSize: 40,
+    fontFamily: FONTFAMILY.PacificoRegular,
+  },
   footer: {
     flex: 2,
-    backgroundColor: '#fff',
+    backgroundColor: COLORS.white,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
+  },
+  forgotpasswordtext: {
+    marginTop: 10,
+    color: COLORS.secondary,
+    fontWeight: '700',
+    textAlign: 'right',
   },
   scrollView: {
     padding: 20,
   },
-  headerTitleText: {
-    color: '#fff',
-    fontSize: 40,
-    fontFamily: fontfamily.PacificoRegular,
-  },
-
   field_group: {
     marginTop: 10,
     borderBottomWidth: 1,

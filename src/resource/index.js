@@ -1,5 +1,5 @@
-export {color} from './color';
-export {fontfamily} from './font';
+export {COLORS} from './color';
+export {FONTFAMILY} from './font';
 export {
   screenHeight,
   screenWidth,

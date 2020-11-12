@@ -3,12 +3,12 @@ import {View, Text, StyleSheet} from 'react-native';
 
 import {TextInput} from 'react-native-paper';
 
-import {responsiveWidth, color} from '@resource';
+import {responsiveWidth, COLORS} from '@resource';
 
 export default class MyTextInput extends Component {
   state = {
-    iconColor: color.gray,
-    eyeIconColor: color.gray,
+    iconColor: COLORS.gray,
+    eyeIconColor: COLORS.gray,
     showEyeIcon: 'eye-off-outline',
     secureTextEntry: this.props.secureTextEntry,
   };
@@ -16,14 +16,14 @@ export default class MyTextInput extends Component {
   handleFocus = () => {
     console.log('foused');
     this.setState({
-      iconColor: color.primary,
-      eyeIconColor: color.primary,
+      iconColor: COLORS.primary,
+      eyeIconColor: COLORS.primary,
     });
   };
 
   handleBlur = () => {
     console.log('focus lost');
-    this.setState({iconColor: color.gray, eyeIconColor: color.gray});
+    this.setState({iconColor: COLORS.gray, eyeIconColor: COLORS.gray});
   };
 
   togglePasswordVisible = () => {
@@ -77,5 +77,3 @@ export default class MyTextInput extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({});

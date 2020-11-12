@@ -1,12 +1,12 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 
-import {responsiveHeight, responsiveWidth} from '@resource';
+import {responsiveHeight, responsiveWidth, COLORS} from '@resource';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#009387',
+    backgroundColor: COLORS.primary,
   },
   header: {
     flex: 2,
@@ -14,10 +14,11 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   footer: {
-    backgroundColor: '#fff',
+    backgroundColor: COLORS.white,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    padding: 50,
+    paddingVertical: responsiveHeight(25),
+    paddingHorizontal: responsiveHeight(10),
   },
   logo: {
     width: responsiveWidth(50),

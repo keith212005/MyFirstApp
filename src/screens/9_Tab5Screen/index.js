@@ -6,7 +6,7 @@ export default class Tab5Screen extends React.Component {
   render() {
     return (
       <>
-        <View style={styles.containerMain}>
+        <View style={styles.container}>
           <Text>Tab 5 Screen</Text>
         </View>
       </>

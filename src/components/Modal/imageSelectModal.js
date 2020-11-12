@@ -13,7 +13,7 @@ import {IconButton, Button, Card, Title, Paragraph} from 'react-native-paper';
 import ImagePicker from 'react-native-image-crop-picker';
 import {Avatar, Accessory} from 'react-native-elements';
 
-import {color} from '@resource';
+import {COLORS} from '@resource';
 
 export default class ImageSelectModal extends Component {
   state = {
@@ -136,12 +136,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: color.halfTransparent,
+    backgroundColor: COLORS.halfTransparent,
   },
   modalSubContainer: {
     flexDirection: 'row',
     padding: 10,
-    backgroundColor: color.white,
+    backgroundColor: COLORS.white,
     borderRadius: 10,
   },
 });

@@ -15,7 +15,7 @@ import {Avatar, Accessory} from 'react-native-elements';
 
 import {styles} from './style';
 import * as Components from '@components';
-import {color} from '@resource';
+import {COLORS} from '@resource';
 
 export default class SignupScreen extends React.Component {
   state = {
@@ -90,7 +90,7 @@ export default class SignupScreen extends React.Component {
   render() {
     return (
       <>
-        <View style={styles.containerMain}>
+        <View style={styles.container}>
           <View style={styles.header}>
             <View style={styles.imageContainer}>
               {this.state.isVisible ? (
@@ -111,7 +111,7 @@ export default class SignupScreen extends React.Component {
                 rounded
                 source={{uri: this.state.avatarSource}}
                 icon={{name: 'user', type: 'font-awesome', color: 'gray'}}
-                containerStyle={{backgroundColor: color.white}}
+                containerStyle={{backgroundColor: COLORS.white}}
                 size="medium"
                 onPress={() => this.toggleShow()}>
                 <Accessory size={18} onPress={() => this.toggleShow()} />

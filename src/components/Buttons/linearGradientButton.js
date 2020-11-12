@@ -4,8 +4,7 @@ import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import LinearGradient from 'react-native-linear-gradient';
 
-import {color, fontfamily} from '@resource';
-import {responsiveHeight, responsiveWidth} from '@resource';
+import {COLORS, FONTFAMILY, responsiveHeight, responsiveWidth} from '@resource';
 
 export default class LinearGradientButton extends React.Component {
   render() {
@@ -34,7 +33,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   text: {
-    fontFamily: fontfamily.RobotoBold,
-    color: color.white,
+    fontFamily: FONTFAMILY.RobotoBold,
+    color: COLORS.white,
   },
 });

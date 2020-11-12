@@ -20,7 +20,6 @@ export default class StartScreen extends React.Component {
               title="Sign In"
               onPress={() => this.props.navigation.navigate('LOGIN_SCREEN')}
               height={50}
-              fontSize={17}
             />
           </View>
           <View style={{padding: 10}}>
@@ -28,7 +27,6 @@ export default class StartScreen extends React.Component {
               title="Sign Up"
               onPress={() => this.props.navigation.navigate('SIGNUP_SCREEN')}
               height={50}
-              fontSize={17}
             />
           </View>
         </View>

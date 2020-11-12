@@ -11,8 +11,9 @@ import {
   TouchableRipple,
   Switch,
 } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 export default DrawerContent = (props) => {
   const [isDarkTheme, setDarkTheme] = React.useState(false);
@@ -58,16 +59,24 @@ export default DrawerContent = (props) => {
           <Drawer.Section style={styles.drawerSection}>
             <DrawerItem
               icon={({color, size}) => (
-                <Icon name="home-outline" color={color} size={size} />
+                <MaterialCommunityIcon
+                  name="home-outline"
+                  color={color}
+                  size={size}
+                />
               )}
               label="Home"
               onPress={() => {
-                props.navigation.navigate('HOME_SCREEN');
+                props.navigation.navigate('HOME_SCREEN2');
               }}
             />
             <DrawerItem
               icon={({color, size}) => (
-                <Icon name="account-outline" color={color} size={size} />
+                <MaterialCommunityIcon
+                  name="account-outline"
+                  color={color}
+                  size={size}
+                />
               )}
               label="Profile"
               onPress={() => {
@@ -76,7 +85,11 @@ export default DrawerContent = (props) => {
             />
             <DrawerItem
               icon={({color, size}) => (
-                <Icon name="bookmark-outline" color={color} size={size} />
+                <MaterialCommunityIcon
+                  name="bookmark-outline"
+                  color={color}
+                  size={size}
+                />
               )}
               label="Bookmarks"
               onPress={() => {}}
@@ -86,11 +99,13 @@ export default DrawerContent = (props) => {
                 <Feather name="settings" color={color} size={size} />
               )}
               label="Settings"
-              onPress={() => {}}
+              onPress={() => {
+                props.navigation.navigate('SETTING_SCREEN');
+              }}
             />
             <DrawerItem
               icon={({color, size}) => (
-                <Icon name="account-check-outline" color={color} size={size} />
+                <MaterialIcon name="support-agent" color={color} size={size} />
               )}
               label="Support"
               onPress={() => {}}
@@ -115,7 +130,7 @@ export default DrawerContent = (props) => {
       <Drawer.Section style={styles.bottomDrawerSection}>
         <DrawerItem
           icon={({color, size}) => (
-            <Icon
+            <MaterialCommunityIcon
               name="exit-to-app"
               color={color}
               size={size}

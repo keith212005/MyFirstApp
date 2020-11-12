@@ -1,9 +1,10 @@
 import React from 'react';
 import {StyleSheet, Dimensions} from 'react-native';
 import * as Helper from '@helpers';
+import {responsiveHeight, responsiveWidth} from '@resource';
 
-const styles = StyleSheet.create({
-  containerMain: {
+export const styles = StyleSheet.create({
+  container: {
     flex: 1,
     backgroundColor: '#009387',
   },
@@ -22,8 +23,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 50,
   },
   logo: {
-    width: Helper.widthPercentageToDP('50%'),
-    height: Helper.widthPercentageToDP('50%'),
+    width: responsiveWidth(50),
+    height: responsiveHeight(50),
   },
   signIn: {
     padding: 10,
@@ -36,5 +37,3 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
 });
-
-export {styles};

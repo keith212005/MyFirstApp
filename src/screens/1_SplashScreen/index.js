@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, ImageBackground} from 'react-native';
+import {View, Image} from 'react-native';
 import {styles} from './style';
 
 export default class SplashScreen extends React.Component {
@@ -11,10 +11,13 @@ export default class SplashScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.containerMain}>
-        <ImageBackground
+      <View style={styles.container}>
+        <Image
           style={styles.image}
-          source={require('@constants/images/splashscreeen.png')}
+          source={{
+            uri:
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1280px-React-icon.svg.png',
+          }}
         />
       </View>
     );

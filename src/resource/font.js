@@ -1,0 +1,15 @@
+export const fontfamily = {
+  RobotoRegular: 'Roboto-Regular',
+  PacificoRegular: 'Pacifico-Regular',
+  RobotoBlack: 'Roboto-Black',
+  RobotoBlackItalic: 'Roboto-BlackItalic',
+  RobotoBold: 'Roboto-Bold',
+  RobotoBoldItalic: 'Roboto-BoldItalic',
+  RobotoItalic: 'Roboto-Italic',
+  RobotoLight: 'Roboto-Light',
+  RobotoLightItalic: 'Roboto-LightItalic',
+  RobotoMedium: 'Roboto-Medium',
+  RobotoMediumItalic: 'Roboto-MediumItalic',
+  RobotoThin: 'Roboto-Thin',
+  RobotoThinItalic: 'Roboto-ThinItalic',
+};

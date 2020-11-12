@@ -8,6 +8,7 @@ import * as Screen from '@screens';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import IonIcon from 'react-native-vector-icons/Ionicons';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {Button, IconButton} from 'react-native-paper';
 import {DrawerActions} from '@react-navigation/native';
 const Tab = createMaterialBottomTabNavigator();
@@ -21,7 +22,7 @@ const homeStack = () => (
       headerTitleStyle: {fontWeight: 'bold'},
     }}>
     <Stack.Screen
-      name="HOME_SCREEN"
+      name="HOME_SCREEN2"
       component={Screen.HomeScreen}
       options={({navigation, route}) => ({
         headerTitle: 'Home',
@@ -102,7 +103,7 @@ export default homeTabNavigator = () => {
           tabBarLabel: 'Profile',
           tabBarColor: '#1f65ff',
           tabBarIcon: ({focused, color, size}) => (
-            <IonIcon name="battery-charging" size={26} color={color} />
+            <AntDesign name="user" size={26} color={color} />
           ),
         }}
       />

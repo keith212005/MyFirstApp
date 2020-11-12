@@ -8,38 +8,33 @@ import {color, fontfamily} from '@resource';
 import {responsiveHeight, responsiveWidth} from '@resource';
 
 export default class LinearGradientButton extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
+    let props = this.props;
     return (
-      <View style={styles.container}>
-        <TouchableOpacity
-          onPress={this.props.onPress}
-          style={styles.tochableopacity}>
-          <LinearGradient
-            colors={['#08d4c4', '#01ab9d']}
-            style={styles.gradientView}>
-            <Text style={styles.text}>{this.props.title}</Text>
-          </LinearGradient>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity onPress={this.props.onPress}>
+        <LinearGradient
+          colors={['#08d4c4', '#01ab9d']}
+          style={[
+            styles.gradientView,
+            {height: props.height, width: props.width},
+          ]}>
+          <Text style={[styles.text, {fontSize: props.fontSize}]}>
+            {props.title}
+          </Text>
+        </LinearGradient>
+      </TouchableOpacity>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    marginBottom: responsiveHeight(8),
-  },
   gradientView: {
-    padding: responsiveHeight(4),
-    borderRadius: responsiveHeight(2),
+    justifyContent: 'center',
     alignItems: 'center',
+    borderRadius: 5,
   },
   text: {
     fontFamily: fontfamily.RobotoBold,
     color: color.white,
-    fontSize: 17,
   },
 });

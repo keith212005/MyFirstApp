@@ -2,7 +2,6 @@ import React from 'react';
 import {
   View,
   Text,
-  TouchableOpacity,
   Alert,
   ScrollView,
   Image,
@@ -84,19 +83,9 @@ export default class SignupScreen extends React.Component {
     }
   };
 
-  handleFocus = () => {
-    this.setState({iconColor: 'red'});
-  };
-
   toggleShow = () => {
     this.setState((state) => ({isVisible: !this.state.isVisible}));
   };
-
-  handleOnRequestClose = (value) => {
-    this.setState((isVisible: false));
-  };
-
-  hideModal = () => this.setState({isVisible: false});
 
   render() {
     return (
@@ -111,7 +100,7 @@ export default class SignupScreen extends React.Component {
                     onRequestClose={(value) =>
                       this.setState({isVisible: false})
                     }
-                    dismiss={this.hideModal}
+                    dismiss={() => this.setState({isVisible: false})}
                     onSuccess={(image) => {
                       this.setState({isVisible: false, avatarSource: image});
                     }}
@@ -123,7 +112,7 @@ export default class SignupScreen extends React.Component {
                 source={{uri: this.state.avatarSource}}
                 icon={{name: 'user', type: 'font-awesome', color: 'gray'}}
                 containerStyle={{backgroundColor: color.white}}
-                size="large"
+                size="medium"
                 onPress={() => this.toggleShow()}>
                 <Accessory size={18} onPress={() => this.toggleShow()} />
               </Avatar>
@@ -282,7 +271,6 @@ export default class SignupScreen extends React.Component {
                   onBlur={() => this.setState({iconColor: 'gray'})}
                   keyboardType={'numeric'}
                   left={<TextInput.Icon name="phone" color={'gray'} />}
-                  style={styles.input}
                   theme={{colors: {primary: '#009387'}, roundness: 15}}
                   ref={(input) => {
                     this.phonenoTextInput = input;
@@ -311,9 +299,11 @@ export default class SignupScreen extends React.Component {
                 />
               </View>
 
-              <TouchableOpacity onPress={() => this.authenticateUser()}>
-                <Components.linearGradientButton title="Register" />
-              </TouchableOpacity>
+              <Components.LinearGradientButton
+                title="Register"
+                height={50}
+                onPress={() => this.authenticateUser()}
+              />
             </ScrollView>
           </View>
         </View>

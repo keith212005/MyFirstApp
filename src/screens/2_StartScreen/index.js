@@ -1,14 +1,10 @@
 import React from 'react';
-import {View, Image, TouchableOpacity} from 'react-native';
+import {View, Image} from 'react-native';
+
 import {styles} from './style';
-import * as Components from '@components';
-import LinearGradient from 'react-native-linear-gradient';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {LinearGradientButton} from '@components';
 
 export default class StartScreen extends React.Component {
-  handleSignIn = () => this.props.navigation.navigate('LOGIN_SCREEN');
-  handleSignUp = () => this.props.navigation.navigate('SIGNUP_SCREEN');
-
   render() {
     return (
       <View style={styles.container}>
@@ -19,15 +15,22 @@ export default class StartScreen extends React.Component {
           />
         </View>
         <View style={styles.footer}>
-          <Components.linearGradientButton
-            title="Sign In"
-            onPress={this.handleSignIn}
-          />
-
-          <Components.linearGradientButton
-            title="Sign Up"
-            onPress={this.handleSignUp}
-          />
+          <View style={{padding: 10}}>
+            <LinearGradientButton
+              title="Sign In"
+              onPress={() => this.props.navigation.navigate('LOGIN_SCREEN')}
+              height={50}
+              fontSize={17}
+            />
+          </View>
+          <View style={{padding: 10}}>
+            <LinearGradientButton
+              title="Sign Up"
+              onPress={() => this.props.navigation.navigate('SIGNUP_SCREEN')}
+              height={50}
+              fontSize={17}
+            />
+          </View>
         </View>
       </View>
     );

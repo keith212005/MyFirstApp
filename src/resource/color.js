@@ -3,4 +3,5 @@ export const color = {
   white: '#fff',
   transparent: 'rgba(52, 52, 52, alpha)',
   halfTransparent: 'rgba(52, 52, 52, 0.8)',
+  gray: 'gray',
 };

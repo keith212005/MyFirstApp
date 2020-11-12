@@ -1,9 +1,8 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, Alert, ScrollView} from 'react-native';
+import {View, Text, ScrollView} from 'react-native';
+
 import {styles} from './style';
 import * as Components from '@components';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {TextInput} from 'react-native-paper';
 
 export default class LoginScreen extends React.Component {
   constructor() {
@@ -15,11 +14,12 @@ export default class LoginScreen extends React.Component {
       isValidPassword: true,
       emailLength: '',
       passwordLength: '',
-      secureText: true,
+      secureTextEntry: true,
     };
   }
 
   handleEmailChange = (text) => {
+    // console.log(text);
     let len = text.length.toString();
     this.setState({email: text, emailLength: len});
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -33,6 +33,7 @@ export default class LoginScreen extends React.Component {
   };
 
   handlePasswordChange = (text) => {
+    console.log(text);
     this.setState({password: text});
     let len = text.length.toString();
     this.setState({password: text, passwordLength: len});
@@ -58,41 +59,44 @@ export default class LoginScreen extends React.Component {
 
   togglePassword = () => {
     this.setState({
-      secureText: !this.state.secureText,
+      secureTextEntry: !this.state.secureTextEntry,
     });
   };
+
+  handleOnSubmit = () => {
+    this.authenticateUser();
+  };
+
   render() {
+    let emailLength = this.state.email.length;
+    const emailField = {
+      mode: 'outlined',
+      label: 'Email',
+      iconName: 'email',
+      value: this.state.email,
+      onChangeText: this.handleEmailChange,
+    };
+    const passwordField = {
+      mode: 'outlined',
+      label: 'Password',
+      iconName: 'lock',
+      value: this.state.password,
+      onChangeText: this.handlePasswordChange,
+      secureTextEntry: this.state.secureTextEntry,
+      maxLength: 10,
+      showEyeIcon: true,
+    };
     return (
       <>
         <View style={styles.containerMain}>
           <View style={styles.header}>
             <Text style={styles.headerTitleText}>Welcome!</Text>
           </View>
+
           <View style={styles.footer}>
             <ScrollView style={styles.scrollView}>
               <View style={styles.field_group}>
-                <TextInput
-                  mode="outlined"
-                  label="Email"
-                  value={this.state.email}
-                  onChangeText={this.handleEmailChange}
-                  left={
-                    <TextInput.Icon
-                      name="email"
-                      color={this.state.emailLength > 0 ? '#009387' : 'gray'}
-                    />
-                  }
-                  style={{width: '100%'}}
-                  theme={{colors: {primary: '#009387'}, roundness: 5}}
-                  ref={(input) => {
-                    this.emailTextInput = input;
-                  }}
-                  onSubmitEditing={() => {
-                    this.passwordTextInput.focus();
-                  }}
-                  blurOnSubmit={false}
-                  selectTextOnFocus
-                />
+                <Components.MyTextInput {...emailField} />
               </View>
 
               {this.state.isValidEmail ? null : (
@@ -100,47 +104,7 @@ export default class LoginScreen extends React.Component {
               )}
 
               <View style={styles.field_group}>
-                <TextInput
-                  mode="outlined"
-                  label="Password"
-                  secureTextEntry={this.state.secureText}
-                  value={this.state.password}
-                  onChangeText={this.handlePasswordChange}
-                  left={
-                    <TextInput.Icon
-                      name="lock"
-                      color={this.state.passwordLength > 0 ? '#009387' : 'gray'}
-                    />
-                  }
-                  right={
-                    this.state.secureText ? (
-                      <TextInput.Icon
-                        name="eye-off-outline"
-                        onPress={() => this.togglePassword()}
-                        color={
-                          this.state.passwordLength > 0 ? '#009387' : 'gray'
-                        }
-                      />
-                    ) : (
-                      <TextInput.Icon
-                        name="eye"
-                        onPress={() => this.togglePassword()}
-                        color={
-                          this.state.passwordLength > 0 ? '#009387' : 'gray'
-                        }
-                      />
-                    )
-                  }
-                  style={{width: '100%'}}
-                  theme={{colors: {primary: '#009387'}, roundness: 5}}
-                  ref={(input) => {
-                    this.passwordTextInput = input;
-                  }}
-                  onSubmitEditing={() => {
-                    this.loginButton.focus();
-                  }}
-                  blurOnSubmit={false}
-                />
+                <Components.MyTextInput {...passwordField} />
               </View>
 
               {this.state.isValidPassword ? null : (
@@ -148,9 +112,11 @@ export default class LoginScreen extends React.Component {
               )}
 
               <View style={{marginTop: 15}}>
-                <TouchableOpacity onPress={() => this.authenticateUser()}>
-                  <Components.linearGradientButton title="Login" />
-                </TouchableOpacity>
+                <Components.LinearGradientButton
+                  title="Login"
+                  onPress={this.handleOnSubmit}
+                  height={50}
+                />
               </View>
             </ScrollView>
           </View>

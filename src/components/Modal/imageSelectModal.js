@@ -80,6 +80,7 @@ export default class ImageSelectModal extends Component {
   }
 
   handleCamera = () => {
+    this.props.dismiss();
     ImagePicker.openCamera({
       cropping: true,
       width: 500,
@@ -94,10 +95,13 @@ export default class ImageSelectModal extends Component {
         var uri = image.path;
         this.props.onSuccess(uri);
       })
-      .catch((e) => {});
+      .catch((e) => {
+        console.log('error in handlecamera');
+      });
   };
 
   handleGallery = () => {
+    this.props.dismiss();
     ImagePicker.openPicker({
       cropping: true,
       width: 300,

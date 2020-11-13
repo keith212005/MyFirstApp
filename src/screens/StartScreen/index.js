@@ -24,7 +24,7 @@ export default class StartScreen extends React.Component {
           </View>
           <View style={{padding: 10}}>
             <LinearGradientButton
-              title="Sign Up"
+              title="Sign up"
               onPress={() => this.props.navigation.navigate('SIGNUP_SCREEN')}
               height={50}
             />

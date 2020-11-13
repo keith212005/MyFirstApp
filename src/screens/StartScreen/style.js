@@ -15,8 +15,8 @@ export const styles = StyleSheet.create({
   },
   footer: {
     backgroundColor: COLORS.white,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
+    borderTopLeftRadius: responsiveHeight(8),
+    borderTopRightRadius: responsiveHeight(8),
     paddingVertical: responsiveHeight(25),
     paddingHorizontal: responsiveHeight(10),
   },

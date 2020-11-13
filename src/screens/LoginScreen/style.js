@@ -1,8 +1,7 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 
-import {responsiveWidth} from '@resource';
-import {FONTFAMILY, COLORS} from '@resource';
+import {FONTFAMILY, COLORS, responsiveWidth, responsiveHeight} from '@resource';
 
 export const styles = StyleSheet.create({
   container: {
@@ -12,7 +11,7 @@ export const styles = StyleSheet.create({
   header: {
     flex: 1,
     justifyContent: 'center',
-    paddingLeft: 10,
+    paddingLeft: responsiveWidth(2),
   },
   headerTitleText: {
     color: COLORS.white,
@@ -22,8 +21,8 @@ export const styles = StyleSheet.create({
   footer: {
     flex: 2,
     backgroundColor: COLORS.white,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
+    borderTopLeftRadius: responsiveHeight(6),
+    borderTopRightRadius: responsiveHeight(6),
   },
   forgotpasswordtext: {
     marginTop: 10,
@@ -32,10 +31,10 @@ export const styles = StyleSheet.create({
     textAlign: 'right',
   },
   scrollView: {
-    padding: 20,
+    padding: responsiveWidth(10),
   },
   field_group: {
-    marginTop: 10,
+    marginTop: responsiveWidth(3),
     borderBottomWidth: 1,
     borderBottomColor: '#f2f2f2',
   },

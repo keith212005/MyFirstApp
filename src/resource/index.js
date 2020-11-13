@@ -6,3 +6,5 @@ export {
   responsiveHeight,
   responsiveWidth,
 } from './responsive';
+
+export {COMMON_STYLES} from './style';

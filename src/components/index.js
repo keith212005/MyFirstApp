@@ -8,3 +8,5 @@ export MyTextInput from './TextInputs/myTextInput';
 export DrawerContent from './Drawer/DrawerContent';
 
 export ImageSelectModal from './Modal/imageSelectModal';
+
+export CustomHeader from './Header/customHeader';

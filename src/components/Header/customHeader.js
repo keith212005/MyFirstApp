@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {View, Platform, Text, StyleSheet, Pressable} from 'react-native';
+import {
+  View,
+  Platform,
+  Text,
+  StyleSheet,
+  Pressable,
+  TouchableWithFeedback,
+} from 'react-native';
 
 import {Header} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
@@ -10,20 +17,16 @@ import {Card, IconButton} from 'react-native-paper';
 export default class CustomHeader extends Component {
   render() {
     return (
-      <LinearGradient colors={['#009387', '#007a93']} style={styles.gradient}>
-        <Pressable
-          style={{backgroundColor: 'red'}}
-          onPress={this.props.onPress()}>
+      <>
+        <LinearGradient colors={['#009387', '#007a93']} style={styles.gradient}>
+          <Text style={styles.title}>{this.props.title}</Text>
           <IconButton
             icon="menu"
             color={COLORS.white}
-            size={30}
-            style={{backgroundColor: 'red'}}
-            pointerEvents="none"
+            onPress={() => this.props.onPress()}
           />
-        </Pressable>
-        <Text style={styles.title}>{this.props.title}</Text>
-      </LinearGradient>
+        </LinearGradient>
+      </>
     );
   }
 }
@@ -37,9 +40,9 @@ const styles = StyleSheet.create({
   title: {
     color: COLORS.white,
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: '700',
+    position: 'absolute',
     width: responsiveWidth(100),
     textAlign: 'center',
-    position: 'absolute',
   },
 });

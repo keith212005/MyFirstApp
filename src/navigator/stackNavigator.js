@@ -2,18 +2,14 @@ import React from 'react';
 
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
-import {DrawerActions} from '@react-navigation/native';
-import {IconButton} from 'react-native-paper';
 
 import DrawerNavigator from './drawerNavigator';
 import {COLORS} from '@resource';
 import * as Screen from '@screens';
-import * as Components from '@components';
 
 export default class StackNavigator extends React.Component {
   render() {
     const Stack = createStackNavigator();
-
     {
       /*
       ============================== PARAMETERS ============================================
@@ -23,7 +19,6 @@ export default class StackNavigator extends React.Component {
       */
     }
     const stack = (name, component, headerShown, headerTitle) => {
-      let val = 'Screen';
       return (
         <Stack.Screen
           name={name}
@@ -39,6 +34,7 @@ export default class StackNavigator extends React.Component {
     return (
       <NavigationContainer>
         <Stack.Navigator
+          initialRouteName="SPLASH_SCREEN"
           screenOptions={{
             headerStyle: {backgroundColor: '#1f65ff'},
             headerTintColor: COLORS.white,
@@ -48,26 +44,7 @@ export default class StackNavigator extends React.Component {
           {stack('START_SCREEN', Screen.StartScreen)}
           {stack('LOGIN_SCREEN', Screen.LoginScreen)}
           {stack('SIGNUP_SCREEN', Screen.SignupScreen)}
-
-          <Stack.Screen
-            name="HOME_SCREEN"
-            component={DrawerNavigator}
-            options={({navigation, route}) => ({
-              headerTitle: 'Home',
-              headerTitleAlign: 'center',
-              headerShown: false,
-              headerLeft: () => (
-                <IconButton
-                  icon="menu"
-                  color={'white'}
-                  size={40}
-                  onPress={() =>
-                    navigation.dispatch(DrawerActions.toggleDrawer())
-                  }
-                />
-              ),
-            })}
-          />
+          {stack('HOME_SCREEN', DrawerNavigator)}
         </Stack.Navigator>
       </NavigationContainer>
     );

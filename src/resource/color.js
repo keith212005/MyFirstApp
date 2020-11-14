@@ -5,6 +5,7 @@ export const COLORS = {
   transparent: 'rgba(52, 52, 52, alpha)',
   halfTransparent: 'rgba(52, 52, 52, 0.8)',
   gray: 'gray',
-  red: '#9e00ff',
+  red: 'rgba(#ff0000, 1)',
+  black: '#000000',
   errormessage: '#cb4242',
 };

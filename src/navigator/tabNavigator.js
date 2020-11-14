@@ -12,72 +12,63 @@ import {IconButton} from 'react-native-paper';
 import * as Screen from '@screens';
 import {COLORS} from '@resource';
 
-const Tab = createMaterialBottomTabNavigator();
-
 export default class TabNavigator extends React.Component {
   render() {
     return (
       <Tab.Navigator initialRouteName="HOME" activeColor={COLORS.white}>
-        <Tab.Screen
-          name="HOME_SCREEN"
-          component={Screen.HomeScreen}
-          options={{
-            tabBarLabel: 'Home',
-            tabBarColor: COLORS.primary,
-            tabBarIcon: ({focused, color, size}) => (
-              <IonIcon name="home-outline" size={26} color={color} />
-            ),
-          }}
-        />
+        {tabs('HOME_SCREEN', Screen.HomeScreen, 'Home', 'home', COLORS.white)}
+        {tabs(
+          'PROFILE_SCREEN',
+          Screen.ProfileScreen,
+          'Profile',
+          'user',
+          COLORS.white,
+        )}
+        {tabs(
+          'TAB3_SCREEN',
+          Screen.Tab3Screen,
+          'Tab 3',
+          'barchart',
+          COLORS.white,
+        )}
 
-        <Tab.Screen
-          name="PROFILE_SCREEN"
-          component={Screen.ProfileScreen}
-          options={{
-            tabBarLabel: 'Profile',
-            tabBarColor: '#215fe6',
-            tabBarIcon: ({focused, color, size}) => (
-              <AntDesign name="user" size={26} color={color} />
-            ),
-          }}
-        />
+        {tabs(
+          'TAB4_SCREEN',
+          Screen.Tab4Screen,
+          'Tab 4',
+          'piechart',
+          COLORS.white,
+        )}
 
-        <Tab.Screen
-          name="TAB3_SCREEN"
-          component={Screen.Tab3Screen}
-          options={{
-            tabBarLabel: 'Tab 3',
-            tabBarColor: '#694fad',
-            tabBarIcon: ({focused, color, size}) => (
-              <IonIcon name="bar-chart-outline" size={26} color={color} />
-            ),
-          }}
-        />
-
-        <Tab.Screen
-          name="TAB4_SCREEN"
-          component={Screen.Tab4Screen}
-          options={{
-            tabBarLabel: 'Tab 4',
-            tabBarColor: '#d02860',
-            tabBarIcon: ({focused, color, size}) => (
-              <IonIcon name="pie-chart-outline" size={26} color={color} />
-            ),
-          }}
-        />
-
-        <Tab.Screen
-          name="TAB5_SCREEN"
-          component={Screen.Tab5Screen}
-          options={{
-            tabBarLabel: 'Tab 5',
-            tabBarColor: '#d09000',
-            tabBarIcon: ({focused, color, size}) => (
-              <IonIcon name="bar-chart" size={26} color={color} />
-            ),
-          }}
-        />
+        {tabs(
+          'TAB5_SCREEN',
+          Screen.Tab5Screen,
+          'Tab 5',
+          'dotchart',
+          COLORS.white,
+        )}
       </Tab.Navigator>
     );
   }
 }
+
+const Tab = createMaterialBottomTabNavigator();
+const tabs = (name, component, tabLabel, tabIconName, iconColor) => {
+  return (
+    <Tab.Screen
+      name={name}
+      component={component}
+      options={{
+        tabBarLabel: tabLabel ? tabLabel : null,
+        tabBarColor: COLORS.primary,
+        tabBarIcon: ({focused, color, size}) => (
+          <AntDesign
+            name={tabIconName ? tabIconName : 'question'}
+            size={26}
+            color={iconColor ? iconColor : COLORS.black}
+          />
+        ),
+      }}
+    />
+  );
+};

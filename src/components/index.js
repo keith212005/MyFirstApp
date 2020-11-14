@@ -10,3 +10,5 @@ export DrawerContent from './Drawer/DrawerContent';
 export ImageSelectModal from './Modal/imageSelectModal';
 
 export CustomHeader from './Header/customHeader';
+
+export ExitAppDialog from './Dialogs/exitAppDialog';

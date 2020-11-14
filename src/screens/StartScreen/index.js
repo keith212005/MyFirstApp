@@ -4,6 +4,8 @@ import {View, Image} from 'react-native';
 import {styles} from './style';
 import {LinearGradientButton} from '@components';
 
+// source={{uri: 'asset:/images/companylogo.png'}}
+
 export default class StartScreen extends React.Component {
   render() {
     return (
@@ -11,7 +13,11 @@ export default class StartScreen extends React.Component {
         <View style={styles.header}>
           <Image
             style={styles.logo}
-            source={{uri: 'asset:/images/companylogo.png'}}
+            resizeMode="contain"
+            source={{
+              uri:
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTI24dS95Qbsm9tEZWPse8sxyrLQuzM-7MQqg&usqp=CAU',
+            }}
           />
         </View>
         <View style={styles.footer}>

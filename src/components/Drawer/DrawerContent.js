@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
+
 import {
   Avatar,
   Title,
@@ -11,13 +11,16 @@ import {
   TouchableRipple,
   Switch,
 } from 'react-native-paper';
+import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import * as Components from '@components';
 
 export default class DrawerContent extends React.Component {
   state = {
     isDarkTheme: false,
+    showAlert: true,
   };
 
   toggleTheme = () => {
@@ -148,6 +151,10 @@ export default class DrawerContent extends React.Component {
               />
             )}
             label="Sign out"
+            onPress={() => {
+              this.props.navigation.pop();
+              this.props.navigation.navigate('LOGIN_SCREEN');
+            }}
           />
         </Drawer.Section>
       </View>

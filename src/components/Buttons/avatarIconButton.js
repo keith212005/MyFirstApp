@@ -1,5 +1,4 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
 
 import {Avatar, Accessory} from 'react-native-elements';
 
@@ -22,5 +21,3 @@ export default class AvatarIconButton extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({});

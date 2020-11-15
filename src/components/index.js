@@ -12,3 +12,6 @@ export ImageSelectModal from './Modal/imageSelectModal';
 export CustomHeader from './Header/customHeader';
 
 export ExitAppDialog from './Dialogs/exitAppDialog';
+
+export LoginForm from './Forms/loginForm';
+export SignupForm from './Forms/signupForm';

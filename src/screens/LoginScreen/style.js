@@ -24,21 +24,8 @@ export const styles = StyleSheet.create({
     borderTopLeftRadius: responsiveHeight(6),
     borderTopRightRadius: responsiveHeight(6),
   },
-  forgotpasswordtext: {
-    marginTop: 10,
-    color: COLORS.secondary,
-    fontWeight: '700',
-    textAlign: 'right',
-  },
   scrollView: {
-    padding: responsiveWidth(10),
-  },
-  field_group: {
-    marginTop: responsiveWidth(3),
-    borderBottomWidth: 1,
-    borderBottomColor: '#f2f2f2',
-  },
-  errorMsg: {
-    color: 'red',
+    paddingTop: 10,
+    marginHorizontal: 30,
   },
 });

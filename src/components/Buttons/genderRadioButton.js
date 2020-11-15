@@ -7,7 +7,6 @@ export default genderRadioButton = ({onChange, gender}) => {
   const [value, setValue] = React.useState(gender);
 
   handleClick = (value) => {
-    // value === 'male' ? setValue('male') : setValue('female');
     setValue(value);
     onChange(value);
   };

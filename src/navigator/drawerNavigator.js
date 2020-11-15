@@ -7,7 +7,7 @@ import Feather from 'react-native-vector-icons/Feather';
 
 import TabNavigator from './tabNavigator';
 import * as Screen from '@screens';
-import * as Components from '@components';
+import {DrawerContent} from '@components';
 import {COLORS} from '@resource';
 
 export default class DrawerNavigator extends React.Component {
@@ -15,8 +15,7 @@ export default class DrawerNavigator extends React.Component {
     const Drawer = createDrawerNavigator();
 
     return (
-      <Drawer.Navigator
-        drawerContent={(props) => <Components.DrawerContent {...props} />}>
+      <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
         <Drawer.Screen name="HOME_SCREEN" component={TabNavigator} />
         <Drawer.Screen name="SETTING_SCREEN" component={Screen.SettingScreen} />
       </Drawer.Navigator>

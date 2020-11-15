@@ -1,20 +1,11 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  Alert,
-  ScrollView,
-  Image,
-  Button,
-  Pressable,
-} from 'react-native';
+import {View, Text, ScrollView} from 'react-native';
 
-import {RadioButton, TextInput, HelperText} from 'react-native-paper';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {RadioButton, TextInput} from 'react-native-paper';
 import {Avatar, Accessory} from 'react-native-elements';
 
-import {styles} from './style';
 import * as Components from '@components';
+import {styles} from './style';
 import {COLORS} from '@resource';
 
 export default class SignupScreen extends React.Component {

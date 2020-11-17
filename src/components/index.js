@@ -1,5 +1,5 @@
 export LinearGradientButton from './Buttons/linearGradientButton';
-export genderRadioButton from './Buttons/genderRadioButton';
+export GenderRadioButton from './Buttons/genderRadioButton';
 export myDatePicker from './Buttons/myDatePicker';
 export AvatarIconButton from './Buttons/avatarIconButton';
 

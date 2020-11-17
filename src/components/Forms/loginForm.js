@@ -25,10 +25,6 @@ export default class LoginForm extends React.Component {
   }
 
   render() {
-    // this.focus;
-
-    console.log('reder called');
-    const {navigation} = this.props;
     const emailField = {
       mode: 'outlined',
       keyboardType: 'email-address',
@@ -60,7 +56,7 @@ export default class LoginForm extends React.Component {
 
     const validateCredentials = () => {
       this.state.email === 'kj@gmail.com' && this.state.password === '1234'
-        ? navigation.replace('HOME_SCREEN')
+        ? this.props.navigation.replace('HOME_SCREEN')
         : null;
     };
     return (

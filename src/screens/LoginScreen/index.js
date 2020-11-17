@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, ScrollView, KeyboardAvoidingView} from 'react-native';
 
 import {styles} from './style';
-import {LoginForm} from '@components';
+import {LoginForm, LoginFormHooks} from '@components';
 
 export default class LoginScreen extends React.Component {
   render() {

@@ -26,7 +26,7 @@ export default class MyTextInput extends Component {
 
     const handleOnBlur = () => {
       this.setState({iconColor: COLORS.gray, eyeIconColor: COLORS.gray});
-      props.value.length > 0
+      this.props.value.length > 0
         ? checkForValidEmail()
         : this.setState({errMsg: props.emptyError});
     };
@@ -68,6 +68,11 @@ export default class MyTextInput extends Component {
             onSubmitEditing={this.props.onSubmitEditing}
             onChangeText={(text) => handleOnChangeText(text)}
             secureTextEntry={this.state.secureTextEntry}
+            theme={{colors: {primary: '#009387'}, roundness: 5}}
+            blurOnSubmit={false}
+            pointerEvents="none"
+            onFocus={handleOnFocus}
+            onBlur={handleOnBlur}
             blurOnSubmit={false}
             left={
               <TextInput.Icon
@@ -86,11 +91,6 @@ export default class MyTextInput extends Component {
                 />
               ) : null
             }
-            theme={{colors: {primary: '#009387'}, roundness: 5}}
-            blurOnSubmit={false}
-            pointerEvents="none"
-            onFocus={handleOnFocus}
-            onBlur={handleOnBlur}
           />
           {this.state.errMsg ? (
             <Text style={{color: COLORS.red}}>{this.state.errMsg}</Text>

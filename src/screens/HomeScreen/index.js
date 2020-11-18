@@ -6,13 +6,27 @@ import {styles} from './style';
 import * as Components from '@components';
 
 export default class HomeScreen extends React.Component {
-  state = {showAlert: false};
+  constructor(props) {
+    super(props);
+    this.state = {showAlert: false};
+  }
 
   componentDidMount() {
-    BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+    this._unsubscribefocus = this.props.navigation.addListener('focus', () => {
+      // do something console.log('foucs called');
+      BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+    });
+    this._unsubscribeblur = this.props.navigation.addListener('blur', () => {
+      // do something console.log('blur called');
+      BackHandler.removeEventListener(
+        'hardwareBackPress',
+        this.handleBackButton,
+      );
+    });
   }
   componentWillUnmount() {
-    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+    this._unsubscribefocus();
+    this._unsubscribeblur();
   }
 
   handleBackButton = () => {
@@ -34,6 +48,7 @@ export default class HomeScreen extends React.Component {
             this.props.navigation.dispatch(DrawerActions.toggleDrawer())
           }
         />
+
         <Components.ExitAppDialog
           showAlert={this.state.showAlert}
           title="Exit"

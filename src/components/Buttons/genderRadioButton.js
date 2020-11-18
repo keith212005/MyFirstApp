@@ -17,7 +17,7 @@ export default class GenderRadioButton extends React.Component {
     return (
       <>
         <Text style={styles.title}>Gender</Text>
-        <View style={styles.container}>
+        <View style={styles.container} ref={this.props.genderRef}>
           <RadioButton.Group
             value={this.state.value}
             onValueChange={(text) => handleClick(text)}>

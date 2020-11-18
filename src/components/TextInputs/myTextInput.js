@@ -30,6 +30,7 @@ export default class MyTextInput extends Component {
         ? checkForValidEmail()
         : this.setState({errMsg: props.emptyError});
     };
+
     const checkForValidEmail = () => {
       let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       if (reg.test(props.value) === false && props.iconName === 'email') {
@@ -40,10 +41,11 @@ export default class MyTextInput extends Component {
     };
 
     const handleOnChangeText = (text) => {
-      this.setState({errMsg: ''});
+      // this.setState({errMsg: ''});
       props.onChangeText(text);
     };
-    const togglePasswordVisible = () => {
+
+    const togglePassword = () => {
       if (this.state.showEyeIcon != 'eye') {
         this.setState({showEyeIcon: 'eye', secureTextEntry: false});
       } else {
@@ -74,6 +76,8 @@ export default class MyTextInput extends Component {
             onFocus={handleOnFocus}
             onBlur={handleOnBlur}
             blurOnSubmit={false}
+            selectTextOnFocus={true}
+            selectionColor={COLORS.secondary}
             left={
               <TextInput.Icon
                 name={props.iconName}
@@ -86,7 +90,7 @@ export default class MyTextInput extends Component {
                   name={this.state.showEyeIcon}
                   color={this.state.eyeIconColor}
                   forceTextInputFocus={false}
-                  onPress={() => togglePasswordVisible()}
+                  onPress={() => togglePassword()}
                   onPressEye={() => console.log('clksdnf')}
                 />
               ) : null
@@ -94,6 +98,9 @@ export default class MyTextInput extends Component {
           />
           {this.state.errMsg ? (
             <Text style={{color: COLORS.red}}>{this.state.errMsg}</Text>
+          ) : null}
+          {this.props.isError ? (
+            <Text style={{color: COLORS.red}}>{props.invalidPassword}</Text>
           ) : null}
         </View>
       </>

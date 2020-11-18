@@ -15,7 +15,10 @@ import {COLORS} from '@resource';
 export default class TabNavigator extends React.Component {
   render() {
     return (
-      <Tab.Navigator initialRouteName="HOME" activeColor={COLORS.white}>
+      <Tab.Navigator
+        initialRouteName="HOME_SCREEN"
+        activeColor={COLORS.white}
+        backBehavior="initialRoute">
         {tabs('HOME_SCREEN', Screen.HomeScreen, 'Home', 'home', COLORS.white)}
         {tabs(
           'PROFILE_SCREEN',

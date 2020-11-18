@@ -14,13 +14,11 @@ export default class LoginScreen extends React.Component {
           </View>
 
           <KeyboardAvoidingView style={styles.footer}>
-            <View>
-              <ScrollView
-                style={styles.scrollView}
-                keyboardShouldPersistTaps="handled">
-                <LoginForm {...this.props} />
-              </ScrollView>
-            </View>
+            <ScrollView
+              style={styles.scrollView}
+              keyboardShouldPersistTaps="handled">
+              <LoginForm {...this.props} />
+            </ScrollView>
           </KeyboardAvoidingView>
         </View>
       </>

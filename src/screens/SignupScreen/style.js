@@ -11,6 +11,8 @@ export const styles = StyleSheet.create({
   header: {
     flex: 2,
     flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   headerText: {
     color: COLORS.white,
@@ -24,21 +26,7 @@ export const styles = StyleSheet.create({
     borderTopRightRadius: 30,
   },
   scrollView: {
-    paddingHorizontal: 35,
-    padding: 10,
-    marginTop: 30,
-  },
-
-  field_group: {
-    borderBottomColor: '#f2f2f2',
-    paddingBottom: 5,
-  },
-  errorMsg: {
-    color: COLORS.errormessage,
-  },
-  imageContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingHorizontal: 30,
+    marginTop: 10,
   },
 });

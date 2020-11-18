@@ -4,9 +4,16 @@ import {View, Text, ScrollView, StyleSheet, Keyboard} from 'react-native';
 import {RadioButton, TextInput} from 'react-native-paper';
 import {Avatar, Accessory} from 'react-native-elements';
 
-import * as Components from '@components';
+import LinearGradientButton from '../Buttons/linearGradientButton';
+import GenderRadioButton from '../Buttons/genderRadioButton';
+import MyDatePicker from '../Buttons/myDatePicker';
+import MyTextInput from '../TextInputs/myTextInput';
+import ImageSelectModal from '../Modal/imageSelectModal';
 
 import {COLORS} from '@resource';
+
+const avatarsrc =
+  'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg';
 
 export default class SignupForm extends React.Component {
   constructor(props) {
@@ -26,8 +33,7 @@ export default class SignupForm extends React.Component {
     email: '',
     password: '',
     confirmPassword: '',
-    avatarSource:
-      'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+    avatarSource: avatarsrc,
     gender: '',
     phoneno: '',
     dob: 'Date of birth',
@@ -39,21 +45,7 @@ export default class SignupForm extends React.Component {
     isError: false,
   };
 
-  authenticateUser = () => {
-    if (this.state.email != 'kj@gmail.com') {
-      this.setState({
-        isValidEmail: false,
-      });
-    }
-    if (this.state.password != '1234') {
-      this.setState({
-        isValidPassword: false,
-      });
-    }
-    if (this.state.email === 'kj@gmail.com' && this.state.password === '1234') {
-      this.props.navigation.replace('HOME_SCREEN');
-    }
-  };
+  authenticateUser = () => {};
 
   validateEmail = (text) => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -86,7 +78,7 @@ export default class SignupForm extends React.Component {
     }
   };
 
-  toggleShow = () => {
+  toggleAvatar = () => {
     this.setState((state) => ({isVisible: !this.state.isVisible}));
   };
 
@@ -96,7 +88,7 @@ export default class SignupForm extends React.Component {
         <View style={styles.imageContainer}>
           {this.state.isVisible ? (
             <View style={{height: 0, width: 0}}>
-              <Components.ImageSelectModal
+              <ImageSelectModal
                 isVisible={this.state.isVisible}
                 onRequestClose={(value) => this.setState({isVisible: false})}
                 dismiss={() => this.setState({isVisible: false})}
@@ -112,12 +104,12 @@ export default class SignupForm extends React.Component {
             icon={{name: 'user', type: 'font-awesome', color: 'gray'}}
             containerStyle={{backgroundColor: COLORS.white}}
             size="medium"
-            onPress={() => this.toggleShow()}>
-            <Accessory size={18} onPress={() => this.toggleShow()} />
+            onPress={() => this.toggleAvatar()}>
+            <Accessory size={18} onPress={() => this.toggleAvatar()} />
           </Avatar>
         </View>
         <View style={styles.field_group}>
-          <Components.MyTextInput
+          <MyTextInput
             label="First name"
             iconName="account"
             value={this.state.firstname}
@@ -131,7 +123,7 @@ export default class SignupForm extends React.Component {
         </View>
 
         <View style={styles.field_group}>
-          <Components.MyTextInput
+          <MyTextInput
             label="Last name"
             iconName="account"
             value={this.state.lastname}
@@ -145,7 +137,7 @@ export default class SignupForm extends React.Component {
         </View>
 
         <View>
-          <Components.MyTextInput
+          <MyTextInput
             label="Email"
             iconName="email"
             value={this.state.email}
@@ -159,7 +151,7 @@ export default class SignupForm extends React.Component {
         </View>
 
         <View style={styles.field_group}>
-          <Components.MyTextInput
+          <MyTextInput
             label="Password"
             iconName="lock"
             secureTextEntry={true}
@@ -176,41 +168,57 @@ export default class SignupForm extends React.Component {
         </View>
 
         <View style={styles.field_group}>
-          <Components.MyTextInput
+          <MyTextInput
             label="Confirm password"
             iconName="lock"
             secureTextEntry={true}
             maxLength={6}
             showEyeIcon={true}
             value={this.state.confirmPassword}
-            onChangeText={(text) => this.setState({confirmPassword: text})}
+            onChangeText={(text) => {
+              this.setState({confirmPassword: text, isError: false});
+            }}
             isError={this.state.isError}
             emptyError="Confirm password cannot be empty!!!"
-            invalidError="Confirm password is invalid!!!"
+            invalidPassword="Password did not match!!!"
             forwardRef={this.confirmPasswordRef}
-            onSubmitEditing={() => Keyboard.dismiss()}
+            onSubmitEditing={() => {
+              if (this.state.password != this.state.confirmPassword) {
+                console.log('not equal');
+                this.setState({
+                  isError: true,
+                });
+                this.confirmPasswordRef.current.focus();
+              } else {
+                console.log('wrong');
+              }
+              Keyboard.dismiss();
+            }}
           />
         </View>
+        <Text>{this.state.isError ? 'Password did not match' : null}</Text>
 
         <View style={styles.field_group}>
-          <Components.GenderRadioButton
+          <GenderRadioButton
             onSuccess={(value) => this.setState({gender: value})}
             forwardRef={this.genderRef}
-            onSubmitEditing={() => this.dobRef.current.focus()}
           />
         </View>
 
         <View style={styles.field_group}>
-          <Components.myDatePicker
+          <MyDatePicker
             modeType="date"
             dob={this.state.dobVisibility}
             dobValue={this.state.dob}
-            onSuccess={(text) => this.setState({dob: text.toString()})}
+            onSuccess={(text) => {
+              this.setState({dob: text.toString()});
+              this.phonenoRef.current.focus();
+            }}
           />
         </View>
 
         <View style={styles.field_group}>
-          <Components.MyTextInput
+          <MyTextInput
             label="Phone"
             iconName="phone"
             keyboardType="phone-pad"
@@ -226,7 +234,7 @@ export default class SignupForm extends React.Component {
         </View>
 
         <View style={styles.field_group}>
-          <Components.MyTextInput
+          <MyTextInput
             label="Address"
             iconName="pin"
             value={this.state.address}
@@ -240,7 +248,7 @@ export default class SignupForm extends React.Component {
         </View>
 
         <View style={{marginTop: 10, marginBottom: 30}}>
-          <Components.LinearGradientButton
+          <LinearGradientButton
             title="Register"
             height={50}
             onPress={() => this.authenticateUser()}

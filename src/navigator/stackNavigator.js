@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 
 import DrawerNavigator from './drawerNavigator';
 import {COLORS} from '@resource';
@@ -36,7 +36,6 @@ export default class StackNavigator extends React.Component {
         <Stack.Navigator
           initialRouteName="SPLASH_SCREEN"
           screenOptions={{
-            headerStyle: {backgroundColor: '#1f65ff'},
             headerTintColor: COLORS.white,
             headerTitleStyle: {fontWeight: 'bold'},
           }}>

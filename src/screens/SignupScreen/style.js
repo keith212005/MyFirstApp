@@ -17,16 +17,16 @@ export const styles = StyleSheet.create({
   headerText: {
     color: COLORS.white,
     fontFamily: FONTFAMILY.PacificoRegular,
-    fontSize: 40,
+    fontSize: responsiveHeight(10),
   },
   footer: {
     flex: 6,
     backgroundColor: COLORS.white,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
+    borderTopLeftRadius: responsiveHeight(5),
+    borderTopRightRadius: responsiveHeight(5),
   },
   scrollView: {
-    paddingHorizontal: 30,
-    marginTop: 10,
+    paddingHorizontal: responsiveHeight(8),
+    marginTop: responsiveHeight(5),
   },
 });

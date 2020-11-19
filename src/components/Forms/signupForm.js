@@ -10,7 +10,7 @@ import MyDatePicker from '../Buttons/myDatePicker';
 import MyTextInput from '../TextInputs/myTextInput';
 import ImageSelectModal from '../Modal/imageSelectModal';
 
-import {COLORS} from '@resource';
+import {COLORS, responsiveHeight} from '@resource';
 
 const avatarsrc =
   'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg';
@@ -87,16 +87,14 @@ export default class SignupForm extends React.Component {
       <View style={styles.container}>
         <View style={styles.imageContainer}>
           {this.state.isVisible ? (
-            <View style={{height: 0, width: 0}}>
-              <ImageSelectModal
-                isVisible={this.state.isVisible}
-                onRequestClose={(value) => this.setState({isVisible: false})}
-                dismiss={() => this.setState({isVisible: false})}
-                onSuccess={(image) => {
-                  this.setState({isVisible: false, avatarSource: image});
-                }}
-              />
-            </View>
+            <ImageSelectModal
+              isVisible={this.state.isVisible}
+              onRequestClose={(value) => this.setState({isVisible: false})}
+              dismiss={() => this.setState({isVisible: false})}
+              onSuccess={(image) => {
+                this.setState({isVisible: false, avatarSource: image});
+              }}
+            />
           ) : null}
           <Avatar
             rounded
@@ -250,7 +248,8 @@ export default class SignupForm extends React.Component {
         <View style={{marginTop: 10, marginBottom: 30}}>
           <LinearGradientButton
             title="Register"
-            height={50}
+            height={responsiveHeight(10)}
+            fontSize={responsiveHeight(3.25)}
             onPress={() => this.authenticateUser()}
           />
         </View>
@@ -265,6 +264,6 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     flex: 1,
-    marginBottom: 10,
+    marginBottom: responsiveHeight(4),
   },
 });

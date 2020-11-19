@@ -13,7 +13,7 @@ import {IconButton, Button, Card, Title, Paragraph} from 'react-native-paper';
 import ImagePicker from 'react-native-image-crop-picker';
 import {Avatar, Accessory} from 'react-native-elements';
 
-import {COLORS} from '@resource';
+import {COLORS, responsiveHeight} from '@resource';
 
 export default class ImageSelectModal extends Component {
   state = {

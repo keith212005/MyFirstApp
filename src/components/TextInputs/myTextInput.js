@@ -3,7 +3,7 @@ import {View, Text, StyleSheet} from 'react-native';
 
 import {TextInput} from 'react-native-paper';
 
-import {responsiveWidth, COLORS} from '@resource';
+import {responsiveWidth, responsiveHeight, COLORS} from '@resource';
 
 export default class MyTextInput extends Component {
   state = {
@@ -32,7 +32,7 @@ export default class MyTextInput extends Component {
     };
 
     const checkForValidEmail = () => {
-      let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{3,3})+$/;
       if (reg.test(props.value) === false && props.iconName === 'email') {
         this.setState({errMsg: props.invalidError});
       } else {
@@ -41,7 +41,7 @@ export default class MyTextInput extends Component {
     };
 
     const handleOnChangeText = (text) => {
-      // this.setState({errMsg: ''});
+      this.setState({errMsg: ''});
       props.onChangeText(text);
     };
 
@@ -60,6 +60,7 @@ export default class MyTextInput extends Component {
       <>
         <View>
           <TextInput
+            style={styles.input}
             mode={props.mode ? props.mode : 'outlined'}
             keyboardType={props.keyboardType ? props.keyboardType : 'default'}
             returnKeyType={props.returnKeyType ? props.returnKeyType : 'next'}
@@ -70,7 +71,7 @@ export default class MyTextInput extends Component {
             onSubmitEditing={this.props.onSubmitEditing}
             onChangeText={(text) => handleOnChangeText(text)}
             secureTextEntry={this.state.secureTextEntry}
-            theme={{colors: {primary: '#009387'}, roundness: 5}}
+            theme={{colors: {primary: COLORS.primary}, roundness: 6}}
             blurOnSubmit={false}
             pointerEvents="none"
             onFocus={handleOnFocus}
@@ -97,10 +98,10 @@ export default class MyTextInput extends Component {
             }
           />
           {this.state.errMsg ? (
-            <Text style={{color: COLORS.red}}>{this.state.errMsg}</Text>
+            <Text style={styles.errorStyle}>{this.state.errMsg}</Text>
           ) : null}
           {this.props.isError ? (
-            <Text style={{color: COLORS.red}}>{props.invalidPassword}</Text>
+            <Text style={styles.errorStyle}>{props.invalidPassword}</Text>
           ) : null}
         </View>
       </>
@@ -109,7 +110,7 @@ export default class MyTextInput extends Component {
 }
 
 const styles = StyleSheet.create({
-  errorMessage: {
+  errorStyle: {
     color: COLORS.red,
   },
 });

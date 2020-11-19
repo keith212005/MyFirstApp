@@ -3,6 +3,7 @@ import {View, Image} from 'react-native';
 
 import {styles} from './style';
 import {LinearGradientButton} from '@components';
+import {responsiveHeight, responsiveWidth} from '@resource';
 
 // source={{uri: 'asset:/images/companylogo.png'}}
 
@@ -25,14 +26,14 @@ export default class StartScreen extends React.Component {
             <LinearGradientButton
               title="Sign In"
               onPress={() => this.props.navigation.navigate('LOGIN_SCREEN')}
-              height={50}
+              height={responsiveHeight(8)}
             />
           </View>
           <View style={{padding: 10}}>
             <LinearGradientButton
               title="Sign up"
               onPress={() => this.props.navigation.navigate('SIGNUP_SCREEN')}
-              height={50}
+              height={responsiveHeight(8)}
             />
           </View>
         </View>

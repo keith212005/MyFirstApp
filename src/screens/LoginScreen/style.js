@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
   },
   headerTitleText: {
     color: COLORS.white,
-    fontSize: 40,
+    fontSize: responsiveHeight(10),
     fontFamily: FONTFAMILY.PacificoRegular,
   },
   footer: {
@@ -25,7 +25,7 @@ export const styles = StyleSheet.create({
     borderTopRightRadius: responsiveHeight(6),
   },
   scrollView: {
-    paddingTop: 10,
-    marginHorizontal: 30,
+    paddingTop: responsiveHeight(2.5),
+    marginHorizontal: responsiveHeight(8),
   },
 });

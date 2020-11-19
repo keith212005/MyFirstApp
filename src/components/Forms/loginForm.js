@@ -1,10 +1,10 @@
 import React from 'react';
-import {View, Text, StyleSheet, Keyboard, Alert} from 'react-native';
+import {View, Text, StyleSheet, Keyboard} from 'react-native';
 
-import {responsiveWidth, COLORS} from '@resource';
 import LinearGradientButton from '../Buttons/linearGradientButton';
 import MyTextInput from '../TextInputs/myTextInput';
 import SimpleAlertDialog from '../Dialogs/simpleAlertDialog';
+import {responsiveHeight, responsiveWidth, COLORS} from '@resource';
 
 export default class LoginForm extends React.Component {
   constructor(props) {
@@ -21,52 +21,51 @@ export default class LoginForm extends React.Component {
     alertTitle: 'title',
     alertContent: 'content',
   };
+  emailProps = {
+    mode: 'outlined',
+    keyboardType: 'email-address',
+    label: 'Email',
+    iconName: 'email',
+    value: this.state.email,
+    onChangeText: (text) => this.setState({email: text}),
+    emptyError: 'Email address cannot be empty!!!',
+    invalidError: 'Email address is invalid!!!',
+    forwardRef: this.emailRef,
+    onSubmitEditing: () => this.passwordRef.current.focus(),
+  };
+  passwordProps = {
+    mode: 'outlined',
+    label: 'Password',
+    iconName: 'lock',
+    value: this.state.password,
+    onChangeText: (text) => this.setState({password: text}),
+    emptyError: 'Password cannot be empty!!!',
+    invalidError: 'Password is invalid!!!',
+    secureTextEntry: true,
+    maxLength: 10,
+    showEyeIcon: true,
+    forwardRef: this.passwordRef,
+    onSubmitEditing: () => Keyboard.dismiss(),
+  };
 
   render() {
-    const emailProps = {
-      mode: 'outlined',
-      keyboardType: 'email-address',
-      label: 'Email',
-      iconName: 'email',
-      value: this.state.email,
-      onChangeText: (text) => this.setState({email: text}),
-      emptyError: 'Email address cannot be empty!!!',
-      invalidError: 'Email address is invalid!!!',
-      forwardRef: this.emailRef,
-      onSubmitEditing: () => this.passwordRef.current.focus(),
-    };
-    const passwordProps = {
-      mode: 'outlined',
-      label: 'Password',
-      iconName: 'lock',
-      value: this.state.password,
-      onChangeText: (text) => this.setState({password: text}),
-      emptyError: 'Password cannot be empty!!!',
-      invalidError: 'Password is invalid!!!',
-      secureTextEntry: true,
-      maxLength: 10,
-      showEyeIcon: true,
-      forwardRef: this.passwordRef,
-      onSubmitEditing: () => Keyboard.dismiss(),
-    };
-
     const validateCredentials = () => {
       console.log('validateCredentials clicked...');
 
       if (this.state.email.length <= 0) {
         this.setState({
           showAlert: true,
-          alertTitle: 'Required',
-          alertContent: 'Email cannot be empty!!!',
+          alertTitle: 'Required !',
+          alertContent: 'Email cannot be empty.',
         });
-        this.emailRef.current.focus();
+        // this.emailRef.current.focus();
       } else if (this.state.password.length <= 0) {
         this.setState({
           showAlert: true,
-          alertTitle: 'Required',
-          alertContent: 'Passoword cannot be empty!!!',
+          alertTitle: 'Required !',
+          alertContent: 'Passoword cannot be empty.',
         });
-        this.passwordRef.current.focus();
+        // this.passwordRef.current.focus();
         this.setState({passwordErr: 'Password cannot be empty!!!'});
       }
 
@@ -77,13 +76,18 @@ export default class LoginForm extends React.Component {
           } else {
             this.setState({
               showAlert: true,
-              alertTitle: 'Invalid',
-              alertContent: 'Invalid password.',
+              alertTitle: 'Invalid password !',
+              alertContent: 'Please enter valid password',
             });
             this.passwordRef.current.focus();
           }
         } else {
-          Alert.alert('Invalid!', 'Invalid email!');
+          this.setState({
+            showAlert: true,
+            alertTitle: 'Invalid Email !',
+            alertContent: 'Plese enter valid email address',
+          });
+          this.emailRef.current.focus();
         }
       }
     };
@@ -97,11 +101,11 @@ export default class LoginForm extends React.Component {
       <>
         <View style={styles.container}>
           <View style={styles.field_group}>
-            <MyTextInput {...emailProps} />
+            <MyTextInput {...this.emailProps} />
           </View>
 
           <View style={styles.field_group}>
-            <MyTextInput {...passwordProps} />
+            <MyTextInput {...this.passwordProps} />
           </View>
 
           <Text
@@ -118,7 +122,7 @@ export default class LoginForm extends React.Component {
               {...this.props}
               forwardRef={this.submitRef}
               onPress={() => validateCredentials()}
-              height={50}
+              height={responsiveHeight(10)}
             />
           </View>
         </View>
@@ -141,15 +145,13 @@ const styles = StyleSheet.create({
   field_group: {
     marginTop: responsiveWidth(3),
     borderBottomWidth: 1,
-    borderBottomColor: '#f2f2f2',
+    borderBottomColor: COLORS.white,
   },
   forgotpasswordtext: {
-    marginTop: 10,
-    color: COLORS.secondary,
+    marginTop: responsiveHeight(2),
+    marginBottom: responsiveHeight(2),
+    color: COLORS.primary,
     fontWeight: '700',
     textAlign: 'right',
-  },
-  errorMsg: {
-    color: 'red',
   },
 });

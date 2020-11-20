@@ -33,12 +33,6 @@ export default class SimpleAlertDialog extends React.Component {
         onConfirmPressed={() => {
           this.props.onConfirmPressed();
         }}
-        titleStyle={{fontSize: responsiveHeight(4)}}
-        messageStyle={{fontSize: responsiveHeight(2)}}
-        confirmButtonStyle={{
-          width: responsiveHeight(10),
-          alignItems: 'center',
-        }}
       />
     ) : null;
   }

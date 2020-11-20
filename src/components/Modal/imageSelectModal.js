@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
   TouchableWithoutFeedback,
   Image,
   Modal,
@@ -13,7 +12,7 @@ import {IconButton, Button, Card, Title, Paragraph} from 'react-native-paper';
 import ImagePicker from 'react-native-image-crop-picker';
 import {Avatar, Accessory} from 'react-native-elements';
 
-import {COLORS, responsiveHeight} from '@resource';
+import {COLORS, FONTFAMILY, responsiveHeight} from '@resource';
 
 export default class ImageSelectModal extends Component {
   state = {
@@ -24,56 +23,50 @@ export default class ImageSelectModal extends Component {
     return (
       <>
         {this.state.isVisible ? (
-          <View style={styles.container}>
-            <Modal
-              animationType={'fade'}
-              transparent={true}
-              onRequestClose={() => this.props.onRequestClose(false)}
-              visible={this.state.isVisible}
-              presentationStyle="overFullScreen">
-              <TouchableWithoutFeedback onPress={this.props.dismiss}>
-                <View style={styles.modalContainer}>
-                  <View style={styles.modalSubContainer}>
-                    <View style={{padding: 10}}>
-                      <Card
-                        elevation={20}
-                        style={{paddingRight: 5, paddingLeft: 5}}>
-                        <Card.Actions>
-                          <View>
-                            <IconButton
-                              icon="camera-plus-outline"
-                              color={'#009387'}
-                              size={40}
-                              onPress={() => this.handleCamera()}
-                            />
-                            <Text style={{textAlign: 'center'}}>Camera</Text>
-                          </View>
-                        </Card.Actions>
-                      </Card>
-                    </View>
+          <Modal
+            animationType={'fade'}
+            transparent={true}
+            onRequestClose={() => this.props.onRequestClose(false)}
+            visible={this.state.isVisible}
+            presentationStyle="overFullScreen">
+            <TouchableWithoutFeedback onPress={this.props.dismiss}>
+              <View style={styles.modalContainer}>
+                <View style={styles.modalSubContainer}>
+                  <View style={{padding: 10}}>
+                    <Card elevation={20} style={styles.cardStyle}>
+                      <Card.Actions>
+                        <View>
+                          <IconButton
+                            icon="camera-plus-outline"
+                            color={COLORS.primary}
+                            size={40}
+                            onPress={() => this.handleCamera()}
+                          />
+                          <Text style={styles.titleText}>Camera</Text>
+                        </View>
+                      </Card.Actions>
+                    </Card>
+                  </View>
 
-                    <View style={{padding: 10}}>
-                      <Card
-                        elevation={20}
-                        style={{paddingRight: 5, paddingLeft: 5}}>
-                        <Card.Actions>
-                          <View>
-                            <IconButton
-                              icon="folder-multiple-image"
-                              color={'#009387'}
-                              size={40}
-                              onPress={() => this.handleGallery()}
-                            />
-                            <Text style={{textAlign: 'center'}}>Gallery</Text>
-                          </View>
-                        </Card.Actions>
-                      </Card>
-                    </View>
+                  <View style={{padding: 10}}>
+                    <Card elevation={20} style={styles.cardStyle}>
+                      <Card.Actions>
+                        <View>
+                          <IconButton
+                            icon="folder-multiple-image"
+                            color={COLORS.primary}
+                            size={40}
+                            onPress={() => this.handleGallery()}
+                          />
+                          <Text style={styles.titleText}>Gallery</Text>
+                        </View>
+                      </Card.Actions>
+                    </Card>
                   </View>
                 </View>
-              </TouchableWithoutFeedback>
-            </Modal>
-          </View>
+              </View>
+            </TouchableWithoutFeedback>
+          </Modal>
         ) : null}
       </>
     );
@@ -120,28 +113,24 @@ export default class ImageSelectModal extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 25,
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  text: {
-    fontSize: 24,
-    marginBottom: 30,
-    padding: 40,
-  },
   modalContainer: {
     flex: 1,
-    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: COLORS.halfTransparent,
   },
+  titleText: {
+    textAlign: 'center',
+    fontFamily: FONTFAMILY.RobotoMedium,
+    color: COLORS.grayFont,
+  },
   modalSubContainer: {
     flexDirection: 'row',
-    padding: 10,
+    padding: 20,
     backgroundColor: COLORS.white,
     borderRadius: 10,
+  },
+  cardStyle: {
+    paddingHorizontal: 5,
   },
 });

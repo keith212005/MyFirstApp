@@ -24,4 +24,5 @@ export const styles = StyleSheet.create({
     width: responsiveWidth(50),
     height: responsiveHeight(50),
   },
+  btnContainer: {padding: responsiveHeight(2)},
 });

@@ -8,4 +8,5 @@ export const COLORS = {
   red: '#fa0a0a',
   black: '#000000',
   errormessage: '#cb4242',
+  grayFont: 'rgba(54, 54, 54, 0.58)',
 };

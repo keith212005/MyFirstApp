@@ -2,7 +2,7 @@ import React from 'react';
 import {View, StyleSheet, Pressable} from 'react-native';
 
 import {RadioButton, Text} from 'react-native-paper';
-import {COLORS} from '@resource';
+import {COLORS, FONTFAMILY} from '@resource';
 
 export default class GenderRadioButton extends React.Component {
   state = {
@@ -17,15 +17,21 @@ export default class GenderRadioButton extends React.Component {
     return (
       <>
         <Text style={styles.title}>Gender</Text>
-        <View style={styles.container} ref={this.props.genderRef}>
+        <View style={styles.container}>
           <RadioButton.Group
             value={this.state.value}
             onValueChange={(text) => handleClick(text)}>
             <View style={styles.radioGroup}>
               <RadioButton value="Male" />
-              <Text onPress={() => this.setState({value: 'Male'})}>Male</Text>
+              <Text
+                style={styles.title}
+                onPress={() => this.setState({value: 'Male'})}>
+                Male
+              </Text>
               <RadioButton value="Female" />
-              <Text onPress={() => this.setState({value: 'Female'})}>
+              <Text
+                style={styles.title}
+                onPress={() => this.setState({value: 'Female'})}>
                 Female
               </Text>
             </View>
@@ -43,8 +49,9 @@ const styles = StyleSheet.create({
     borderColor: COLORS.gray,
   },
   title: {
-    marginTop: 5,
+    fontFamily: FONTFAMILY.RobotoMedium,
     fontWeight: '700',
+    color: COLORS.grayFont,
   },
   radioGroup: {
     padding: 8,

@@ -49,9 +49,9 @@ export default class MyDatePicker extends React.Component {
           <View style={styles.container}>
             <FontAwesome
               style={styles.searchIcon}
-              name="calendar"
-              color={COLORS.gray}
               size={26}
+              color={COLORS.gray}
+              name="calendar"
             />
             <Text style={styles.dob}>{this.state.dobs}</Text>
 
@@ -64,6 +64,12 @@ export default class MyDatePicker extends React.Component {
                   is24Hour={true}
                   display="default"
                   onChange={onChange}
+                  minimumDate={
+                    this.props.minimumDate ? this.props.minimumDate : null
+                  }
+                  maximumDate={
+                    this.props.maximumDate ? this.props.maximumDate : null
+                  }
                 />
               </>
             )}

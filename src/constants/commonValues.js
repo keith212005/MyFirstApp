@@ -33,12 +33,16 @@ export const personSignupVars = {
   isError: false,
 };
 
-export const loginFormStateVars = {
-  email: 'Kj@gmail.com',
-  password: '1234',
-  emailErr: '',
-  passwordErr: '',
-  showAlert: false,
-  alertTitle: 'title',
-  alertContent: 'content',
+export const field_object_login = {
+  email: {
+    isError: false,
+    error_text: '',
+    value: '',
+  },
+  password: {
+    isError: false,
+    error_text: '',
+    value: '',
+  },
+  failAlert: false,
 };

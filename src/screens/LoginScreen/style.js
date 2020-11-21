@@ -25,7 +25,34 @@ export const styles = StyleSheet.create({
     borderTopRightRadius: responsiveHeight(6),
   },
   scrollView: {
-    paddingTop: responsiveHeight(2.5),
-    marginHorizontal: responsiveHeight(8),
+    paddingTop: 30,
+    padding: 20,
+  },
+  signIn: {
+    height: responsiveHeight(14),
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    borderColor: COLORS.primary,
+    marginTop: 15,
+    borderWidth: 1,
+  },
+  forgotpasswordtext: {
+    marginTop: responsiveHeight(2),
+    marginBottom: responsiveHeight(2),
+    color: COLORS.primary,
+    fontWeight: '600',
+    textAlign: 'right',
+  },
+  errorStyle: {
+    color: COLORS.red,
+  },
+  login_fail_alert: {
+    color: COLORS.red,
+    textAlign: 'center',
+    marginTop: 5,
+  },
+  signupBtn: {
+    marginBottom: 50,
   },
 });

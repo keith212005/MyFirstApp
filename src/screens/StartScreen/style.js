@@ -14,15 +14,40 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   footer: {
+    flex: 1,
     backgroundColor: COLORS.white,
-    borderTopLeftRadius: responsiveHeight(8),
-    borderTopRightRadius: responsiveHeight(8),
-    paddingVertical: responsiveHeight(25),
-    paddingHorizontal: responsiveHeight(10),
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    paddingVertical: 50,
+    paddingHorizontal: 30,
   },
   logo: {
-    width: responsiveWidth(50),
-    height: responsiveHeight(50),
+    width: responsiveWidth(28),
+    height: responsiveHeight(28),
   },
-  btnContainer: {padding: responsiveHeight(2)},
+  title: {
+    color: '#05375a',
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
+  text: {
+    color: 'grey',
+    marginTop: 5,
+  },
+  button: {
+    alignItems: 'flex-end',
+    marginTop: 30,
+  },
+  signIn: {
+    width: 150,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 50,
+    flexDirection: 'row',
+  },
+  textSign: {
+    color: COLORS.white,
+    fontWeight: 'bold',
+  },
 });

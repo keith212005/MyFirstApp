@@ -13,24 +13,20 @@ export default class MyTextInput extends Component {
     secureTextEntry: this.props.secureTextEntry,
     value: this.props.value,
   };
-
   render() {
-    let props = this.props;
+    // console.log('myTextInput render called - ' + this.props.iconName);
 
+    let props = this.props;
     const handleOnFocus = () => {
       this.setState({
         iconColor: COLORS.primary,
         eyeIconColor: COLORS.primary,
       });
-      // this.props.onFocus();
+      this.props.onFocus();
     };
 
     const handleOnBlur = () => {
       this.setState({iconColor: COLORS.gray, eyeIconColor: COLORS.gray});
-    };
-
-    const handleOnChangeText = (text) => {
-      this.props.onChangeText(text);
     };
 
     const togglePassword = () => {
@@ -48,7 +44,6 @@ export default class MyTextInput extends Component {
       <>
         <View>
           <TextInput
-            style={styles.input}
             mode={props.mode ? props.mode : 'outlined'}
             keyboardType={props.keyboardType ? props.keyboardType : 'default'}
             returnKeyType={props.returnKeyType ? props.returnKeyType : 'next'}
@@ -56,11 +51,15 @@ export default class MyTextInput extends Component {
             maxLength={props.maxLength ? props.maxLength : null}
             value={props.value}
             onSubmitEditing={this.props.onSubmitEditing}
-            onChangeText={(text) => handleOnChangeText(text)}
+            onEndEditing={this.props.onEndEditing}
+            onChangeText={(text) => this.props.onChangeText(text)}
             secureTextEntry={this.state.secureTextEntry}
             theme={{colors: {primary: COLORS.primary}, roundness: 6}}
             blurOnSubmit={false}
+            ref={props.forwardRef}
             pointerEvents="none"
+            isInputValid={this.state.isInputValid}
+            errorMessage={this.state.errorMessage}
             onFocus={handleOnFocus}
             onBlur={handleOnBlur}
             blurOnSubmit={false}
@@ -80,11 +79,13 @@ export default class MyTextInput extends Component {
                   color={this.state.eyeIconColor}
                   forceTextInputFocus={false}
                   onPress={() => togglePassword()}
-                  onPressEye={() => console.log('clksdnf')}
                 />
               ) : null
             }
           />
+          {this.props.isError ? (
+            <Text style={styles.errorStyle}>{this.props.error_text}</Text>
+          ) : null}
         </View>
       </>
     );
@@ -94,5 +95,8 @@ export default class MyTextInput extends Component {
 const styles = StyleSheet.create({
   errorStyle: {
     color: COLORS.red,
+  },
+  input: {
+    borderRadius: 30,
   },
 });

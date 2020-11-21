@@ -1,69 +1,46 @@
 import React from 'react';
-import {View, Image} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 
-import DeviceInfo from 'react-native-device-info';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import * as Animatable from 'react-native-animatable';
+import LinearGradient from 'react-native-linear-gradient';
 
 import {styles} from './style';
-import {LinearGradientButton} from '@components';
-import {responsiveHeight, responsiveWidth} from '@resource';
-
-// source={{
-//   uri:
-//     'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTI24dS95Qbsm9tEZWPse8sxyrLQuzM-7MQqg&usqp=CAU',
-// }}
+import {COLORS} from '@resource';
 
 export default class StartScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <Image
+          <Animatable.Image
+            animation="bounceIn"
+            duraton="1500"
             style={styles.logo}
             resizeMode="contain"
             source={{uri: 'asset:/images/companylogo.png'}}
           />
         </View>
-        <View style={styles.footer}>
-          {DeviceInfo.isTablet() ? (
-            <>
-              <View style={styles.btnContainer}>
-                <LinearGradientButton
-                  title="Sign In"
-                  onPress={() => this.props.navigation.navigate('LOGIN_SCREEN')}
-                  height={responsiveHeight(10)}
+
+        <Animatable.View style={styles.footer} animation="fadeInUpBig">
+          <Text style={styles.title}>Stay connected with everyone!</Text>
+          <Text style={styles.text}>Sign in with account</Text>
+          <View style={styles.button}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('LOGIN_SCREEN')}>
+              <LinearGradient
+                colors={['#08d4c4', '#01ab9d']}
+                style={styles.signIn}>
+                <Text style={styles.textSign}>Get Started</Text>
+                <MaterialIcons
+                  name="navigate-next"
+                  color={COLORS.white}
+                  size={20}
                 />
-              </View>
-              <View style={styles.btnContainer}>
-                <LinearGradientButton
-                  title="Sign up"
-                  onPress={() =>
-                    this.props.navigation.navigate('SIGNUP_SCREEN')
-                  }
-                  height={responsiveHeight(10)}
-                />
-              </View>
-            </>
-          ) : (
-            <>
-              <View style={styles.btnContainer}>
-                <LinearGradientButton
-                  title="Sign In"
-                  onPress={() => this.props.navigation.navigate('LOGIN_SCREEN')}
-                  height={responsiveHeight(12)}
-                />
-              </View>
-              <View style={styles.btnContainer}>
-                <LinearGradientButton
-                  title="Sign up"
-                  onPress={() =>
-                    this.props.navigation.navigate('SIGNUP_SCREEN')
-                  }
-                  height={responsiveHeight(12)}
-                />
-              </View>
-            </>
-          )}
-        </View>
+              </LinearGradient>
+            </TouchableOpacity>
+          </View>
+        </Animatable.View>
       </View>
     );
   }

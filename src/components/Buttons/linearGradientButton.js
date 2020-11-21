@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   gradientView: {
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 5,
+    borderRadius: 10,
   },
   titleText: {
     fontFamily: FONTFAMILY.RobotoBold,

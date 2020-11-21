@@ -83,6 +83,7 @@ export default class MyDatePicker extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: 'center',
     flexDirection: 'row',
     borderWidth: 1,
     borderRadius: 5,
@@ -93,7 +94,7 @@ const styles = StyleSheet.create({
   dob: {
     marginLeft: 10,
     color: COLORS.gray,
-    fontSize: 20,
+    fontSize: 16,
     textAlign: 'center',
     // borderWidth: 1,
   },

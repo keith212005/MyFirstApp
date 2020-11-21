@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
 import {TextInput} from 'react-native-paper';
+import * as Animatable from 'react-native-animatable';
 
-import {responsiveWidth, responsiveHeight, COLORS} from '@resource';
+import {responsiveWidth, responsiveHeight, COLORS, FONTFAMILY} from '@resource';
 
 export default class MyTextInput extends Component {
   state = {
@@ -42,7 +43,7 @@ export default class MyTextInput extends Component {
 
     return (
       <>
-        <View>
+        <Animatable.View animation={props.isError ? 'bounceIn' : ''}>
           <TextInput
             mode={props.mode ? props.mode : 'outlined'}
             keyboardType={props.keyboardType ? props.keyboardType : 'default'}
@@ -86,7 +87,7 @@ export default class MyTextInput extends Component {
           {this.props.isError ? (
             <Text style={styles.errorStyle}>{this.props.error_text}</Text>
           ) : null}
-        </View>
+        </Animatable.View>
       </>
     );
   }
@@ -95,6 +96,7 @@ export default class MyTextInput extends Component {
 const styles = StyleSheet.create({
   errorStyle: {
     color: COLORS.red,
+    fontFamily: FONTFAMILY.RobotoItalic,
   },
   input: {
     borderRadius: 30,

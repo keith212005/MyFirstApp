@@ -1,36 +1,20 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  StyleSheet,
-  Keyboard,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import {View, Text, ScrollView, StyleSheet} from 'react-native';
 
-import {RadioButton, TextInput} from 'react-native-paper';
 import {Avatar, Accessory} from 'react-native-elements';
 
+import {
+  field_object_signup,
+  field_vars_signup,
+  signupRefs,
+  validateEmailAddress,
+} from '@constants';
+import {COLORS, responsiveHeight, FONTFAMILY} from '@resource';
 import LinearGradientButton from '../Buttons/linearGradientButton';
 import GenderRadioButton from '../Buttons/genderRadioButton';
 import MyDatePicker from '../Buttons/myDatePicker';
 import MyTextInput from '../TextInputs/myTextInput';
 import ImageSelectModal from '../Modal/imageSelectModal';
-import {COLORS, responsiveHeight} from '@resource';
-import {field_object_signup, signupRefs} from '@constants';
-
-const validateEmailAddress = (text) => {
-  let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  if (reg.test(text) === false) {
-    // console.log('Email is Not Correct');
-    // this.setState({email: text});
-    return false;
-  } else {
-    // this.setState({email: text});
-    // console.log('Email is Correct');
-    return true;
-  }
-};
 
 export default class SignupForm extends React.Component {
   constructor(props) {
@@ -59,6 +43,7 @@ export default class SignupForm extends React.Component {
       isVisible,
       isError,
     } = this.state;
+
     const toggleAvatar = () => {
       this.setState((state) => ({isVisible: !state.isVisible}));
     };
@@ -234,126 +219,120 @@ export default class SignupForm extends React.Component {
 
     //===========================================================================
 
-    // ========================== Handle text change evensts =====================
-    const handleFirstNameChange = (text) => {
-      this.setState((prevState) => ({
-        ...prevState,
-        firstname: {
-          ...prevState.firstname,
-          value: text,
-          isError: false,
-        },
-      }));
-    };
-    const handleLastNameChange = (text) => {
-      this.setState((prevState) => ({
-        ...prevState,
-        lastname: {
-          ...prevState.lastname,
-          value: text,
-          isError: false,
-        },
-      }));
-    };
-    const handleEmailChange = (text) => {
-      this.setState((prevState) => ({
-        ...prevState,
-        email: {
-          ...prevState.email,
-          value: text.trim(),
-          isError: false,
-        },
-      }));
-    };
-    const handlePasswordChange = (text) => {
-      this.setState((prevState) => ({
-        ...prevState,
-        password: {
-          ...prevState.password,
-          value: text,
-          isError: false,
-        },
-      }));
-    };
-    const handleConfirmPasswordChange = (text) => {
-      this.setState((prevState) => ({
-        ...prevState,
-        confirmPassword: {
-          ...prevState.confirmPassword,
-          value: text,
-          isError: false,
-        },
-      }));
-    };
-    const handlePhonenoChange = (text) => {
-      this.setState((prevState) => ({
-        ...prevState,
-        phoneno: {
-          ...prevState.phoneno,
-          value: text,
-          isError: false,
-        },
-      }));
-    };
-    const handleAddressChange = (text) => {
-      this.setState((prevState) => ({
-        ...prevState,
-        address: {
-          ...prevState.address,
-          value: text,
-          isError: false,
-        },
-      }));
-    };
-    const handleGenderChange = (text) => {
-      this.setState((prevState) => ({
-        ...prevState,
-        gender: {
-          ...prevState.gender,
-          value: text,
-          isError: false,
-        },
-      }));
-      checkImage();
-      checkFname();
-      checkLname();
-      checkEmail();
-      checkPassword();
-      checkConfirmPassword();
-      checkPhoneno();
-      checkAddress();
-    };
-    const handleDobChange = (text) => {
-      this.setState((prevState) => ({
-        ...prevState,
-        dob: {
-          ...prevState.dob,
-          value: text.toString(),
-          isError: false,
-        },
-      }));
-      checkImage();
-      checkFname();
-      checkLname();
-      checkEmail();
-      checkPassword();
-      checkConfirmPassword();
-      checkPhoneno();
-      checkAddress();
-      checkGender();
+    // ========================== Handle onChangeText event =====================
+    const handleOnChangeText = (text, label) => {
+      if (label === 'firstname') {
+        this.setState((prevState) => ({
+          ...prevState,
+          firstname: {
+            ...prevState.firstname,
+            value: text,
+            isError: false,
+          },
+        }));
+      } else if (label === 'lastname') {
+        this.setState((prevState) => ({
+          ...prevState,
+          lastname: {
+            ...prevState.lastname,
+            value: text,
+            isError: false,
+          },
+        }));
+      } else if (label === 'email') {
+        this.setState((prevState) => ({
+          ...prevState,
+          email: {
+            ...prevState.email,
+            value: text.trim(),
+            isError: false,
+          },
+        }));
+      } else if (label === 'password') {
+        this.setState((prevState) => ({
+          ...prevState,
+          password: {
+            ...prevState.password,
+            value: text,
+            isError: false,
+          },
+        }));
+      } else if (label === 'confirmpassword') {
+        this.setState((prevState) => ({
+          ...prevState,
+          confirmPassword: {
+            ...prevState.confirmPassword,
+            value: text,
+            isError: false,
+          },
+        }));
+      } else if (label === 'phoneno') {
+        this.setState((prevState) => ({
+          ...prevState,
+          phoneno: {
+            ...prevState.phoneno,
+            value: text,
+            isError: false,
+          },
+        }));
+      } else if (label === 'address') {
+        this.setState((prevState) => ({
+          ...prevState,
+          address: {
+            ...prevState.address,
+            value: text,
+            isError: false,
+          },
+        }));
+      } else if (label === 'gender') {
+        this.setState((prevState) => ({
+          ...prevState,
+          gender: {
+            ...prevState.gender,
+            value: text,
+            isError: false,
+          },
+        }));
+        checkImage();
+        checkFname();
+        checkLname();
+        checkEmail();
+        checkPassword();
+        checkConfirmPassword();
+        checkPhoneno();
+        checkAddress();
+      } else if (label === 'dob') {
+        this.setState((prevState) => ({
+          ...prevState,
+          dob: {
+            ...prevState.dob,
+            value: text.toString(),
+            isError: false,
+          },
+        }));
+        checkImage();
+        checkFname();
+        checkLname();
+        checkEmail();
+        checkPassword();
+        checkConfirmPassword();
+        checkPhoneno();
+        checkAddress();
+        checkGender();
+      }
     };
 
     //===========================================================================
-    const handleOnSubmitEditing = () => {
-      checkFname();
-      signupRefs.lastNameRef.current.focus();
-    };
+
+    //================== handleEndEditing event common for every input ===========
     const handleEndEditing = (text) => {
       console.log('handleEndEditing called... ' + text);
     };
 
     const registerUser = () => {
       if (
+        avatarSource.value !=
+          'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg' &&
         firstname.value.length > 0 &&
         lastname.value.length > 0 &&
         email.value.length > 0 &&
@@ -424,12 +403,10 @@ export default class SignupForm extends React.Component {
             isError={firstname.isError}
             error_text={firstname.error_text}
             forwardRef={signupRefs.firstNameRef}
-            onChangeText={(text) => handleFirstNameChange(text)}
+            onChangeText={(text) => handleOnChangeText(text, 'firstname')}
             onSubmitEditing={() => signupRefs.lastNameRef.current.focus()}
             onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
-            onFocus={() => {
-              checkImage();
-            }}
+            onFocus={() => checkImage()}
           />
         </View>
 
@@ -441,7 +418,7 @@ export default class SignupForm extends React.Component {
             isError={lastname.isError}
             error_text={lastname.error_text}
             forwardRef={signupRefs.lastNameRef}
-            onChangeText={(text) => handleLastNameChange(text)}
+            onChangeText={(text) => handleOnChangeText(text, 'lastname')}
             onSubmitEditing={() => signupRefs.emailRef.current.focus()}
             onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
             onFocus={() => {
@@ -459,7 +436,7 @@ export default class SignupForm extends React.Component {
             isError={email.isError}
             error_text={email.error_text}
             forwardRef={signupRefs.emailRef}
-            onChangeText={(text) => handleEmailChange(text)}
+            onChangeText={(text) => handleOnChangeText(text, 'email')}
             onSubmitEditing={() => signupRefs.passwordRef.current.focus()}
             onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
             onFocus={() => {
@@ -480,7 +457,7 @@ export default class SignupForm extends React.Component {
             value={password.value}
             isError={password.isError}
             error_text={password.error_text}
-            onChangeText={(text) => handlePasswordChange(text)}
+            onChangeText={(text) => handleOnChangeText(text, 'password')}
             forwardRef={signupRefs.passwordRef}
             onSubmitEditing={() =>
               signupRefs.confirmPasswordRef.current.focus()
@@ -505,7 +482,7 @@ export default class SignupForm extends React.Component {
             value={confirmPassword.value}
             isError={confirmPassword.isError}
             error_text={confirmPassword.error_text}
-            onChangeText={(text) => handleConfirmPasswordChange(text)}
+            onChangeText={(text) => handleOnChangeText(text, 'confirmpassword')}
             forwardRef={signupRefs.confirmPasswordRef}
             onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
             onSubmitEditing={() => signupRefs.phonenoRef.current.focus()}
@@ -528,7 +505,7 @@ export default class SignupForm extends React.Component {
             value={phoneno.value}
             isError={phoneno.isError}
             error_text={phoneno.error_text}
-            onChangeText={(text) => handlePhonenoChange(text)}
+            onChangeText={(text) => handleOnChangeText(text, 'phoneno')}
             forwardRef={signupRefs.phonenoRef}
             onSubmitEditing={() => signupRefs.addressRef.current.focus()}
             onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
@@ -551,7 +528,7 @@ export default class SignupForm extends React.Component {
             value={address.value}
             isError={address.isError}
             error_text={address.error_text}
-            onChangeText={(text) => handleAddressChange(text)}
+            onChangeText={(text) => handleOnChangeText(text, 'address')}
             forwardRef={signupRefs.addressRef}
             onSubmitEditing={() => {}}
             onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
@@ -571,7 +548,7 @@ export default class SignupForm extends React.Component {
           <GenderRadioButton
             isError={gender.isError}
             error_text={gender.error_text}
-            onSuccess={(value) => handleGenderChange(value)}
+            onSuccess={(value) => handleOnChangeText(value, 'gender')}
             forwardRef={signupRefs.genderRef}
           />
         </View>
@@ -581,7 +558,7 @@ export default class SignupForm extends React.Component {
             modeType="date"
             dob={dobVisibility}
             value={dob.value}
-            onSuccess={(value) => handleDobChange(value)}
+            onSuccess={(value) => handleOnChangeText(value, 'dob')}
             minimumDate={new Date(1980, 0, 1)}
             maximumDate={new Date()}
           />
@@ -614,5 +591,6 @@ const styles = StyleSheet.create({
   },
   errorStyle: {
     color: COLORS.red,
+    fontFamily: FONTFAMILY.RobotoItalic,
   },
 });

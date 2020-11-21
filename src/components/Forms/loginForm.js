@@ -1,71 +1,133 @@
 import React from 'react';
 import {View, Text, StyleSheet, Keyboard, TouchableOpacity} from 'react-native';
 
-import {HelperText} from 'react-native-paper';
-import LinearGradient from 'react-native-linear-gradient';
-
 import LinearGradientButton from '../Buttons/linearGradientButton';
 import MyTextInput from '../TextInputs/myTextInput';
-import SimpleAlertDialog from '../Dialogs/simpleAlertDialog';
-import {responsiveHeight, responsiveWidth, COLORS} from '@resource';
-import {loginFormStateVars, loginRefs, errorMessage} from '@constants';
+import {responsiveHeight, responsiveWidth, COLORS, FONTFAMILY} from '@resource';
+import {field_object_login, validateEmailAddress} from '@constants';
 
 export default class LoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.emailRef = React.createRef();
     this.passwordRef = React.createRef();
+    this.state = {...field_object_login};
   }
-  state = {
-    email: '',
-    password: '',
-    isInputValid: true,
-    errorMessage: '',
-  };
-
-  validateAllFields = () => {
-    if (this.state.email.length <= 0) {
-      this.setState({
-        isInputValid: false,
-        errorMessage: errorMessage.required,
-      });
-    }
-
-    if (this.state.password.length <= 0) {
-      this.setState({
-        isInputValid: false,
-        errorMessage: errorMessage.required,
-      });
-    }
-  };
 
   render() {
-    console.log('login form render called');
+    const {email, password, failAlert} = this.state;
+
+    //========================= Validation Functins ==============================
+    const checkEmail = () => {
+      if (email.value.length == 0) {
+        this.setState((prevState) => ({
+          email: {
+            ...prevState.email,
+            isError: true,
+            error_text: 'This is required field.',
+          },
+        }));
+      } else {
+        if (!validateEmailAddress(email.value)) {
+          this.setState((prevState) => ({
+            email: {
+              ...prevState.email,
+              isError: true,
+              error_text: 'Invalid Email address!',
+            },
+          }));
+        }
+      }
+    };
+    const checkPassword = () => {
+      if (password.value.length == 0) {
+        this.setState((prevState) => ({
+          password: {
+            ...prevState.password,
+            isError: true,
+            error_text: 'This is required field.',
+          },
+        }));
+      }
+    };
+    const validateAllFields = () => {
+      if (
+        email.value.length > 0 &&
+        password.value.length > 0 &&
+        validateEmailAddress(email.value)
+      ) {
+        if (email.value === 'Kj@gmail.com' && password.value === '1234') {
+          this.props.navigation.replace('HOME_SCREEN');
+        } else {
+          this.setState((prevState) => ({
+            failAlert: true,
+          }));
+        }
+      } else {
+        checkEmail();
+        checkPassword();
+      }
+    };
+    //============================================================================
+
+    // ========================== Handle onChangeText events =====================
+    const handleEmailChange = (text) => {
+      this.setState((prevState) => ({
+        email: {
+          ...prevState.email,
+          isError: false,
+          value: text,
+        },
+        failAlert: false,
+      }));
+    };
+    const handlePasswordChange = (text) => {
+      this.setState((prevState) => ({
+        password: {
+          ...prevState.password,
+          isError: false,
+          value: text,
+        },
+        failAlert: false,
+      }));
+    };
+    //============================================================================
+
+    // ========================== Handle onEndEditing events =====================
+    const handlePasswordEndEditing = (value) => {};
+    // ===========================================================================
     const emailProps = {
       keyboardType: 'email-address',
       label: 'Email',
       iconName: 'email',
-      value: this.state.email,
-      onChangeText: (text) => this.setState({email: text}),
+      value: email.value,
+      isError: email.isError,
+      error_text: email.error_text,
       forwardRef: this.emailRef,
+      onChangeText: (text) => handleEmailChange(text),
       onSubmitEditing: () => this.passwordRef.current.focus(),
-      isInputValid: this.state.isInputValid,
-      errorMessage: this.state.errorMessage,
+      onEndEditing: () => {},
+      onFocus: () => {},
     };
+
     const passwordProps = {
       label: 'Password',
       iconName: 'lock',
-      value: this.state.password,
-      onChangeText: (text) => this.setState({password: text}),
+      value: password.value,
+      isError: password.isError,
+      error_text: password.error_text,
+      forwardRef: this.passwordRef,
       secureTextEntry: true,
       maxLength: 10,
       showEyeIcon: true,
-      forwardRef: this.passwordRef,
+      onChangeText: (text) => handlePasswordChange(text),
       onSubmitEditing: () => Keyboard.dismiss(),
-      isInputValid: this.state.isInputValid,
-      errorMessage: this.state.errorMessage,
+      onEndEditing: (e) => {
+        // checkPassword();
+        validateAllFields();
+      },
+      onFocus: () => checkEmail(),
     };
-
     return (
       <>
         <View style={styles.container}>
@@ -77,6 +139,10 @@ export default class LoginForm extends React.Component {
             <MyTextInput {...passwordProps} />
           </View>
 
+          {failAlert ? (
+            <Text style={styles.errorStyle}>Login Failed!</Text>
+          ) : null}
+
           <Text style={styles.forgotpasswordtext}>Forgot password?</Text>
 
           <View>
@@ -84,7 +150,7 @@ export default class LoginForm extends React.Component {
               title="Sign In"
               {...this.props}
               forwardRef={this.submitRef}
-              onPress={() => this.validateAllFields()}
+              onPress={() => validateAllFields()}
               height={responsiveHeight(14)}
               fontSize={15}
             />
@@ -122,6 +188,8 @@ const styles = StyleSheet.create({
   },
   errorStyle: {
     color: COLORS.red,
+    fontFamily: FONTFAMILY.RobotoItalic,
+    textAlign: 'center',
   },
   signIn: {
     height: responsiveHeight(14),

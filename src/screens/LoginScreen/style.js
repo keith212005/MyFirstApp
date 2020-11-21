@@ -46,6 +46,7 @@ export const styles = StyleSheet.create({
   },
   errorStyle: {
     color: COLORS.red,
+    fontFamily: FONTFAMILY.RobotoItalic,
   },
   login_fail_alert: {
     color: COLORS.red,

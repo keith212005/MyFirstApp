@@ -135,5 +135,6 @@ const styles = StyleSheet.create({
   },
   errorStyle: {
     color: COLORS.red,
+    fontFamily: FONTFAMILY.RobotoItalic,
   },
 });

@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: FONTFAMILY.RobotoMedium,
-    fontWeight: '700',
     color: COLORS.grayFont,
   },
   radioGroup: {
@@ -63,5 +62,6 @@ const styles = StyleSheet.create({
   },
   errorStyle: {
     color: COLORS.red,
+    fontFamily: FONTFAMILY.RobotoItalic,
   },
 });

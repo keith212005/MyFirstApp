@@ -1,8 +1,9 @@
 import React from 'react';
-import {View, Text, ScrollView, KeyboardAvoidingView} from 'react-native';
+import {View, Text, ScrollView} from 'react-native';
 
 import {styles} from './style';
 import {SignupForm} from '@components';
+import * as Animatable from 'react-native-animatable';
 
 export default class SignupScreen extends React.Component {
   render() {
@@ -13,13 +14,16 @@ export default class SignupScreen extends React.Component {
             <Text style={styles.headerText}>Sign Up</Text>
           </View>
 
-          <KeyboardAvoidingView style={styles.footer} enabled>
+          <Animatable.View
+            style={styles.footer}
+            animation="fadeInUpBig"
+            duration={1500}>
             <ScrollView
               style={styles.scrollView}
               keyboardShouldPersistTaps="handled">
               <SignupForm {...this.props} />
             </ScrollView>
-          </KeyboardAvoidingView>
+          </Animatable.View>
         </View>
       </>
     );

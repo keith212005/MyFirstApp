@@ -133,4 +133,7 @@ const styles = StyleSheet.create({
   cardStyle: {
     paddingHorizontal: 5,
   },
+  errorStyle: {
+    color: COLORS.red,
+  },
 });

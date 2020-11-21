@@ -64,6 +64,21 @@ export default class SignupForm extends React.Component {
     };
 
     //========================= Validation Functinos ============================
+    const checkImage = () => {
+      if (
+        avatarSource.value ===
+        'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg'
+      ) {
+        this.setState((prevState) => ({
+          ...prevState,
+          avatarSource: {
+            ...prevState.avatarSource,
+            isError: true,
+            error_text: 'Please add image.',
+          },
+        }));
+      }
+    };
     const checkFname = () => {
       if (firstname.value.length == 0) {
         this.setState((prevState) => ({
@@ -335,8 +350,8 @@ export default class SignupForm extends React.Component {
               onSuccess={(image) => {
                 this.setState((prevState) => ({
                   avatarSource: {
-                    value: image,
                     ...prevState.avatarSource,
+                    value: image,
                   },
                   isVisible: false,
                 }));
@@ -353,6 +368,9 @@ export default class SignupForm extends React.Component {
             onPress={() => toggleAvatar()}>
             <Accessory size={18} onPress={() => toggleAvatar()} />
           </Avatar>
+          {avatarSource.isError ? (
+            <Text style={styles.errorStyle}>{avatarSource.error_text}</Text>
+          ) : null}
         </View>
 
         <View style={styles.field_group}>
@@ -366,7 +384,9 @@ export default class SignupForm extends React.Component {
             onChangeText={(text) => handleFirstNameChange(text)}
             onSubmitEditing={() => signupRefs.lastNameRef.current.focus()}
             onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
-            onFocus={() => {}}
+            onFocus={() => {
+              checkImage();
+            }}
           />
         </View>
 
@@ -382,6 +402,7 @@ export default class SignupForm extends React.Component {
             onSubmitEditing={() => signupRefs.emailRef.current.focus()}
             onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
             onFocus={() => {
+              checkImage();
               checkFname();
             }}
           />
@@ -399,6 +420,7 @@ export default class SignupForm extends React.Component {
             onSubmitEditing={() => signupRefs.passwordRef.current.focus()}
             onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
             onFocus={() => {
+              checkImage();
               checkFname();
               checkLname();
             }}
@@ -422,6 +444,7 @@ export default class SignupForm extends React.Component {
             }
             onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
             onFocus={() => {
+              checkImage();
               checkFname();
               checkLname();
               checkEmail();
@@ -444,6 +467,7 @@ export default class SignupForm extends React.Component {
             onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
             onSubmitEditing={() => signupRefs.phonenoRef.current.focus()}
             onFocus={() => {
+              checkImage();
               checkFname();
               checkLname();
               checkEmail();
@@ -466,6 +490,7 @@ export default class SignupForm extends React.Component {
             onSubmitEditing={() => signupRefs.addressRef.current.focus()}
             onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
             onFocus={() => {
+              checkImage();
               checkFname();
               checkLname();
               checkEmail();
@@ -488,6 +513,7 @@ export default class SignupForm extends React.Component {
             onSubmitEditing={() => {}}
             onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
             onFocus={() => {
+              checkImage();
               checkFname();
               checkLname();
               checkEmail();
@@ -540,5 +566,8 @@ const styles = StyleSheet.create({
   btnContainer: {
     marginTop: 10,
     marginBottom: 30,
+  },
+  errorStyle: {
+    color: COLORS.red,
   },
 });

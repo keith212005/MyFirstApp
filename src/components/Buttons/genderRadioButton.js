@@ -37,6 +37,9 @@ export default class GenderRadioButton extends React.Component {
             </View>
           </RadioButton.Group>
         </View>
+        {this.props.isError ? (
+          <Text style={styles.errorStyle}>{this.props.error_text}</Text>
+        ) : null}
       </>
     );
   }
@@ -57,5 +60,8 @@ const styles = StyleSheet.create({
     padding: 8,
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  errorStyle: {
+    color: COLORS.red,
   },
 });

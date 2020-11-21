@@ -207,6 +207,31 @@ export default class SignupForm extends React.Component {
         }));
       }
     };
+    const checkGender = () => {
+      if (gender.value.length == 0) {
+        this.setState((prevState) => ({
+          ...prevState,
+          gender: {
+            ...prevState.gender,
+            isError: true,
+            error_text: 'This field is required.',
+          },
+        }));
+      }
+    };
+    const checkDob = () => {
+      if (dob.value.length == 0) {
+        this.setState((prevState) => ({
+          ...prevState,
+          dob: {
+            ...prevState.dob,
+            isError: true,
+            error_text: 'This field is required.',
+          },
+        }));
+      }
+    };
+
     //===========================================================================
 
     // ========================== Handle text change evensts =====================
@@ -289,6 +314,14 @@ export default class SignupForm extends React.Component {
           isError: false,
         },
       }));
+      checkImage();
+      checkFname();
+      checkLname();
+      checkEmail();
+      checkPassword();
+      checkConfirmPassword();
+      checkPhoneno();
+      checkAddress();
     };
     const handleDobChange = (text) => {
       this.setState((prevState) => ({
@@ -299,6 +332,15 @@ export default class SignupForm extends React.Component {
           isError: false,
         },
       }));
+      checkImage();
+      checkFname();
+      checkLname();
+      checkEmail();
+      checkPassword();
+      checkConfirmPassword();
+      checkPhoneno();
+      checkAddress();
+      checkGender();
     };
 
     //===========================================================================
@@ -352,6 +394,7 @@ export default class SignupForm extends React.Component {
                   avatarSource: {
                     ...prevState.avatarSource,
                     value: image,
+                    isError: false,
                   },
                   isVisible: false,
                 }));
@@ -526,6 +569,8 @@ export default class SignupForm extends React.Component {
 
         <View style={styles.field_group}>
           <GenderRadioButton
+            isError={gender.isError}
+            error_text={gender.error_text}
             onSuccess={(value) => handleGenderChange(value)}
             forwardRef={signupRefs.genderRef}
           />
@@ -535,7 +580,7 @@ export default class SignupForm extends React.Component {
           <MyDatePicker
             modeType="date"
             dob={dobVisibility}
-            dobValue={dob.value}
+            value={dob.value}
             onSuccess={(value) => handleDobChange(value)}
             minimumDate={new Date(1980, 0, 1)}
             maximumDate={new Date()}

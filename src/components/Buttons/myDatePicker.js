@@ -10,7 +10,7 @@ export default class MyDatePicker extends React.Component {
     date: new Date(),
     mode: this.props.modeType,
     show: false,
-    dobs: this.props.dobValue.toString(),
+    dobs: this.props.value.toString(),
   };
 
   render() {

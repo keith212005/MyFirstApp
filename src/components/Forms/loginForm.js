@@ -1,8 +1,16 @@
 import React from 'react';
-import {View, Text, StyleSheet, Keyboard, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Keyboard,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 
 import LinearGradientButton from '../Buttons/linearGradientButton';
 import MyTextInput from '../TextInputs/myTextInput';
+import SimpleActivityIndicator from '../ActivityIndicator/simpleActivityIndicator';
 import {responsiveHeight, responsiveWidth, COLORS, FONTFAMILY} from '@resource';
 import {field_object_login, validateEmailAddress} from '@constants';
 
@@ -15,7 +23,7 @@ export default class LoginForm extends React.Component {
   }
 
   render() {
-    const {email, password, failAlert} = this.state;
+    const {email, password, failAlert, progressVisible} = this.state;
 
     //========================= Validation Functins ==============================
     const checkEmail = () => {
@@ -56,11 +64,16 @@ export default class LoginForm extends React.Component {
         password.value.length > 0 &&
         validateEmailAddress(email.value)
       ) {
+        this.setState((prevState) => ({
+          progressVisible: true,
+        }));
+
         if (email.value === 'Kj@gmail.com' && password.value === '1234') {
           this.props.navigation.replace('HOME_SCREEN');
         } else {
           this.setState((prevState) => ({
             failAlert: true,
+            progressVisible: false,
           }));
         }
       } else {
@@ -130,6 +143,7 @@ export default class LoginForm extends React.Component {
     };
     return (
       <>
+        {progressVisible ? <SimpleActivityIndicator /> : null}
         <View style={styles.container}>
           <View style={styles.field_group}>
             <MyTextInput {...emailProps} />
@@ -162,7 +176,7 @@ export default class LoginForm extends React.Component {
               {borderColor: '#009387', marginTop: 15, borderWidth: 1},
             ]}
             onPress={() => this.props.navigation.navigate('SIGNUP_SCREEN')}>
-            <Text>Sign Up</Text>
+            <Text style={styles.signUpText}>Sign Up</Text>
           </TouchableOpacity>
         </View>
       </>
@@ -196,5 +210,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
+  },
+  signUpText: {
+    color: COLORS.primary,
   },
 });

@@ -5,7 +5,6 @@ import {Avatar, Accessory} from 'react-native-elements';
 
 import {
   field_object_signup,
-  field_vars_signup,
   signupRefs,
   validateEmailAddress,
 } from '@constants';
@@ -151,7 +150,7 @@ export default class SignupForm extends React.Component {
             confirmPassword: {
               ...prevState.confirmPassword,
               isError: true,
-              error_text: 'Password does not match!',
+              error_text: 'Password and Confirm password does not match!',
             },
           }));
         }
@@ -219,7 +218,7 @@ export default class SignupForm extends React.Component {
 
     //===========================================================================
 
-    // ========================== Handle onChangeText event =====================
+    // =========== Handle onChangeText event common for every input ==============
     const handleOnChangeText = (text, label) => {
       if (label === 'firstname') {
         this.setState((prevState) => ({
@@ -321,8 +320,7 @@ export default class SignupForm extends React.Component {
         checkGender();
       }
     };
-
-    //===========================================================================
+    // ===========================================================================
 
     //================== handleEndEditing event common for every input ===========
     const handleEndEditing = (text) => {
@@ -344,7 +342,7 @@ export default class SignupForm extends React.Component {
         dob.value.length > 0
       ) {
         console.log('all fields are filled');
-
+        console.log(avatarSource.value);
         console.log(firstname.value);
         console.log(lastname.value);
         console.log(email.value);
@@ -355,8 +353,7 @@ export default class SignupForm extends React.Component {
         console.log(gender.value);
         console.log(dob.value);
       } else {
-        console.log('some fiels are empty.');
-        console.log(dob.value);
+        console.log('Some Fields are empty.');
       }
     };
 

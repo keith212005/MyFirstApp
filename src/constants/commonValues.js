@@ -80,6 +80,7 @@ export const field_object_login = {
     value: '',
   },
   failAlert: false,
+  progressVisible: false,
 };
 
 export const validateEmailAddress = (text) => {

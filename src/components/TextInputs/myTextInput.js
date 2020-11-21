@@ -45,6 +45,7 @@ export default class MyTextInput extends Component {
       <>
         <Animatable.View animation={props.isError ? 'bounceIn' : ''}>
           <TextInput
+            style={styles.input}
             mode={props.mode ? props.mode : 'outlined'}
             keyboardType={props.keyboardType ? props.keyboardType : 'default'}
             returnKeyType={props.returnKeyType ? props.returnKeyType : 'next'}
@@ -55,7 +56,7 @@ export default class MyTextInput extends Component {
             onEndEditing={this.props.onEndEditing}
             onChangeText={(text) => this.props.onChangeText(text)}
             secureTextEntry={this.state.secureTextEntry}
-            theme={{colors: {primary: COLORS.primary}, roundness: 6}}
+            theme={{colors: {primary: COLORS.primary}, roundness: 14}}
             blurOnSubmit={false}
             ref={props.forwardRef}
             pointerEvents="none"
@@ -99,6 +100,9 @@ const styles = StyleSheet.create({
     fontFamily: FONTFAMILY.RobotoItalic,
   },
   input: {
-    borderRadius: 30,
+    // borderRadius: 10,
+    // borderWidth: 1,
+    // borderColor: 'red',
+    // overflow: 'hidden',
   },
 });

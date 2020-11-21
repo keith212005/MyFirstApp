@@ -17,7 +17,7 @@ export default class SignupScreen extends React.Component {
           <Animatable.View
             style={styles.footer}
             animation="fadeInUpBig"
-            duration={1500}>
+            duration={2000}>
             <ScrollView
               style={styles.scrollView}
               keyboardShouldPersistTaps="handled">

@@ -14,8 +14,10 @@ export default class LoginScreen extends React.Component {
           <View style={styles.header}>
             <Text style={styles.headerTitleText}>Welcome!</Text>
           </View>
-
-          <Animatable.View style={styles.footer} animation="fadeInUpBig">
+          <Animatable.View
+            style={styles.footer}
+            animation="fadeIn"
+            duration={1500}>
             <ScrollView
               style={styles.scrollView}
               keyboardShouldPersistTaps="handled">

@@ -1,9 +1,15 @@
 import React from 'react';
-import {View, Text, ScrollView, StyleSheet, Keyboard} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from 'react-native';
 
 import {RadioButton, TextInput} from 'react-native-paper';
 import {Avatar, Accessory} from 'react-native-elements';
-import DeviceInfo from 'react-native-device-info';
 
 import LinearGradientButton from '../Buttons/linearGradientButton';
 import GenderRadioButton from '../Buttons/genderRadioButton';
@@ -11,10 +17,20 @@ import MyDatePicker from '../Buttons/myDatePicker';
 import MyTextInput from '../TextInputs/myTextInput';
 import ImageSelectModal from '../Modal/imageSelectModal';
 import {COLORS, responsiveHeight} from '@resource';
-import {signupRefs, personSignupVars} from '@constants';
+import {field_object_signup, signupRefs} from '@constants';
 
-const avatarsrc =
-  'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg';
+const validateEmailAddress = (text) => {
+  let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  if (reg.test(text) === false) {
+    // console.log('Email is Not Correct');
+    // this.setState({email: text});
+    return false;
+  } else {
+    // this.setState({email: text});
+    // console.log('Email is Correct');
+    return true;
+  }
+};
 
 export default class SignupForm extends React.Component {
   constructor(props) {
@@ -22,115 +38,335 @@ export default class SignupForm extends React.Component {
     for (var key in signupRefs) {
       signupRefs[key] = React.createRef();
     }
+    this.state = {...field_object_signup};
   }
 
-  state = {
-    person: personSignupVars,
-    firstname: '',
-    lastname: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    avatarSource:
-      'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-    gender: '',
-    phoneno: '',
-    dob: 'Date of birth',
-    address: '',
-    dobVisibility: false,
-    isValidEmail: true,
-    doesPasswordMatch: true,
-    isVisible: false,
-    isError: false,
-  };
-
-  validateEmail = (text) => {
-    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{3,3})+$/;
-    if (reg.test(text) === false) {
-      this.setState({isValidEmail: false});
-      return false;
-    } else {
-      this.setState({isValidEmail: true});
-    }
-  };
-
-  handleEmailChange = (text) => {
-    this.setState({
-      email: text,
-    });
-    this.validateEmail(text);
-  };
-
-  handleConfirmPasswordChange = (text) => {
-    this.setState({confirmPassword: text});
-
-    if (this.state.password === text) {
-      this.setState({
-        doesPasswordMatch: true,
-      });
-    } else {
-      this.setState({
-        doesPasswordMatch: false,
-      });
-    }
-  };
-
   render() {
-    const state = this.state;
-
-    const authenticateUser = () => {};
-
+    const {
+      firstname,
+      lastname,
+      email,
+      password,
+      confirmPassword,
+      avatarSource,
+      gender,
+      phoneno,
+      dob,
+      address,
+      dobVisibility,
+      isValidEmail,
+      doesPasswordMatch,
+      isVisible,
+      isError,
+    } = this.state;
     const toggleAvatar = () => {
       this.setState((state) => ({isVisible: !state.isVisible}));
+    };
+
+    //========================= Validation Functinos ============================
+    const checkFname = () => {
+      if (firstname.value.length == 0) {
+        this.setState((prevState) => ({
+          ...prevState,
+          firstname: {
+            ...prevState.firstname,
+            isError: true,
+            error_text: 'This field is required.',
+          },
+        }));
+      }
+    };
+    const checkLname = () => {
+      if (lastname.value.length == 0) {
+        this.setState((prevState) => ({
+          ...prevState,
+          lastname: {
+            ...prevState.lastname,
+            isError: true,
+            error_text: 'This field is required.',
+          },
+        }));
+      }
+    };
+    const checkEmail = () => {
+      if (email.value.length == 0) {
+        this.setState((prevState) => ({
+          email: {
+            ...prevState.email,
+            isError: true,
+            error_text: 'This is required field.',
+          },
+        }));
+      } else {
+        const result = validateEmailAddress(email.value);
+        if (!result) {
+          this.setState((prevState) => ({
+            email: {
+              ...prevState.email,
+              isError: true,
+              error_text: 'Invalid Email address!',
+            },
+          }));
+        }
+      }
+    };
+    const checkPassword = () => {
+      if (password.value.length == 0) {
+        this.setState((prevState) => ({
+          ...prevState,
+          password: {
+            ...prevState.password,
+            isError: true,
+            error_text: 'This field is required.',
+          },
+        }));
+      } else {
+        if (password.value.length <= 3) {
+          this.setState((prevState) => ({
+            ...prevState,
+            password: {
+              ...prevState.password,
+              isError: true,
+              error_text:
+                'Password should be minimum 4 characters and maximum 10 characters.',
+            },
+          }));
+        }
+      }
+    };
+    const checkConfirmPassword = () => {
+      if (confirmPassword.value.length == 0) {
+        this.setState((prevState) => ({
+          ...prevState,
+          confirmPassword: {
+            ...prevState.confirmPassword,
+            isError: true,
+            error_text: 'This field is required.',
+          },
+        }));
+      } else {
+        if (password.value != confirmPassword.value) {
+          this.setState((prevState) => ({
+            ...prevState,
+            confirmPassword: {
+              ...prevState.confirmPassword,
+              isError: true,
+              error_text: 'Password does not match!',
+            },
+          }));
+        }
+      }
+    };
+    const checkPhoneno = () => {
+      if (phoneno.value.length == 0) {
+        this.setState((prevState) => ({
+          ...prevState,
+          phoneno: {
+            ...prevState.phoneno,
+            isError: true,
+            error_text: 'This field is required.',
+          },
+        }));
+      } else {
+        if (phoneno.value.length < 10) {
+          this.setState((prevState) => ({
+            ...prevState,
+            phoneno: {
+              ...prevState.phoneno,
+              isError: true,
+              error_text: 'Phone number should be minimum 10 digits.',
+            },
+          }));
+        }
+      }
+    };
+    const checkAddress = () => {
+      if (address.value.length == 0) {
+        this.setState((prevState) => ({
+          ...prevState,
+          address: {
+            ...prevState.address,
+            isError: true,
+            error_text: 'This field is required.',
+          },
+        }));
+      }
+    };
+    //===========================================================================
+
+    // ========================== Handle text change evensts =====================
+    const handleFirstNameChange = (text) => {
+      this.setState((prevState) => ({
+        ...prevState,
+        firstname: {
+          ...prevState.firstname,
+          value: text,
+          isError: false,
+        },
+      }));
+    };
+    const handleLastNameChange = (text) => {
+      this.setState((prevState) => ({
+        ...prevState,
+        lastname: {
+          ...prevState.lastname,
+          value: text,
+          isError: false,
+        },
+      }));
+    };
+    const handleEmailChange = (text) => {
+      this.setState((prevState) => ({
+        ...prevState,
+        email: {
+          ...prevState.email,
+          value: text.trim(),
+          isError: false,
+        },
+      }));
+    };
+    const handlePasswordChange = (text) => {
+      this.setState((prevState) => ({
+        ...prevState,
+        password: {
+          ...prevState.password,
+          value: text,
+          isError: false,
+        },
+      }));
+    };
+    const handleConfirmPasswordChange = (text) => {
+      this.setState((prevState) => ({
+        ...prevState,
+        confirmPassword: {
+          ...prevState.confirmPassword,
+          value: text,
+          isError: false,
+        },
+      }));
+    };
+    const handlePhonenoChange = (text) => {
+      this.setState((prevState) => ({
+        ...prevState,
+        phoneno: {
+          ...prevState.phoneno,
+          value: text,
+          isError: false,
+        },
+      }));
+    };
+    const handleAddressChange = (text) => {
+      this.setState((prevState) => ({
+        ...prevState,
+        address: {
+          ...prevState.address,
+          value: text,
+          isError: false,
+        },
+      }));
+    };
+    const handleGenderChange = (text) => {
+      this.setState((prevState) => ({
+        ...prevState,
+        gender: {
+          ...prevState.gender,
+          value: text,
+          isError: false,
+        },
+      }));
+    };
+    const handleDobChange = (text) => {
+      this.setState((prevState) => ({
+        ...prevState,
+        dob: {
+          ...prevState.dob,
+          value: text.toString(),
+          isError: false,
+        },
+      }));
+    };
+
+    //===========================================================================
+    const handleOnSubmitEditing = () => {
+      checkFname();
+      signupRefs.lastNameRef.current.focus();
+    };
+    const handleEndEditing = (text) => {
+      console.log('handleEndEditing called... ' + text);
+    };
+
+    const registerUser = () => {
+      if (
+        firstname.value.length > 0 &&
+        lastname.value.length > 0 &&
+        email.value.length > 0 &&
+        password.value.length > 0 &&
+        confirmPassword.value.length > 0 &&
+        phoneno.value.length > 0 &&
+        address.value.length > 0 &&
+        gender.value.length > 0 &&
+        dob.value.length > 0
+      ) {
+        console.log('all fields are filled');
+
+        console.log(firstname.value);
+        console.log(lastname.value);
+        console.log(email.value);
+        console.log(password.value);
+        console.log(confirmPassword.value);
+        console.log(phoneno.value);
+        console.log(address.value);
+        console.log(gender.value);
+        console.log(dob.value);
+      } else {
+        console.log('some fiels are empty.');
+        console.log(dob.value);
+      }
     };
 
     return (
       <View style={styles.container}>
         <View style={styles.imageContainer}>
-          {state.isVisible ? (
+          {isVisible ? (
             <ImageSelectModal
-              isVisible={state.isVisible}
+              isVisible={isVisible}
               onRequestClose={(value) => this.setState({isVisible: false})}
               dismiss={() => this.setState({isVisible: false})}
               onSuccess={(image) => {
-                this.setState({isVisible: false, avatarSource: image});
+                this.setState((prevState) => ({
+                  avatarSource: {
+                    value: image,
+                    ...prevState.avatarSource,
+                  },
+                  isVisible: false,
+                }));
               }}
             />
           ) : null}
 
-          {DeviceInfo.isTablet() ? (
-            <Avatar
-              rounded
-              source={{uri: state.avatarSource}}
-              icon={{name: 'user', type: 'font-awesome', color: 'gray'}}
-              containerStyle={{backgroundColor: COLORS.white}}
-              size="large"
-              onPress={() => this.toggleAvatar()}>
-              <Accessory size={26} onPress={() => toggleAvatar()} />
-            </Avatar>
-          ) : (
-            <Avatar
-              rounded
-              source={{uri: state.avatarSource}}
-              icon={{name: 'user', type: 'font-awesome', color: 'gray'}}
-              containerStyle={{backgroundColor: COLORS.white}}
-              size="medium"
-              onPress={() => toggleAvatar()}>
-              <Accessory size={18} onPress={() => toggleAvatar()} />
-            </Avatar>
-          )}
+          <Avatar
+            rounded
+            source={{uri: avatarSource.value}}
+            icon={{name: 'user', type: 'font-awesome', color: 'gray'}}
+            containerStyle={{backgroundColor: COLORS.white}}
+            size="medium"
+            onPress={() => toggleAvatar()}>
+            <Accessory size={18} onPress={() => toggleAvatar()} />
+          </Avatar>
         </View>
+
         <View style={styles.field_group}>
           <MyTextInput
             label="First name"
             iconName="account"
-            value={state.firstname}
-            onChangeText={(text) => this.setState({firstname: text})}
-            isError={state.isError}
-            emptyError="First name cannot be empty!!!"
-            invalidError="First name is invalid!!!"
+            value={firstname.value}
+            isError={firstname.isError}
+            error_text={firstname.error_text}
             forwardRef={signupRefs.firstNameRef}
+            onChangeText={(text) => handleFirstNameChange(text)}
             onSubmitEditing={() => signupRefs.lastNameRef.current.focus()}
+            onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
+            onFocus={() => {}}
           />
         </View>
 
@@ -138,13 +374,16 @@ export default class SignupForm extends React.Component {
           <MyTextInput
             label="Last name"
             iconName="account"
-            value={state.lastname}
-            onChangeText={(text) => this.setState({lastname: text})}
-            isError={state.isError}
-            emptyError="Last name cannot be empty!!!"
-            invalidError="Last name is invalid!!!"
+            value={lastname.value}
+            isError={lastname.isError}
+            error_text={lastname.error_text}
             forwardRef={signupRefs.lastNameRef}
+            onChangeText={(text) => handleLastNameChange(text)}
             onSubmitEditing={() => signupRefs.emailRef.current.focus()}
+            onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
+            onFocus={() => {
+              checkFname();
+            }}
           />
         </View>
 
@@ -152,13 +391,17 @@ export default class SignupForm extends React.Component {
           <MyTextInput
             label="Email"
             iconName="email"
-            value={state.email}
-            onChangeText={(text) => this.setState({email: text})}
-            isError={state.isError}
-            emptyError="Email address cannot be empty!!!"
-            invalidError="Email address is invalid!!!"
+            value={email.value}
+            isError={email.isError}
+            error_text={email.error_text}
             forwardRef={signupRefs.emailRef}
+            onChangeText={(text) => handleEmailChange(text)}
             onSubmitEditing={() => signupRefs.passwordRef.current.focus()}
+            onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
+            onFocus={() => {
+              checkFname();
+              checkLname();
+            }}
           />
         </View>
 
@@ -167,17 +410,22 @@ export default class SignupForm extends React.Component {
             label="Password"
             iconName="lock"
             secureTextEntry={true}
-            maxLength={6}
+            maxLength={10}
             showEyeIcon={true}
-            value={state.password}
-            onChangeText={(text) => this.setState({password: text})}
-            isError={state.isError}
-            emptyError="Password cannot be empty!!!"
-            invalidError="Password is invalid!!!"
+            value={password.value}
+            isError={password.isError}
+            error_text={password.error_text}
+            onChangeText={(text) => handlePasswordChange(text)}
             forwardRef={signupRefs.passwordRef}
             onSubmitEditing={() =>
               signupRefs.confirmPasswordRef.current.focus()
             }
+            onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
+            onFocus={() => {
+              checkFname();
+              checkLname();
+              checkEmail();
+            }}
           />
         </View>
 
@@ -186,51 +434,21 @@ export default class SignupForm extends React.Component {
             label="Confirm password"
             iconName="lock"
             secureTextEntry={true}
-            maxLength={6}
+            maxLength={10}
             showEyeIcon={true}
-            value={state.confirmPassword}
-            onChangeText={(text) => {
-              this.setState({confirmPassword: text, isError: false});
-            }}
-            isError={state.isError}
-            emptyError="Confirm password cannot be empty!!!"
-            invalidPassword="Password did not match!!!"
+            value={confirmPassword.value}
+            isError={confirmPassword.isError}
+            error_text={confirmPassword.error_text}
+            onChangeText={(text) => handleConfirmPasswordChange(text)}
             forwardRef={signupRefs.confirmPasswordRef}
-            onSubmitEditing={() => {
-              if (state.password != state.confirmPassword) {
-                console.log('not equal');
-                this.setState({
-                  isError: true,
-                });
-                signupRefs.confirmPasswordRef.current.focus();
-              } else {
-                console.log('wrong');
-              }
-              Keyboard.dismiss();
+            onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
+            onSubmitEditing={() => signupRefs.phonenoRef.current.focus()}
+            onFocus={() => {
+              checkFname();
+              checkLname();
+              checkEmail();
+              checkPassword();
             }}
-          />
-        </View>
-        {/*
-        <Text>{this.state.isError ? 'Password did not match' : null}</Text>
-        */}
-        <View style={styles.field_group}>
-          <GenderRadioButton
-            onSuccess={(value) => this.setState({gender: value})}
-            forwardRef={signupRefs.genderRef}
-          />
-        </View>
-
-        <View style={styles.field_group}>
-          <MyDatePicker
-            modeType="date"
-            dob={state.dobVisibility}
-            dobValue={state.dob}
-            onSuccess={(text) => {
-              this.setState({dob: text.toString()});
-              signupRefs.phonenoRef.current.focus();
-            }}
-            minimumDate={new Date(1980, 0, 1)}
-            maximumDate={new Date()}
           />
         </View>
 
@@ -239,14 +457,21 @@ export default class SignupForm extends React.Component {
             label="Phone"
             iconName="phone"
             keyboardType="phone-pad"
-            value={state.phoneno}
             maxLength={10}
-            onChangeText={(text) => this.setState({phoneno: text})}
-            isError={state.isError}
-            emptyError="Phone number cannot be empty!!!"
-            invalidError="Phone number is invalid!!!"
+            value={phoneno.value}
+            isError={phoneno.isError}
+            error_text={phoneno.error_text}
+            onChangeText={(text) => handlePhonenoChange(text)}
             forwardRef={signupRefs.phonenoRef}
             onSubmitEditing={() => signupRefs.addressRef.current.focus()}
+            onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
+            onFocus={() => {
+              checkFname();
+              checkLname();
+              checkEmail();
+              checkPassword();
+              checkConfirmPassword();
+            }}
           />
         </View>
 
@@ -254,33 +479,50 @@ export default class SignupForm extends React.Component {
           <MyTextInput
             label="Address"
             iconName="pin"
-            value={state.address}
-            onChangeText={(text) => this.setState({address: text})}
-            isError={state.isError}
-            emptyError="Address cannot be empty!!!"
-            invalidError="Address is invalid!!!"
-            forwardRef={signupRefs.addressRef}
-            onSubmitEditing={() => Keyboard.dismiss()}
             multiline={true}
+            value={address.value}
+            isError={address.isError}
+            error_text={address.error_text}
+            onChangeText={(text) => handleAddressChange(text)}
+            forwardRef={signupRefs.addressRef}
+            onSubmitEditing={() => {}}
+            onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
+            onFocus={() => {
+              checkFname();
+              checkLname();
+              checkEmail();
+              checkPassword();
+              checkConfirmPassword();
+              checkPhoneno();
+            }}
+          />
+        </View>
+
+        <View style={styles.field_group}>
+          <GenderRadioButton
+            onSuccess={(value) => handleGenderChange(value)}
+            forwardRef={signupRefs.genderRef}
+          />
+        </View>
+
+        <View style={styles.field_group}>
+          <MyDatePicker
+            modeType="date"
+            dob={dobVisibility}
+            dobValue={dob.value}
+            onSuccess={(value) => handleDobChange(value)}
+            minimumDate={new Date(1980, 0, 1)}
+            maximumDate={new Date()}
           />
         </View>
 
         <View style={styles.btnContainer}>
-          {DeviceInfo.isTablet() ? (
-            <LinearGradientButton
-              title="Register"
-              height={responsiveHeight(8)}
-              fontSize={responsiveHeight(2.5)}
-              onPress={() => this.authenticateUser()}
-            />
-          ) : (
-            <LinearGradientButton
-              title="Register"
-              height={responsiveHeight(13)}
-              fontSize={responsiveHeight(3.25)}
-              onPress={() => this.authenticateUser()}
-            />
-          )}
+          <LinearGradientButton
+            title="Register"
+            height={responsiveHeight(13)}
+            fontSize={responsiveHeight(3.25)}
+            onPress={() => registerUser()}
+          />
         </View>
       </View>
     );

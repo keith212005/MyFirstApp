@@ -1,8 +1,5 @@
 export {
-  signupRefs,
-  personSignupVars,
-  loginFormStateVars,
-  loginRefs,
-  errorMessage,
   field_object_login,
+  field_object_signup,
+  signupRefs,
 } from './commonValues';

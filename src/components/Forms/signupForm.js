@@ -204,7 +204,9 @@ export default class SignupForm extends React.Component {
       }
     };
     const checkDob = () => {
-      if (dob.value.length == 0) {
+      console.log('asdf' + dob.value.length);
+      if (dob.value === 'Date of birth') {
+        console.log('inside');
         this.setState((prevState) => ({
           ...prevState,
           dob: {
@@ -354,6 +356,17 @@ export default class SignupForm extends React.Component {
         console.log(dob.value);
       } else {
         console.log('Some Fields are empty.');
+        checkImage();
+        checkFname();
+        checkLname();
+        checkEmail();
+        checkPassword();
+        checkConfirmPassword();
+        checkPhoneno();
+        checkAddress();
+        checkGender();
+        checkAddress();
+        checkDob();
       }
     };
 
@@ -555,6 +568,8 @@ export default class SignupForm extends React.Component {
             modeType="date"
             dob={dobVisibility}
             value={dob.value}
+            isError={dob.isError}
+            error_text={dob.error_text}
             onSuccess={(value) => handleOnChangeText(value, 'dob')}
             minimumDate={new Date(1980, 0, 1)}
             maximumDate={new Date()}

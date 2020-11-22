@@ -3,7 +3,7 @@ import {View, Text, Platform, StyleSheet, Pressable} from 'react-native';
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {COLORS, responsiveWidth} from '@resource';
+import {COLORS, FONTFAMILY, responsiveWidth} from '@resource';
 
 export default class MyDatePicker extends React.Component {
   state = {
@@ -75,6 +75,9 @@ export default class MyDatePicker extends React.Component {
             )}
           </View>
         </Pressable>
+        {this.props.isError ? (
+          <Text style={styles.errorStyle}>{this.props.error_text}</Text>
+        ) : null}
       </>
     );
   }
@@ -97,6 +100,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
     // borderWidth: 1,
+  },
+  errorStyle: {
+    color: COLORS.red,
+    fontFamily: FONTFAMILY.RobotoItalic,
   },
 });
 

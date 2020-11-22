@@ -4,3 +4,5 @@ export {
   signupRefs,
   validateEmailAddress,
 } from './commonValues';
+
+export {commonStyles} from './commonStyles';

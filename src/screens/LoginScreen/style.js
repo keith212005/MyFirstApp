@@ -44,10 +44,7 @@ export const styles = StyleSheet.create({
     fontWeight: '600',
     textAlign: 'right',
   },
-  errorStyle: {
-    color: COLORS.red,
-    fontFamily: FONTFAMILY.RobotoItalic,
-  },
+
   login_fail_alert: {
     color: COLORS.red,
     textAlign: 'center',

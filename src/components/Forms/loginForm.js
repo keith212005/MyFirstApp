@@ -12,7 +12,11 @@ import LinearGradientButton from '../Buttons/linearGradientButton';
 import MyTextInput from '../TextInputs/myTextInput';
 import SimpleActivityIndicator from '../ActivityIndicator/simpleActivityIndicator';
 import {responsiveHeight, responsiveWidth, COLORS, FONTFAMILY} from '@resource';
-import {field_object_login, validateEmailAddress} from '@constants';
+import {
+  field_object_login,
+  validateEmailAddress,
+  commonStyles,
+} from '@constants';
 
 export default class LoginForm extends React.Component {
   constructor(props) {
@@ -154,7 +158,9 @@ export default class LoginForm extends React.Component {
           </View>
 
           {failAlert ? (
-            <Text style={styles.errorStyle}>Login Failed!</Text>
+            <Text style={[commonStyles.errorStyle, {textAlign: 'center'}]}>
+              Login Failed!
+            </Text>
           ) : null}
 
           <Text style={styles.forgotpasswordtext}>Forgot password?</Text>
@@ -170,14 +176,16 @@ export default class LoginForm extends React.Component {
             />
           </View>
 
-          <TouchableOpacity
-            style={[
-              styles.signIn,
-              {borderColor: '#009387', marginTop: 15, borderWidth: 1},
-            ]}
-            onPress={() => this.props.navigation.navigate('SIGNUP_SCREEN')}>
-            <Text style={styles.signUpText}>Sign Up</Text>
-          </TouchableOpacity>
+          <View style={styles.signupBtn}>
+            <TouchableOpacity
+              style={[
+                styles.signIn,
+                {borderColor: '#009387', marginTop: 15, borderWidth: 1},
+              ]}
+              onPress={() => this.props.navigation.navigate('SIGNUP_SCREEN')}>
+              <Text style={styles.signUpText}>Sign Up</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </>
     );
@@ -200,11 +208,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     textAlign: 'right',
   },
-  errorStyle: {
-    color: COLORS.red,
-    fontFamily: FONTFAMILY.RobotoItalic,
-    textAlign: 'center',
-  },
   signIn: {
     height: responsiveHeight(14),
     justifyContent: 'center',
@@ -213,5 +216,8 @@ const styles = StyleSheet.create({
   },
   signUpText: {
     color: COLORS.primary,
+  },
+  signupBtn: {
+    marginBottom: 50,
   },
 });

@@ -7,6 +7,7 @@ import {
   field_object_signup,
   signupRefs,
   validateEmailAddress,
+  commonStyles,
 } from '@constants';
 import {COLORS, responsiveHeight, FONTFAMILY} from '@resource';
 import LinearGradientButton from '../Buttons/linearGradientButton';
@@ -401,7 +402,9 @@ export default class SignupForm extends React.Component {
             <Accessory size={18} onPress={() => toggleAvatar()} />
           </Avatar>
           {avatarSource.isError ? (
-            <Text style={styles.errorStyle}>{avatarSource.error_text}</Text>
+            <Text style={commonStyles.errorStyle}>
+              {avatarSource.error_text}
+            </Text>
           ) : null}
         </View>
 
@@ -600,9 +603,5 @@ const styles = StyleSheet.create({
   btnContainer: {
     marginTop: 10,
     marginBottom: 30,
-  },
-  errorStyle: {
-    color: COLORS.red,
-    fontFamily: FONTFAMILY.RobotoItalic,
   },
 });

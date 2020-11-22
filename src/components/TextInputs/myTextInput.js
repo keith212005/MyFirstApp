@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text} from 'react-native';
 
 import {TextInput} from 'react-native-paper';
 import * as Animatable from 'react-native-animatable';
 
-import {responsiveWidth, responsiveHeight, COLORS, FONTFAMILY} from '@resource';
+import {COLORS} from '@resource';
+import {commonStyles} from '@constants';
 
 export default class MyTextInput extends Component {
   state = {
@@ -15,8 +16,6 @@ export default class MyTextInput extends Component {
     value: this.props.value,
   };
   render() {
-    // console.log('myTextInput render called - ' + this.props.iconName);
-
     let props = this.props;
     const handleOnFocus = () => {
       this.setState({
@@ -45,7 +44,6 @@ export default class MyTextInput extends Component {
       <>
         <Animatable.View animation={props.isError ? 'bounceIn' : ''}>
           <TextInput
-            style={styles.input}
             mode={props.mode ? props.mode : 'outlined'}
             keyboardType={props.keyboardType ? props.keyboardType : 'default'}
             returnKeyType={props.returnKeyType ? props.returnKeyType : 'next'}
@@ -86,23 +84,10 @@ export default class MyTextInput extends Component {
             }
           />
           {this.props.isError ? (
-            <Text style={styles.errorStyle}>{this.props.error_text}</Text>
+            <Text style={commonStyles.errorStyle}>{this.props.error_text}</Text>
           ) : null}
         </Animatable.View>
       </>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  errorStyle: {
-    color: COLORS.red,
-    fontFamily: FONTFAMILY.RobotoItalic,
-  },
-  input: {
-    // borderRadius: 10,
-    // borderWidth: 1,
-    // borderColor: 'red',
-    // overflow: 'hidden',
-  },
-});

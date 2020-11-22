@@ -75,7 +75,7 @@ export default class DrawerContent extends React.Component {
                 )}
                 label="Home"
                 onPress={() => {
-                  this.props.navigation.navigate('HOME_SCREEN2');
+                  this.props.navigation.navigate('HOME_SCREEN');
                 }}
               />
               <DrawerItem

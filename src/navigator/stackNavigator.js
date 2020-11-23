@@ -1,4 +1,5 @@
 import React from 'react';
+import {View} from 'react-native';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -8,17 +9,28 @@ import {COLORS} from '@resource';
 import * as Screen from '@screens';
 
 export default class StackNavigator extends React.Component {
+  state = {
+    isLoading: true,
+    userToken: null,
+  };
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        isLoading: false,
+      });
+    }, 2000);
+  }
+
   render() {
     const Stack = createStackNavigator();
-    {
-      /*
-      ============================== PARAMETERS ============================================
-      String routename, ScreenObject componentname, (boolean) showheader, String headerTitle
-      {stack('SPLASH_SCREEN', Screen.SplashScreen, true, 'title')}
-      ======================================================================================
-      */
-    }
     const stack = (name, component, headerShown, headerTitle) => {
+      {
+        /*============================== PARAMETERS ============================================
+        String routename, ScreenObject componentname, (boolean) showheader, String headerTitle
+        {stack('SPLASH_SCREEN', Screen.SplashScreen, true, 'title')}
+        */
+      }
       return (
         <Stack.Screen
           name={name}
@@ -31,19 +43,28 @@ export default class StackNavigator extends React.Component {
       );
     };
 
+    if (this.state.isLoading) {
+      return <Screen.SplashScreen />;
+    }
+
     return (
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="SPLASH_SCREEN"
+          initialRouteName="START_SCREEN"
           screenOptions={{
             headerTintColor: COLORS.white,
             headerTitleStyle: {fontWeight: 'bold'},
           }}>
-          {stack('SPLASH_SCREEN', Screen.SplashScreen)}
-          {stack('START_SCREEN', Screen.StartScreen)}
-          {stack('LOGIN_SCREEN', Screen.LoginScreen)}
-          {stack('SIGNUP_SCREEN', Screen.SignupScreen)}
-          {stack('HOME_SCREEN', DrawerNavigator)}
+          {this.state.userToken == null ? (
+            <>
+              {stack('START_SCREEN', Screen.StartScreen)}
+              {stack('LOGIN_SCREEN', Screen.LoginScreen)}
+              {stack('SIGNUP_SCREEN', Screen.SignupScreen)}
+              {stack('HOME_SCREEN', DrawerNavigator)}
+            </>
+          ) : (
+            <>{stack('HOME_SCREEN', DrawerNavigator)}</>
+          )}
         </Stack.Navigator>
       </NavigationContainer>
     );

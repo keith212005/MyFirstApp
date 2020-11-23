@@ -3,6 +3,7 @@ import {View, StyleSheet, Pressable} from 'react-native';
 
 import {RadioButton, Text} from 'react-native-paper';
 import {COLORS, FONTFAMILY} from '@resource';
+import {commonStyles} from '@constants';
 
 export default class GenderRadioButton extends React.Component {
   state = {

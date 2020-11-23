@@ -2,8 +2,6 @@ import React from 'react';
 
 import {DrawerActions} from '@react-navigation/native';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
-
-import {IconButton} from 'react-native-paper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import {COLORS} from '@resource';

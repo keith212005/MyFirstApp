@@ -108,7 +108,7 @@ export default class DrawerContent extends React.Component {
                 )}
                 label="Settings"
                 onPress={() => {
-                  this.props.navigation.navigate('SETTING_SCREEN');
+                  // this.props.navigation.navigate('SETTING_SCREEN');
                 }}
               />
               <DrawerItem

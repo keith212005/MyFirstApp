@@ -44,293 +44,324 @@ export default class SignupForm extends React.Component {
       isError,
     } = this.state;
 
+    // called when we add/edit image Avatar
     const toggleAvatar = () => {
       this.setState((state) => ({isVisible: !state.isVisible}));
     };
 
-    //========================= Validation Functinos ============================
-    const checkImage = () => {
-      if (
-        avatarSource.value ===
-        'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg'
-      ) {
-        this.setState((prevState) => ({
-          ...prevState,
-          avatarSource: {
-            ...prevState.avatarSource,
-            isError: true,
-            error_text: 'Please add image.',
-          },
-        }));
+    // call this function to validate any fieldName
+    const validateField = (fieldName) => {
+      switch (fieldName) {
+        case 'image':
+          if (
+            avatarSource.value ===
+            'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg'
+          ) {
+            this.setState((prevState) => ({
+              ...prevState,
+              avatarSource: {
+                ...prevState.avatarSource,
+                isError: true,
+                error_text: 'Please add image.',
+              },
+            }));
+          }
+          break;
+        case 'firstname':
+          if (firstname.value.length == 0) {
+            this.setState((prevState) => ({
+              ...prevState,
+              firstname: {
+                ...prevState.firstname,
+                isError: true,
+                error_text: 'This field is required.',
+              },
+            }));
+          }
+          break;
+        case 'lastname':
+          if (lastname.value.length == 0) {
+            this.setState((prevState) => ({
+              ...prevState,
+              lastname: {
+                ...prevState.lastname,
+                isError: true,
+                error_text: 'This field is required.',
+              },
+            }));
+          }
+          break;
+        case 'email':
+          if (email.value.length == 0) {
+            this.setState((prevState) => ({
+              email: {
+                ...prevState.email,
+                isError: true,
+                error_text: 'This is required field.',
+              },
+            }));
+          } else {
+            const result = validateEmailAddress(email.value);
+            if (!result) {
+              this.setState((prevState) => ({
+                email: {
+                  ...prevState.email,
+                  isError: true,
+                  error_text: 'Invalid Email address!',
+                },
+              }));
+            }
+          }
+          break;
+        case 'password':
+          if (password.value.length == 0) {
+            this.setState((prevState) => ({
+              ...prevState,
+              password: {
+                ...prevState.password,
+                isError: true,
+                error_text: 'This field is required.',
+              },
+            }));
+          } else {
+            if (password.value.length <= 3) {
+              this.setState((prevState) => ({
+                ...prevState,
+                password: {
+                  ...prevState.password,
+                  isError: true,
+                  error_text:
+                    'Password should be minimum 4 characters and maximum 10 characters.',
+                },
+              }));
+            }
+          }
+          break;
+        case 'confirmpassword':
+          if (confirmPassword.value.length == 0) {
+            this.setState((prevState) => ({
+              ...prevState,
+              confirmPassword: {
+                ...prevState.confirmPassword,
+                isError: true,
+                error_text: 'This field is required.',
+              },
+            }));
+          } else {
+            if (password.value != confirmPassword.value) {
+              this.setState((prevState) => ({
+                ...prevState,
+                confirmPassword: {
+                  ...prevState.confirmPassword,
+                  isError: true,
+                  error_text: 'Password and Confirm password does not match!',
+                },
+              }));
+            }
+          }
+          break;
+        case 'phoneno':
+          if (phoneno.value.length == 0) {
+            this.setState((prevState) => ({
+              ...prevState,
+              phoneno: {
+                ...prevState.phoneno,
+                isError: true,
+                error_text: 'This field is required.',
+              },
+            }));
+          } else {
+            if (phoneno.value.length < 10) {
+              this.setState((prevState) => ({
+                ...prevState,
+                phoneno: {
+                  ...prevState.phoneno,
+                  isError: true,
+                  error_text: 'Phone number should be minimum 10 digits.',
+                },
+              }));
+            }
+          }
+          break;
+        case 'address':
+          if (address.value.length == 0) {
+            this.setState((prevState) => ({
+              ...prevState,
+              address: {
+                ...prevState.address,
+                isError: true,
+                error_text: 'This field is required.',
+              },
+            }));
+          }
+          break;
+        case 'gender':
+          if (gender.value.length == 0) {
+            this.setState((prevState) => ({
+              ...prevState,
+              gender: {
+                ...prevState.gender,
+                isError: true,
+                error_text: 'This field is required.',
+              },
+            }));
+          }
+          break;
+        case 'dob':
+          if (dob.value === 'Date of birth') {
+            console.log('inside');
+            this.setState((prevState) => ({
+              ...prevState,
+              dob: {
+                ...prevState.dob,
+                isError: true,
+                error_text: 'This field is required.',
+              },
+            }));
+          }
+          break;
+        default:
+          break;
       }
     };
-    const checkFname = () => {
-      if (firstname.value.length == 0) {
-        this.setState((prevState) => ({
-          ...prevState,
-          firstname: {
-            ...prevState.firstname,
-            isError: true,
-            error_text: 'This field is required.',
-          },
-        }));
-      }
-    };
-    const checkLname = () => {
-      if (lastname.value.length == 0) {
-        this.setState((prevState) => ({
-          ...prevState,
-          lastname: {
-            ...prevState.lastname,
-            isError: true,
-            error_text: 'This field is required.',
-          },
-        }));
-      }
-    };
-    const checkEmail = () => {
-      if (email.value.length == 0) {
-        this.setState((prevState) => ({
-          email: {
-            ...prevState.email,
-            isError: true,
-            error_text: 'This is required field.',
-          },
-        }));
-      } else {
-        const result = validateEmailAddress(email.value);
-        if (!result) {
-          this.setState((prevState) => ({
-            email: {
-              ...prevState.email,
-              isError: true,
-              error_text: 'Invalid Email address!',
+
+    // called when change text in any InputText
+    const handleOnChangeText = (text, label) => {
+      switch (label) {
+        case 'firstname': {
+          return this.setState((prevState) => ({
+            ...prevState,
+            firstname: {
+              ...prevState.firstname,
+              value: text,
+              isError: false,
             },
           }));
         }
-      }
-    };
-    const checkPassword = () => {
-      if (password.value.length == 0) {
-        this.setState((prevState) => ({
-          ...prevState,
-          password: {
-            ...prevState.password,
-            isError: true,
-            error_text: 'This field is required.',
-          },
-        }));
-      } else {
-        if (password.value.length <= 3) {
-          this.setState((prevState) => ({
+        case 'lastname': {
+          return this.setState((prevState) => ({
+            ...prevState,
+            lastname: {
+              ...prevState.lastname,
+              value: text,
+              isError: false,
+            },
+          }));
+        }
+        case 'email': {
+          return this.setState((prevState) => ({
+            ...prevState,
+            email: {
+              ...prevState.email,
+              value: text.trim(),
+              isError: false,
+            },
+          }));
+        }
+        case 'password': {
+          return this.setState((prevState) => ({
             ...prevState,
             password: {
               ...prevState.password,
-              isError: true,
-              error_text:
-                'Password should be minimum 4 characters and maximum 10 characters.',
+              value: text,
+              isError: false,
             },
           }));
         }
-      }
-    };
-    const checkConfirmPassword = () => {
-      if (confirmPassword.value.length == 0) {
-        this.setState((prevState) => ({
-          ...prevState,
-          confirmPassword: {
-            ...prevState.confirmPassword,
-            isError: true,
-            error_text: 'This field is required.',
-          },
-        }));
-      } else {
-        if (password.value != confirmPassword.value) {
-          this.setState((prevState) => ({
+        case 'confirmpassword': {
+          return this.setState((prevState) => ({
             ...prevState,
             confirmPassword: {
               ...prevState.confirmPassword,
-              isError: true,
-              error_text: 'Password and Confirm password does not match!',
+              value: text,
+              isError: false,
             },
           }));
         }
-      }
-    };
-    const checkPhoneno = () => {
-      if (phoneno.value.length == 0) {
-        this.setState((prevState) => ({
-          ...prevState,
-          phoneno: {
-            ...prevState.phoneno,
-            isError: true,
-            error_text: 'This field is required.',
-          },
-        }));
-      } else {
-        if (phoneno.value.length < 10) {
-          this.setState((prevState) => ({
+        case 'phoneno': {
+          return this.setState((prevState) => ({
             ...prevState,
             phoneno: {
               ...prevState.phoneno,
-              isError: true,
-              error_text: 'Phone number should be minimum 10 digits.',
+              value: text,
+              isError: false,
+            },
+          }));
+        }
+        case 'address': {
+          return this.setState((prevState) => ({
+            ...prevState,
+            address: {
+              ...prevState.address,
+              value: text,
+              isError: false,
+            },
+          }));
+        }
+        case 'gender': {
+          validateField('image');
+          validateField('firstname');
+          validateField('lastname');
+          validateField('email');
+          validateField('password');
+          validateField('confirmpassword');
+          validateField('phoneno');
+          validateField('address');
+          // checkImage();
+          // checkFname();
+          // checkLname();
+          // checkEmail();
+          // checkPassword();
+          // checkConfirmPassword();
+          // checkPhoneno();
+          // checkAddress();
+          return this.setState((prevState) => ({
+            ...prevState,
+            gender: {
+              ...prevState.gender,
+              value: text,
+              isError: false,
+            },
+          }));
+        }
+        case 'dob': {
+          validateField('image');
+          validateField('firstname');
+          validateField('lastname');
+          validateField('email');
+          validateField('password');
+          validateField('confirmpassword');
+          validateField('phoneno');
+          validateField('address');
+          validateField('gender');
+          // checkImage();
+          // checkFname();
+          // checkLname();
+          // checkEmail();
+          // checkPassword();
+          // checkConfirmPassword();
+          // checkPhoneno();
+          // checkAddress();
+          // checkGender();
+          return this.setState((prevState) => ({
+            ...prevState,
+            dob: {
+              ...prevState.dob,
+              value: text.toString(),
+              isError: false,
             },
           }));
         }
       }
     };
-    const checkAddress = () => {
-      if (address.value.length == 0) {
-        this.setState((prevState) => ({
-          ...prevState,
-          address: {
-            ...prevState.address,
-            isError: true,
-            error_text: 'This field is required.',
-          },
-        }));
-      }
-    };
-    const checkGender = () => {
-      if (gender.value.length == 0) {
-        this.setState((prevState) => ({
-          ...prevState,
-          gender: {
-            ...prevState.gender,
-            isError: true,
-            error_text: 'This field is required.',
-          },
-        }));
-      }
-    };
-    const checkDob = () => {
-      console.log('asdf' + dob.value.length);
-      if (dob.value === 'Date of birth') {
-        console.log('inside');
-        this.setState((prevState) => ({
-          ...prevState,
-          dob: {
-            ...prevState.dob,
-            isError: true,
-            error_text: 'This field is required.',
-          },
-        }));
-      }
-    };
 
-    //===========================================================================
-
-    // =========== Handle onChangeText event common for every input ==============
-    const handleOnChangeText = (text, label) => {
-      if (label === 'firstname') {
-        this.setState((prevState) => ({
-          ...prevState,
-          firstname: {
-            ...prevState.firstname,
-            value: text,
-            isError: false,
-          },
-        }));
-      } else if (label === 'lastname') {
-        this.setState((prevState) => ({
-          ...prevState,
-          lastname: {
-            ...prevState.lastname,
-            value: text,
-            isError: false,
-          },
-        }));
-      } else if (label === 'email') {
-        this.setState((prevState) => ({
-          ...prevState,
-          email: {
-            ...prevState.email,
-            value: text.trim(),
-            isError: false,
-          },
-        }));
-      } else if (label === 'password') {
-        this.setState((prevState) => ({
-          ...prevState,
-          password: {
-            ...prevState.password,
-            value: text,
-            isError: false,
-          },
-        }));
-      } else if (label === 'confirmpassword') {
-        this.setState((prevState) => ({
-          ...prevState,
-          confirmPassword: {
-            ...prevState.confirmPassword,
-            value: text,
-            isError: false,
-          },
-        }));
-      } else if (label === 'phoneno') {
-        this.setState((prevState) => ({
-          ...prevState,
-          phoneno: {
-            ...prevState.phoneno,
-            value: text,
-            isError: false,
-          },
-        }));
-      } else if (label === 'address') {
-        this.setState((prevState) => ({
-          ...prevState,
-          address: {
-            ...prevState.address,
-            value: text,
-            isError: false,
-          },
-        }));
-      } else if (label === 'gender') {
-        this.setState((prevState) => ({
-          ...prevState,
-          gender: {
-            ...prevState.gender,
-            value: text,
-            isError: false,
-          },
-        }));
-        checkImage();
-        checkFname();
-        checkLname();
-        checkEmail();
-        checkPassword();
-        checkConfirmPassword();
-        checkPhoneno();
-        checkAddress();
-      } else if (label === 'dob') {
-        this.setState((prevState) => ({
-          ...prevState,
-          dob: {
-            ...prevState.dob,
-            value: text.toString(),
-            isError: false,
-          },
-        }));
-        checkImage();
-        checkFname();
-        checkLname();
-        checkEmail();
-        checkPassword();
-        checkConfirmPassword();
-        checkPhoneno();
-        checkAddress();
-        checkGender();
-      }
-    };
-    // ===========================================================================
-
-    //================== handleEndEditing event common for every input ===========
+    // called when end editing on any InputText
     const handleEndEditing = (text) => {
       console.log('handleEndEditing called... ' + text);
     };
 
-    const registerUser = () => {
+    // called when we press register button
+    const submit = () => {
       if (
         avatarSource.value !=
           'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg' &&
@@ -344,30 +375,40 @@ export default class SignupForm extends React.Component {
         gender.value.length > 0 &&
         dob.value.length > 0
       ) {
-        console.log('all fields are filled');
-        console.log(avatarSource.value);
-        console.log(firstname.value);
-        console.log(lastname.value);
-        console.log(email.value);
-        console.log(password.value);
-        console.log(confirmPassword.value);
-        console.log(phoneno.value);
-        console.log(address.value);
-        console.log(gender.value);
-        console.log(dob.value);
+        var personData = {
+          avatarSource: avatarSource.value,
+          firstname: firstname.value,
+          lastname: lastname.value,
+          email: email.value,
+          password: password.value,
+          confirmPassword: confirmPassword.value,
+          phoneno: phoneno.value,
+          address: address.value,
+          gender: gender.value,
+          dob: dob.value,
+        };
+        console.log(personData);
       } else {
-        console.log('Some Fields are empty.');
-        checkImage();
-        checkFname();
-        checkLname();
-        checkEmail();
-        checkPassword();
-        checkConfirmPassword();
-        checkPhoneno();
-        checkAddress();
-        checkGender();
-        checkAddress();
-        checkDob();
+        validateField('image');
+        validateField('firstname');
+        validateField('lastname');
+        validateField('email');
+        validateField('password');
+        validateField('confirmpassword');
+        validateField('phoneno');
+        validateField('address');
+        validateField('gender');
+        validateField('dob');
+        // checkImage();
+        // checkFname();
+        // checkLname();
+        // checkEmail();
+        // checkPassword();
+        // checkConfirmPassword();
+        // checkPhoneno();
+        // checkAddress();
+        // checkGender();
+        // checkDob();
       }
     };
 
@@ -402,7 +443,7 @@ export default class SignupForm extends React.Component {
             <Accessory size={18} onPress={() => toggleAvatar()} />
           </Avatar>
           {avatarSource.isError ? (
-            <Text style={commonStyles.errorStyle}>
+            <Text style={[commonStyles.errorStyle]}>
               {avatarSource.error_text}
             </Text>
           ) : null}
@@ -419,7 +460,7 @@ export default class SignupForm extends React.Component {
             onChangeText={(text) => handleOnChangeText(text, 'firstname')}
             onSubmitEditing={() => signupRefs.lastNameRef.current.focus()}
             onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
-            onFocus={() => checkImage()}
+            onFocus={() => validateField('image')}
           />
         </View>
 
@@ -435,8 +476,8 @@ export default class SignupForm extends React.Component {
             onSubmitEditing={() => signupRefs.emailRef.current.focus()}
             onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
             onFocus={() => {
-              checkImage();
-              checkFname();
+              validateField('image');
+              validateField('firstname');
             }}
           />
         </View>
@@ -453,9 +494,9 @@ export default class SignupForm extends React.Component {
             onSubmitEditing={() => signupRefs.passwordRef.current.focus()}
             onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
             onFocus={() => {
-              checkImage();
-              checkFname();
-              checkLname();
+              validateField('image');
+              validateField('firstname');
+              validateField('lastname');
             }}
           />
         </View>
@@ -477,10 +518,10 @@ export default class SignupForm extends React.Component {
             }
             onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
             onFocus={() => {
-              checkImage();
-              checkFname();
-              checkLname();
-              checkEmail();
+              validateField('image');
+              validateField('firstname');
+              validateField('lastname');
+              validateField('email');
             }}
           />
         </View>
@@ -500,11 +541,11 @@ export default class SignupForm extends React.Component {
             onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
             onSubmitEditing={() => signupRefs.phonenoRef.current.focus()}
             onFocus={() => {
-              checkImage();
-              checkFname();
-              checkLname();
-              checkEmail();
-              checkPassword();
+              validateField('image');
+              validateField('firstname');
+              validateField('lastname');
+              validateField('email');
+              validateField('password');
             }}
           />
         </View>
@@ -523,12 +564,12 @@ export default class SignupForm extends React.Component {
             onSubmitEditing={() => signupRefs.addressRef.current.focus()}
             onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
             onFocus={() => {
-              checkImage();
-              checkFname();
-              checkLname();
-              checkEmail();
-              checkPassword();
-              checkConfirmPassword();
+              validateField('image');
+              validateField('firstname');
+              validateField('lastname');
+              validateField('email');
+              validateField('password');
+              validateField('confirmpassword');
             }}
           />
         </View>
@@ -546,13 +587,13 @@ export default class SignupForm extends React.Component {
             onSubmitEditing={() => {}}
             onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
             onFocus={() => {
-              checkImage();
-              checkFname();
-              checkLname();
-              checkEmail();
-              checkPassword();
-              checkConfirmPassword();
-              checkPhoneno();
+              validateField('image');
+              validateField('firstname');
+              validateField('lastname');
+              validateField('email');
+              validateField('password');
+              validateField('confirmpassword');
+              validateField('phoneno');
             }}
           />
         </View>
@@ -584,7 +625,7 @@ export default class SignupForm extends React.Component {
             title="Register"
             height={responsiveHeight(13)}
             fontSize={responsiveHeight(3.25)}
-            onPress={() => registerUser()}
+            onPress={() => submit()}
           />
         </View>
       </View>

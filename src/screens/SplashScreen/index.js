@@ -4,11 +4,11 @@ import {View, Image} from 'react-native';
 import {styles} from './style';
 
 export default class SplashScreen extends React.Component {
-  componentDidMount() {
-    setTimeout(() => {
-      this.props.navigation.replace('START_SCREEN');
-    }, 1000);
-  }
+  // componentDidMount() {
+  //   setTimeout(() => {
+  //     this.props.navigation.replace('START_SCREEN');
+  //   }, 3000);
+  // }
 
   render() {
     return (

@@ -75,7 +75,7 @@ export default class DrawerContent extends React.Component {
                 )}
                 label="Home"
                 onPress={() => {
-                  this.props.navigation.navigate('HOME_SCREEN');
+                  this.props.navigation.navigate('Home');
                 }}
               />
               <DrawerItem
@@ -88,7 +88,7 @@ export default class DrawerContent extends React.Component {
                 )}
                 label="Profile"
                 onPress={() => {
-                  this.props.navigation.navigate('PROFILE_SCREEN');
+                  this.props.navigation.navigate('Profile');
                 }}
               />
               <DrawerItem
@@ -107,9 +107,7 @@ export default class DrawerContent extends React.Component {
                   <Feather name="settings" color={color} size={size} />
                 )}
                 label="Settings"
-                onPress={() => {
-                  // this.props.navigation.navigate('SETTING_SCREEN');
-                }}
+                onPress={() => {}}
               />
               <DrawerItem
                 icon={({color, size}) => (
@@ -152,7 +150,7 @@ export default class DrawerContent extends React.Component {
             label="Sign out"
             onPress={() => {
               this.props.navigation.pop();
-              this.props.navigation.navigate('LOGIN_SCREEN');
+              this.props.navigation.navigate('Login');
             }}
           />
         </Drawer.Section>

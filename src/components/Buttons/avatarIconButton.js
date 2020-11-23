@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Avatar, Accessory} from 'react-native-elements';
 
-import {COLORS} from '@resource';
+import {colors} from '@resource';
 
 export default class AvatarIconButton extends React.Component {
   constructor(props) {
@@ -14,7 +14,7 @@ export default class AvatarIconButton extends React.Component {
         rounded
         source={{uri: this.props.source}}
         icon={{name: 'user', type: 'font-awesome', color: 'gray'}}
-        containerStyle={{backgroundColor: COLORS.white}}
+        containerStyle={{backgroundColor: colors.white}}
         size="medium">
         <Accessory size={18} />
       </Avatar>

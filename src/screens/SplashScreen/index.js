@@ -3,13 +3,12 @@ import {View, Image} from 'react-native';
 
 import {styles} from './style';
 
-export default class SplashScreen extends React.Component {
-  // componentDidMount() {
-  //   setTimeout(() => {
-  //     this.props.navigation.replace('START_SCREEN');
-  //   }, 3000);
-  // }
-
+export default class Splash extends React.Component {
+  componentDidMount() {
+    setTimeout(() => {
+      this.props.navigation.replace('Start');
+    }, 2000);
+  }
   render() {
     return (
       <View style={styles.container}>

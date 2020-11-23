@@ -3,8 +3,8 @@ import {View, Text, Platform, StyleSheet, Pressable} from 'react-native';
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {COLORS, FONTFAMILY, responsiveWidth} from '@resource';
-import {commonStyles} from '@constants';
+import {colors, fontFamily, responsiveWidth} from '@resource';
+import {commonStyle} from '@constants';
 
 export default class MyDatePicker extends React.Component {
   state = {
@@ -51,7 +51,7 @@ export default class MyDatePicker extends React.Component {
             <FontAwesome
               style={styles.searchIcon}
               size={26}
-              color={COLORS.gray}
+              color={colors.gray}
               name="calendar"
             />
             <Text style={styles.dob}>{this.state.dobs}</Text>
@@ -77,7 +77,7 @@ export default class MyDatePicker extends React.Component {
           </View>
         </Pressable>
         {this.props.isError ? (
-          <Text style={commonStyles.errorStyle}>{this.props.error_text}</Text>
+          <Text style={commonStyle.errorStyle}>{this.props.error_text}</Text>
         ) : null}
       </>
     );
@@ -91,13 +91,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderWidth: 1,
     borderRadius: 5,
-    borderColor: COLORS.gray,
+    borderColor: colors.gray,
     padding: 14,
     marginTop: 6,
   },
   dob: {
     marginLeft: 10,
-    color: COLORS.gray,
+    color: colors.gray,
     fontSize: 16,
     textAlign: 'center',
   },

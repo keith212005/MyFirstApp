@@ -5,7 +5,7 @@ import {styles} from './style';
 import {SignupForm} from '@components';
 import * as Animatable from 'react-native-animatable';
 
-export default class SignupScreen extends React.Component {
+export default class Signup extends React.Component {
   render() {
     return (
       <>

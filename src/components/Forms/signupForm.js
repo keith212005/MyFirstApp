@@ -7,9 +7,9 @@ import {
   field_object_signup,
   signupRefs,
   validateEmailAddress,
-  commonStyles,
+  commonStyle,
 } from '@constants';
-import {COLORS, responsiveHeight, FONTFAMILY} from '@resource';
+import {colors, responsiveHeight, fontFamily, responsiveWidth} from '@resource';
 import LinearGradientButton from '../Buttons/linearGradientButton';
 import GenderRadioButton from '../Buttons/genderRadioButton';
 import MyDatePicker from '../Buttons/myDatePicker';
@@ -307,14 +307,7 @@ export default class SignupForm extends React.Component {
           validateField('confirmpassword');
           validateField('phoneno');
           validateField('address');
-          // checkImage();
-          // checkFname();
-          // checkLname();
-          // checkEmail();
-          // checkPassword();
-          // checkConfirmPassword();
-          // checkPhoneno();
-          // checkAddress();
+
           return this.setState((prevState) => ({
             ...prevState,
             gender: {
@@ -334,15 +327,7 @@ export default class SignupForm extends React.Component {
           validateField('phoneno');
           validateField('address');
           validateField('gender');
-          // checkImage();
-          // checkFname();
-          // checkLname();
-          // checkEmail();
-          // checkPassword();
-          // checkConfirmPassword();
-          // checkPhoneno();
-          // checkAddress();
-          // checkGender();
+
           return this.setState((prevState) => ({
             ...prevState,
             dob: {
@@ -399,21 +384,11 @@ export default class SignupForm extends React.Component {
         validateField('address');
         validateField('gender');
         validateField('dob');
-        // checkImage();
-        // checkFname();
-        // checkLname();
-        // checkEmail();
-        // checkPassword();
-        // checkConfirmPassword();
-        // checkPhoneno();
-        // checkAddress();
-        // checkGender();
-        // checkDob();
       }
     };
 
     return (
-      <View style={styles.container}>
+      <View style={commonStyle.containerFlex1}>
         <View style={styles.imageContainer}>
           {isVisible ? (
             <ImageSelectModal
@@ -437,19 +412,19 @@ export default class SignupForm extends React.Component {
             rounded
             source={{uri: avatarSource.value}}
             icon={{name: 'user', type: 'font-awesome', color: 'gray'}}
-            containerStyle={{backgroundColor: COLORS.white}}
+            containerStyle={{backgroundColor: colors.white}}
             size="medium"
             onPress={() => toggleAvatar()}>
             <Accessory size={18} onPress={() => toggleAvatar()} />
           </Avatar>
           {avatarSource.isError ? (
-            <Text style={[commonStyles.errorStyle]}>
+            <Text style={[commonStyle.errorStyle]}>
               {avatarSource.error_text}
             </Text>
           ) : null}
         </View>
 
-        <View style={styles.field_group}>
+        <View style={commonStyle.field_group}>
           <MyTextInput
             label="First name"
             iconName="account"
@@ -464,7 +439,7 @@ export default class SignupForm extends React.Component {
           />
         </View>
 
-        <View style={styles.field_group}>
+        <View style={commonStyle.field_group}>
           <MyTextInput
             label="Last name"
             iconName="account"
@@ -501,7 +476,7 @@ export default class SignupForm extends React.Component {
           />
         </View>
 
-        <View style={styles.field_group}>
+        <View style={commonStyle.field_group}>
           <MyTextInput
             label="Password"
             iconName="lock"
@@ -526,7 +501,7 @@ export default class SignupForm extends React.Component {
           />
         </View>
 
-        <View style={styles.field_group}>
+        <View style={commonStyle.field_group}>
           <MyTextInput
             label="Confirm password"
             iconName="lock"
@@ -550,7 +525,7 @@ export default class SignupForm extends React.Component {
           />
         </View>
 
-        <View style={styles.field_group}>
+        <View style={commonStyle.field_group}>
           <MyTextInput
             label="Phone"
             iconName="phone"
@@ -574,7 +549,7 @@ export default class SignupForm extends React.Component {
           />
         </View>
 
-        <View style={styles.field_group}>
+        <View style={commonStyle.field_group}>
           <MyTextInput
             label="Address"
             iconName="pin"
@@ -598,7 +573,7 @@ export default class SignupForm extends React.Component {
           />
         </View>
 
-        <View style={styles.field_group}>
+        <View style={commonStyle.field_group}>
           <GenderRadioButton
             isError={gender.isError}
             error_text={gender.error_text}
@@ -607,7 +582,7 @@ export default class SignupForm extends React.Component {
           />
         </View>
 
-        <View style={styles.field_group}>
+        <View style={commonStyle.field_group}>
           <MyDatePicker
             modeType="date"
             dob={dobVisibility}
@@ -634,9 +609,6 @@ export default class SignupForm extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   imageContainer: {
     flex: 1,
     marginBottom: responsiveHeight(4),

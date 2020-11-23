@@ -2,8 +2,8 @@ import React from 'react';
 import {View, StyleSheet, Pressable} from 'react-native';
 
 import {RadioButton, Text} from 'react-native-paper';
-import {COLORS, FONTFAMILY} from '@resource';
-import {commonStyles} from '@constants';
+import {colors, fontFamily} from '@resource';
+import {commonStyle} from '@constants';
 
 export default class GenderRadioButton extends React.Component {
   state = {
@@ -39,7 +39,7 @@ export default class GenderRadioButton extends React.Component {
           </RadioButton.Group>
         </View>
         {this.props.isError ? (
-          <Text style={commonStyles.errorStyle}>{this.props.error_text}</Text>
+          <Text style={commonStyle.errorStyle}>{this.props.error_text}</Text>
         ) : null}
       </>
     );
@@ -50,11 +50,11 @@ const styles = StyleSheet.create({
   container: {
     borderWidth: 1,
     borderRadius: 5,
-    borderColor: COLORS.gray,
+    borderColor: colors.gray,
   },
   title: {
-    fontFamily: FONTFAMILY.RobotoMedium,
-    color: COLORS.grayFont,
+    fontFamily: fontFamily.RobotoMedium,
+    color: colors.grayFont,
   },
   radioGroup: {
     padding: 8,

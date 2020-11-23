@@ -3,7 +3,7 @@ import {Platform, Text, StyleSheet} from 'react-native';
 
 import {Header} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
-import {responsiveWidth, responsiveHeight, COLORS} from '@resource';
+import {responsiveWidth, responsiveHeight, colors} from '@resource';
 
 import {Card, IconButton} from 'react-native-paper';
 
@@ -19,7 +19,7 @@ export default class CustomHeader extends Component {
             <IconButton
               icon="menu"
               size={responsiveHeight(6)}
-              color={COLORS.white}
+              color={colors.white}
               onPress={() => this.props.onPress()}
             />
           </LinearGradient>
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     padding: responsiveHeight(1),
   },
   title: {
-    color: COLORS.white,
+    color: colors.white,
     fontSize: responsiveHeight(4),
     fontWeight: '700',
     position: 'absolute',

@@ -1,15 +1,15 @@
 import React from 'react';
 import {View, Text, StyleSheet, Keyboard, TouchableOpacity} from 'react-native';
 
-import LinearGradientButton from '../Buttons/linearGradientButton';
-import MyTextInput from '../TextInputs/myTextInput';
-import SimpleActivityIndicator from '../ActivityIndicator/simpleActivityIndicator';
-import {responsiveHeight, responsiveWidth, COLORS, FONTFAMILY} from '@resource';
 import {
   field_object_login,
   validateEmailAddress,
-  commonStyles,
+  commonStyle,
 } from '@constants';
+import LinearGradientButton from '../Buttons/linearGradientButton';
+import MyTextInput from '../TextInputs/myTextInput';
+import SimpleActivityIndicator from '../ActivityIndicator/simpleActivityIndicator';
+import {responsiveHeight, responsiveWidth, colors, fontFamily} from '@resource';
 
 export default class LoginForm extends React.Component {
   constructor(props) {
@@ -77,7 +77,7 @@ export default class LoginForm extends React.Component {
         }));
 
         if (email.value === 'Kj@gmail.com' && password.value === '1234') {
-          this.props.navigation.replace('HOME_SCREEN');
+          this.props.navigation.replace('DrawerNavigator');
         } else {
           this.setState({
             progressVisible: false,
@@ -152,17 +152,17 @@ export default class LoginForm extends React.Component {
     return (
       <>
         {progressVisible ? <SimpleActivityIndicator /> : null}
-        <View style={styles.container}>
-          <View style={styles.field_group}>
+        <View style={commonStyle.containerFlex1}>
+          <View style={commonStyle.field_group}>
             <MyTextInput {...emailProps} />
           </View>
 
-          <View style={styles.field_group}>
+          <View style={commonStyle.field_group}>
             <MyTextInput {...passwordProps} />
           </View>
 
           {failAlert ? (
-            <Text style={[commonStyles.errorStyle, {textAlign: 'center'}]}>
+            <Text style={[commonStyle.errorStyle, {textAlign: 'center'}]}>
               Login Failed!
             </Text>
           ) : null}
@@ -172,7 +172,6 @@ export default class LoginForm extends React.Component {
           <View>
             <LinearGradientButton
               title="Sign In"
-              {...this.props}
               forwardRef={this.submitRef}
               onPress={() => submit()}
               height={responsiveHeight(14)}
@@ -180,14 +179,14 @@ export default class LoginForm extends React.Component {
             />
           </View>
 
-          <View style={styles.signupBtn}>
+          <View style={styles.signupBtnContainer}>
             <TouchableOpacity
               style={[
                 styles.signIn,
-                {borderColor: COLORS.primary, marginTop: 15, borderWidth: 1},
+                {borderColor: colors.primary, marginTop: 15, borderWidth: 1},
               ]}
-              onPress={() => this.props.navigation.navigate('SIGNUP_SCREEN')}>
-              <Text style={styles.signUpText}>Sign Up</Text>
+              onPress={() => this.props.navigation.navigate('Signup')}>
+              <Text style={commonStyle.primaryText}>Sign Up</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -197,18 +196,10 @@ export default class LoginForm extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  field_group: {
-    marginTop: responsiveWidth(3),
-    borderBottomWidth: 1,
-    borderBottomColor: COLORS.white,
-  },
   forgotpasswordtext: {
     marginTop: responsiveHeight(2),
     marginBottom: responsiveHeight(2),
-    color: COLORS.primary,
+    color: colors.primary,
     fontWeight: '600',
     textAlign: 'right',
   },
@@ -218,10 +209,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 10,
   },
-  signUpText: {
-    color: COLORS.primary,
-  },
-  signupBtn: {
+  signupBtnContainer: {
     marginBottom: 50,
   },
 });

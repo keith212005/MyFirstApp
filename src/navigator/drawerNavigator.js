@@ -3,17 +3,17 @@ import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
 import TabNavigator from './tabNavigator';
-import {SettingScreen} from '@screens';
+import {Setting} from '@screens';
 import {DrawerContent} from '@components';
-import {COLORS} from '@resource';
+import {colors} from '@resource';
 
+const Drawer = createDrawerNavigator();
 export default class DrawerNavigator extends React.Component {
   render() {
-    const Drawer = createDrawerNavigator();
     return (
       <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
-        <Drawer.Screen name="HOME_SCREEN" component={TabNavigator} />
-        <Drawer.Screen name="SETTING_SCREEN" component={SettingScreen} />
+        <Drawer.Screen name="TabNavigator" component={TabNavigator} />
+        <Drawer.Screen name="Setting" component={Setting} />
       </Drawer.Navigator>
     );
   }

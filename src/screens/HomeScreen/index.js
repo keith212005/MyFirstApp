@@ -2,10 +2,12 @@ import React from 'react';
 import {View, Text, BackHandler} from 'react-native';
 
 import {DrawerActions} from '@react-navigation/native';
+
 import {styles} from './style';
+import {commonStyle} from '@constants';
 import * as Components from '@components';
 
-export default class HomeScreen extends React.Component {
+export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {showAlert: false};
@@ -13,11 +15,9 @@ export default class HomeScreen extends React.Component {
 
   componentDidMount() {
     this._unsubscribefocus = this.props.navigation.addListener('focus', () => {
-      // do something console.log('foucs called');
       BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
     });
     this._unsubscribeblur = this.props.navigation.addListener('blur', () => {
-      // do something console.log('blur called');
       BackHandler.removeEventListener(
         'hardwareBackPress',
         this.handleBackButton,
@@ -42,19 +42,22 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <>
-        <Components.CustomHeader
-          title="HOME"
-          onPress={() =>
-            this.props.navigation.dispatch(DrawerActions.toggleDrawer())
-          }
-        />
+        <View style={commonStyle.containerFlex1}>
+          <Components.CustomHeader
+            title="HOME"
+            onPress={() =>
+              this.props.navigation.dispatch(DrawerActions.toggleDrawer())
+            }
+          />
 
-        <Components.ExitAppDialog
-          showAlert={this.state.showAlert}
-          title="Exit"
-          content="Are you sure you want to exit?"
-          onSuccess={(value) => this.handleSuccess(value)}
-        />
+          <Text>Home Screen</Text>
+          <Components.ExitAppDialog
+            showAlert={this.state.showAlert}
+            title="Exit"
+            content="Are you sure you want to exit?"
+            onSuccess={(value) => this.handleSuccess(value)}
+          />
+        </View>
       </>
     );
   }

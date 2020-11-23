@@ -5,7 +5,7 @@ import {DrawerActions} from '@react-navigation/native';
 import {styles} from './style';
 import * as Components from '@components';
 
-export default class ProfileScreen extends React.Component {
+export default class Profile extends React.Component {
   render() {
     return (
       <>

@@ -6,9 +6,9 @@ import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
 
 import {styles} from './style';
-import {COLORS} from '@resource';
+import {colors} from '@resource';
 
-export default class StartScreen extends React.Component {
+export default class Start extends React.Component {
   render() {
     return (
       <View style={styles.container}>
@@ -27,14 +27,14 @@ export default class StartScreen extends React.Component {
           <Text style={styles.text}>Sign in with account</Text>
           <View style={styles.button}>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('LOGIN_SCREEN')}>
+              onPress={() => this.props.navigation.navigate('Login')}>
               <LinearGradient
                 colors={['#08d4c4', '#01ab9d']}
                 style={styles.signIn}>
                 <Text style={styles.textSign}>Get Started</Text>
                 <MaterialIcons
                   name="navigate-next"
-                  color={COLORS.white}
+                  color={colors.white}
                   size={20}
                 />
               </LinearGradient>

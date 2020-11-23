@@ -4,13 +4,13 @@ import {View, Text} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import * as Animatable from 'react-native-animatable';
 
-import {COLORS} from '@resource';
-import {commonStyles} from '@constants';
+import {colors} from '@resource';
+import {commonStyle} from '@constants';
 
 export default class MyTextInput extends Component {
   state = {
-    iconColor: COLORS.gray,
-    eyeIconColor: COLORS.gray,
+    iconColor: colors.gray,
+    eyeIconColor: colors.gray,
     showEyeIcon: 'eye-off-outline',
     secureTextEntry: this.props.secureTextEntry,
     value: this.props.value,
@@ -19,14 +19,14 @@ export default class MyTextInput extends Component {
     let props = this.props;
     const handleOnFocus = () => {
       this.setState({
-        iconColor: COLORS.primary,
-        eyeIconColor: COLORS.primary,
+        iconColor: colors.primary,
+        eyeIconColor: colors.primary,
       });
       this.props.onFocus();
     };
 
     const handleOnBlur = () => {
-      this.setState({iconColor: COLORS.gray, eyeIconColor: COLORS.gray});
+      this.setState({iconColor: colors.gray, eyeIconColor: colors.gray});
     };
 
     const togglePassword = () => {
@@ -54,7 +54,7 @@ export default class MyTextInput extends Component {
             onEndEditing={this.props.onEndEditing}
             onChangeText={(text) => this.props.onChangeText(text)}
             secureTextEntry={this.state.secureTextEntry}
-            theme={{colors: {primary: COLORS.primary}, roundness: 14}}
+            theme={{colors: {primary: colors.primary}, roundness: 14}}
             blurOnSubmit={false}
             ref={props.forwardRef}
             pointerEvents="none"
@@ -64,7 +64,7 @@ export default class MyTextInput extends Component {
             onBlur={handleOnBlur}
             blurOnSubmit={false}
             selectTextOnFocus={true}
-            selectionColor={COLORS.secondary}
+            selectionColor={colors.secondary}
             multiline={props.multiline ? props.multiline : false}
             left={
               <TextInput.Icon
@@ -84,7 +84,7 @@ export default class MyTextInput extends Component {
             }
           />
           {this.props.isError ? (
-            <Text style={commonStyles.errorStyle}>{this.props.error_text}</Text>
+            <Text style={commonStyle.errorStyle}>{this.props.error_text}</Text>
           ) : null}
         </Animatable.View>
       </>

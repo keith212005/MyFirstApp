@@ -5,66 +5,38 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import DrawerNavigator from './drawerNavigator';
-import {COLORS} from '@resource';
+import {colors} from '@resource';
 import * as Screen from '@screens';
 
-export default class StackNavigator extends React.Component {
-  state = {
-    isLoading: true,
-    userToken: null,
-  };
+const Stack = createStackNavigator();
 
-  componentDidMount() {
-    setTimeout(() => {
-      this.setState({
-        isLoading: false,
-      });
-    }, 2000);
-  }
+export default class StackNavigator extends React.Component {
+  //  extraProps is an object containing name and component as props
+  stack = (extraProps) => (
+    <Stack.Screen
+      name={extraProps.name}
+      component={extraProps.component}
+      options={{
+        headerShown: false,
+      }}
+    />
+  );
 
   render() {
-    const Stack = createStackNavigator();
-    const stack = (name, component, headerShown, headerTitle) => {
-      {
-        /*============================== PARAMETERS ============================================
-        String routename, ScreenObject componentname, (boolean) showheader, String headerTitle
-        {stack('SPLASH_SCREEN', Screen.SplashScreen, true, 'title')}
-        */
-      }
-      return (
-        <Stack.Screen
-          name={name}
-          component={component}
-          options={{
-            headerTitle: headerTitle ? headerTitle : null,
-            headerShown: headerShown === true ? true : false,
-          }}
-        />
-      );
-    };
-
-    if (this.state.isLoading) {
-      return <Screen.SplashScreen />;
-    }
-
+    const stack = this.stack;
     return (
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="START_SCREEN"
+          initialRouteName="Splash"
           screenOptions={{
-            headerTintColor: COLORS.white,
+            headerTintColor: colors.white,
             headerTitleStyle: {fontWeight: 'bold'},
           }}>
-          {this.state.userToken == null ? (
-            <>
-              {stack('START_SCREEN', Screen.StartScreen)}
-              {stack('LOGIN_SCREEN', Screen.LoginScreen)}
-              {stack('SIGNUP_SCREEN', Screen.SignupScreen)}
-              {stack('HOME_SCREEN', DrawerNavigator)}
-            </>
-          ) : (
-            <>{stack('HOME_SCREEN', DrawerNavigator)}</>
-          )}
+          {stack({name: 'Splash', component: Screen.Splash})}
+          {stack({name: 'Start', component: Screen.Start})}
+          {stack({name: 'Login', component: Screen.Login})}
+          {stack({name: 'Signup', component: Screen.Signup})}
+          {stack({name: 'DrawerNavigator', component: DrawerNavigator})}
         </Stack.Navigator>
       </NavigationContainer>
     );

@@ -1,8 +1,9 @@
 import React from 'react';
 import {View, Text} from 'react-native';
+
 import {styles} from './style';
 
-export default class SettingScreen extends React.Component {
+export default class Setting extends React.Component {
   render() {
     return (
       <>

@@ -12,7 +12,7 @@ import {IconButton, Button, Card, Title, Paragraph} from 'react-native-paper';
 import ImagePicker from 'react-native-image-crop-picker';
 import {Avatar, Accessory} from 'react-native-elements';
 
-import {COLORS, FONTFAMILY, responsiveHeight} from '@resource';
+import {colors, fontFamily, responsiveHeight} from '@resource';
 
 export default class SimpleActivityIndicator extends Component {
   render() {
@@ -27,7 +27,7 @@ export default class SimpleActivityIndicator extends Component {
           <TouchableWithoutFeedback>
             <View style={styles.modalContainer}>
               <View style={styles.modalSubContainer}>
-                <ActivityIndicator size="large" color={COLORS.primary} />
+                <ActivityIndicator size="large" color={colors.primary} />
               </View>
             </View>
           </TouchableWithoutFeedback>
@@ -46,17 +46,17 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: COLORS.halfTransparent,
+    backgroundColor: colors.halfTransparent,
   },
   titleText: {
     textAlign: 'center',
-    fontFamily: FONTFAMILY.RobotoMedium,
-    color: COLORS.grayFont,
+    fontFamily: fontFamily.RobotoMedium,
+    color: colors.grayFont,
   },
   modalSubContainer: {
     flexDirection: 'row',
     padding: 20,
-    backgroundColor: COLORS.white,
+    backgroundColor: colors.white,
     borderRadius: 10,
   },
   cardStyle: {

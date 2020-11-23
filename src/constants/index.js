@@ -5,4 +5,4 @@ export {
   validateEmailAddress,
 } from './commonValues';
 
-export {commonStyles} from './commonStyles';
+export {commonStyle} from './commonStyle';

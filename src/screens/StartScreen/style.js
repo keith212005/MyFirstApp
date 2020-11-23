@@ -1,12 +1,12 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 
-import {responsiveHeight, responsiveWidth, COLORS} from '@resource';
+import {responsiveHeight, responsiveWidth, colors} from '@resource';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.primary,
+    backgroundColor: colors.primary,
   },
   header: {
     flex: 2,
@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
   },
   footer: {
     flex: 1,
-    backgroundColor: COLORS.white,
+    backgroundColor: colors.white,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     paddingVertical: 50,
@@ -47,7 +47,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   textSign: {
-    color: COLORS.white,
+    color: colors.white,
     fontWeight: 'bold',
   },
 });

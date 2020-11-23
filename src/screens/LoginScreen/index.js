@@ -6,7 +6,7 @@ import * as Animatable from 'react-native-animatable';
 import {styles} from './style';
 import {LoginForm} from '@components';
 
-export default class LoginScreen extends React.Component {
+export default class Login extends React.Component {
   render() {
     return (
       <>

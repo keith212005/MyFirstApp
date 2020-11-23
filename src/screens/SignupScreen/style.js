@@ -1,12 +1,12 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 
-import {FONTFAMILY, COLORS, responsiveHeight, responsiveWidth} from '@resource';
+import {fontFamily, colors, responsiveHeight, responsiveWidth} from '@resource';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.primary,
+    backgroundColor: colors.primary,
   },
   header: {
     flex: 2,
@@ -15,13 +15,13 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerText: {
-    color: COLORS.white,
-    fontFamily: FONTFAMILY.PacificoRegular,
+    color: colors.white,
+    fontFamily: fontFamily.PacificoRegular,
     fontSize: responsiveHeight(10),
   },
   footer: {
     flex: 6,
-    backgroundColor: COLORS.white,
+    backgroundColor: colors.white,
     borderTopLeftRadius: responsiveHeight(5),
     borderTopRightRadius: responsiveHeight(5),
   },

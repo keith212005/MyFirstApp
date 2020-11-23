@@ -3,7 +3,7 @@ import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 
 import AwesomeAlert from 'react-native-awesome-alerts';
 
-import {responsiveHeight, COLORS} from '@resource';
+import {responsiveHeight, colors} from '@resource';
 
 export default class SimpleAlertDialog extends React.Component {
   render() {
@@ -26,7 +26,7 @@ export default class SimpleAlertDialog extends React.Component {
         showConfirmButton={true}
         cancelText={props.cancelText ? props.cancelText : 'Cancel'}
         confirmText={props.confirmText ? props.confirmText : 'OK'}
-        confirmButtonColor={COLORS.primary}
+        confirmButtonColor={colors.primary}
         onCancelPressed={() => {
           this.props.onCancelPressed();
         }}

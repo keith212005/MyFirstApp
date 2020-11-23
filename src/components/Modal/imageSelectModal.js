@@ -12,7 +12,7 @@ import {IconButton, Button, Card, Title, Paragraph} from 'react-native-paper';
 import ImagePicker from 'react-native-image-crop-picker';
 import {Avatar, Accessory} from 'react-native-elements';
 
-import {COLORS, FONTFAMILY, responsiveHeight} from '@resource';
+import {colors, fontFamily, responsiveHeight} from '@resource';
 
 export default class ImageSelectModal extends Component {
   state = {
@@ -38,7 +38,7 @@ export default class ImageSelectModal extends Component {
                         <View>
                           <IconButton
                             icon="camera-plus-outline"
-                            color={COLORS.primary}
+                            color={colors.primary}
                             size={40}
                             onPress={() => this.handleCamera()}
                           />
@@ -54,7 +54,7 @@ export default class ImageSelectModal extends Component {
                         <View>
                           <IconButton
                             icon="folder-multiple-image"
-                            color={COLORS.primary}
+                            color={colors.primary}
                             size={40}
                             onPress={() => this.handleGallery()}
                           />
@@ -117,24 +117,24 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: COLORS.halfTransparent,
+    backgroundColor: colors.halfTransparent,
   },
   titleText: {
     textAlign: 'center',
-    fontFamily: FONTFAMILY.RobotoMedium,
-    color: COLORS.grayFont,
+    fontFamily: fontFamily.RobotoMedium,
+    color: colors.grayFont,
   },
   modalSubContainer: {
     flexDirection: 'row',
     padding: 20,
-    backgroundColor: COLORS.white,
+    backgroundColor: colors.white,
     borderRadius: 10,
   },
   cardStyle: {
     paddingHorizontal: 5,
   },
   errorStyle: {
-    color: COLORS.red,
-    fontFamily: FONTFAMILY.RobotoItalic,
+    color: colors.red,
+    fontFamily: fontFamily.RobotoItalic,
   },
 });

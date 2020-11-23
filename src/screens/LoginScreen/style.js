@@ -1,12 +1,12 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 
-import {FONTFAMILY, COLORS, responsiveWidth, responsiveHeight} from '@resource';
+import {fontFamily, colors, responsiveWidth, responsiveHeight} from '@resource';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.primary,
+    backgroundColor: colors.primary,
   },
   header: {
     flex: 1,
@@ -14,13 +14,13 @@ export const styles = StyleSheet.create({
     paddingLeft: responsiveWidth(2),
   },
   headerTitleText: {
-    color: COLORS.white,
+    color: colors.white,
     fontSize: responsiveHeight(10),
-    fontFamily: FONTFAMILY.PacificoRegular,
+    fontFamily: fontFamily.PacificoRegular,
   },
   footer: {
     flex: 2,
-    backgroundColor: COLORS.white,
+    backgroundColor: colors.white,
     borderTopLeftRadius: responsiveHeight(6),
     borderTopRightRadius: responsiveHeight(6),
   },
@@ -33,20 +33,20 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
-    borderColor: COLORS.primary,
+    borderColor: colors.primary,
     marginTop: 15,
     borderWidth: 1,
   },
   forgotpasswordtext: {
     marginTop: responsiveHeight(2),
     marginBottom: responsiveHeight(2),
-    color: COLORS.primary,
+    color: colors.primary,
     fontWeight: '600',
     textAlign: 'right',
   },
 
   login_fail_alert: {
-    color: COLORS.red,
+    color: colors.red,
     textAlign: 'center',
     marginTop: 5,
   },

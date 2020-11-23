@@ -1,11 +1,8 @@
 import React from 'react';
 import {View, Text, StyleSheet, Keyboard, TouchableOpacity} from 'react-native';
 
-import {
-  field_object_login,
-  validateEmailAddress,
-  commonStyle,
-} from '@constants';
+import {field_object_login, commonStyle} from '@constants';
+import {isValidEmail, isSameString, isEmpty} from '@utils';
 import LinearGradientButton from '../Buttons/linearGradientButton';
 import MyTextInput from '../TextInputs/myTextInput';
 import SimpleActivityIndicator from '../ActivityIndicator/simpleActivityIndicator';
@@ -26,7 +23,7 @@ export default class LoginForm extends React.Component {
     const validateField = (fieldName) => {
       switch (fieldName) {
         case 'email':
-          if (email.value.length == 0) {
+          if (isEmpty(email.value)) {
             this.setState((prevState) => ({
               email: {
                 ...prevState.email,
@@ -35,7 +32,7 @@ export default class LoginForm extends React.Component {
               },
             }));
           } else {
-            if (!validateEmailAddress(email.value)) {
+            if (!isValidEmail(email.value)) {
               this.setState((prevState) => ({
                 email: {
                   ...prevState.email,
@@ -47,7 +44,7 @@ export default class LoginForm extends React.Component {
           }
           break;
         case 'password':
-          if (password.value.length == 0) {
+          if (isEmpty(password.value)) {
             this.setState((prevState) => ({
               password: {
                 ...prevState.password,
@@ -70,20 +67,19 @@ export default class LoginForm extends React.Component {
       if (
         email.value.length > 0 &&
         password.value.length > 0 &&
-        validateEmailAddress(email.value)
+        isValidEmail(email.value)
       ) {
         this.setState((prevState) => ({
           progressVisible: true,
         }));
 
-        if (email.value === 'Kj@gmail.com' && password.value === '1234') {
-          this.props.navigation.replace('DrawerNavigator');
-        } else {
-          this.setState({
-            progressVisible: false,
-            failAlert: true,
-          });
-        }
+        isSameString(email.value, 'Kj@gmail.com') &&
+        isSameString(password.value, '1234')
+          ? this.props.navigation.replace('DrawerNavigator')
+          : this.setState({
+              progressVisible: false,
+              failAlert: true,
+            });
       } else {
         validateField('email');
         validateField('password');

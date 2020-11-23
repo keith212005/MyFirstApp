@@ -3,12 +3,8 @@ import {View, Text, ScrollView, StyleSheet} from 'react-native';
 
 import {Avatar, Accessory} from 'react-native-elements';
 
-import {
-  field_object_signup,
-  signupRefs,
-  validateEmailAddress,
-  commonStyle,
-} from '@constants';
+import {field_object_signup, signupRefs, commonStyle} from '@constants';
+import {isValidEmail, isSameString, isEmpty} from '@utils';
 import {colors, responsiveHeight, fontFamily, responsiveWidth} from '@resource';
 import LinearGradientButton from '../Buttons/linearGradientButton';
 import GenderRadioButton from '../Buttons/genderRadioButton';
@@ -38,8 +34,6 @@ export default class SignupForm extends React.Component {
       dob,
       address,
       dobVisibility,
-      isValidEmail,
-      doesPasswordMatch,
       isVisible,
       isError,
     } = this.state;
@@ -50,7 +44,7 @@ export default class SignupForm extends React.Component {
     };
 
     // call this function to validate any fieldName
-    const validateField = (fieldName) => {
+    const validate = (fieldName) => {
       switch (fieldName) {
         case 'image':
           if (
@@ -68,7 +62,7 @@ export default class SignupForm extends React.Component {
           }
           break;
         case 'firstname':
-          if (firstname.value.length == 0) {
+          if (isEmpty(firstname.value)) {
             this.setState((prevState) => ({
               ...prevState,
               firstname: {
@@ -80,7 +74,7 @@ export default class SignupForm extends React.Component {
           }
           break;
         case 'lastname':
-          if (lastname.value.length == 0) {
+          if (isEmpty(lastname.value)) {
             this.setState((prevState) => ({
               ...prevState,
               lastname: {
@@ -92,7 +86,7 @@ export default class SignupForm extends React.Component {
           }
           break;
         case 'email':
-          if (email.value.length == 0) {
+          if (isEmpty(email.value)) {
             this.setState((prevState) => ({
               email: {
                 ...prevState.email,
@@ -101,8 +95,7 @@ export default class SignupForm extends React.Component {
               },
             }));
           } else {
-            const result = validateEmailAddress(email.value);
-            if (!result) {
+            if (!isValidEmail(email.value)) {
               this.setState((prevState) => ({
                 email: {
                   ...prevState.email,
@@ -114,7 +107,7 @@ export default class SignupForm extends React.Component {
           }
           break;
         case 'password':
-          if (password.value.length == 0) {
+          if (isEmpty(password.value)) {
             this.setState((prevState) => ({
               ...prevState,
               password: {
@@ -138,7 +131,7 @@ export default class SignupForm extends React.Component {
           }
           break;
         case 'confirmpassword':
-          if (confirmPassword.value.length == 0) {
+          if (isEmpty(confirmPassword.value)) {
             this.setState((prevState) => ({
               ...prevState,
               confirmPassword: {
@@ -148,7 +141,7 @@ export default class SignupForm extends React.Component {
               },
             }));
           } else {
-            if (password.value != confirmPassword.value) {
+            if (!isSameString(password.value, confirmPassword.value)) {
               this.setState((prevState) => ({
                 ...prevState,
                 confirmPassword: {
@@ -161,7 +154,7 @@ export default class SignupForm extends React.Component {
           }
           break;
         case 'phoneno':
-          if (phoneno.value.length == 0) {
+          if (isEmpty(phoneno.value)) {
             this.setState((prevState) => ({
               ...prevState,
               phoneno: {
@@ -184,7 +177,7 @@ export default class SignupForm extends React.Component {
           }
           break;
         case 'address':
-          if (address.value.length == 0) {
+          if (isEmpty(address.value)) {
             this.setState((prevState) => ({
               ...prevState,
               address: {
@@ -196,7 +189,7 @@ export default class SignupForm extends React.Component {
           }
           break;
         case 'gender':
-          if (gender.value.length == 0) {
+          if (isEmpty(gender.value)) {
             this.setState((prevState) => ({
               ...prevState,
               gender: {
@@ -209,7 +202,6 @@ export default class SignupForm extends React.Component {
           break;
         case 'dob':
           if (dob.value === 'Date of birth') {
-            console.log('inside');
             this.setState((prevState) => ({
               ...prevState,
               dob: {
@@ -299,14 +291,14 @@ export default class SignupForm extends React.Component {
           }));
         }
         case 'gender': {
-          validateField('image');
-          validateField('firstname');
-          validateField('lastname');
-          validateField('email');
-          validateField('password');
-          validateField('confirmpassword');
-          validateField('phoneno');
-          validateField('address');
+          validate('image');
+          validate('firstname');
+          validate('lastname');
+          validate('email');
+          validate('password');
+          validate('confirmpassword');
+          validate('phoneno');
+          validate('address');
 
           return this.setState((prevState) => ({
             ...prevState,
@@ -318,15 +310,15 @@ export default class SignupForm extends React.Component {
           }));
         }
         case 'dob': {
-          validateField('image');
-          validateField('firstname');
-          validateField('lastname');
-          validateField('email');
-          validateField('password');
-          validateField('confirmpassword');
-          validateField('phoneno');
-          validateField('address');
-          validateField('gender');
+          validate('image');
+          validate('firstname');
+          validate('lastname');
+          validate('email');
+          validate('password');
+          validate('confirmpassword');
+          validate('phoneno');
+          validate('address');
+          validate('gender');
 
           return this.setState((prevState) => ({
             ...prevState,
@@ -350,15 +342,15 @@ export default class SignupForm extends React.Component {
       if (
         avatarSource.value !=
           'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg' &&
-        firstname.value.length > 0 &&
-        lastname.value.length > 0 &&
-        email.value.length > 0 &&
-        password.value.length > 0 &&
-        confirmPassword.value.length > 0 &&
-        phoneno.value.length > 0 &&
-        address.value.length > 0 &&
-        gender.value.length > 0 &&
-        dob.value.length > 0
+        !isEmpty(firstname.value) &&
+        !isEmpty(lastname.value) &&
+        !isEmpty(email.value) &&
+        !isEmpty(password.value) &&
+        !isEmpty(confirmPassword.value) &&
+        !isEmpty(phoneno.value) &&
+        !isEmpty(address.value) &&
+        !isEmpty(gender.value) &&
+        !isEmpty(dob.value)
       ) {
         var personData = {
           avatarSource: avatarSource.value,
@@ -374,16 +366,16 @@ export default class SignupForm extends React.Component {
         };
         console.log(personData);
       } else {
-        validateField('image');
-        validateField('firstname');
-        validateField('lastname');
-        validateField('email');
-        validateField('password');
-        validateField('confirmpassword');
-        validateField('phoneno');
-        validateField('address');
-        validateField('gender');
-        validateField('dob');
+        validate('image');
+        validate('firstname');
+        validate('lastname');
+        validate('email');
+        validate('password');
+        validate('confirmpassword');
+        validate('phoneno');
+        validate('address');
+        validate('gender');
+        validate('dob');
       }
     };
 
@@ -435,7 +427,7 @@ export default class SignupForm extends React.Component {
             onChangeText={(text) => handleOnChangeText(text, 'firstname')}
             onSubmitEditing={() => signupRefs.lastNameRef.current.focus()}
             onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
-            onFocus={() => validateField('image')}
+            onFocus={() => validate('image')}
           />
         </View>
 
@@ -451,8 +443,8 @@ export default class SignupForm extends React.Component {
             onSubmitEditing={() => signupRefs.emailRef.current.focus()}
             onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
             onFocus={() => {
-              validateField('image');
-              validateField('firstname');
+              validate('image');
+              validate('firstname');
             }}
           />
         </View>
@@ -469,9 +461,9 @@ export default class SignupForm extends React.Component {
             onSubmitEditing={() => signupRefs.passwordRef.current.focus()}
             onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
             onFocus={() => {
-              validateField('image');
-              validateField('firstname');
-              validateField('lastname');
+              validate('image');
+              validate('firstname');
+              validate('lastname');
             }}
           />
         </View>
@@ -493,10 +485,10 @@ export default class SignupForm extends React.Component {
             }
             onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
             onFocus={() => {
-              validateField('image');
-              validateField('firstname');
-              validateField('lastname');
-              validateField('email');
+              validate('image');
+              validate('firstname');
+              validate('lastname');
+              validate('email');
             }}
           />
         </View>
@@ -516,11 +508,11 @@ export default class SignupForm extends React.Component {
             onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
             onSubmitEditing={() => signupRefs.phonenoRef.current.focus()}
             onFocus={() => {
-              validateField('image');
-              validateField('firstname');
-              validateField('lastname');
-              validateField('email');
-              validateField('password');
+              validate('image');
+              validate('firstname');
+              validate('lastname');
+              validate('email');
+              validate('password');
             }}
           />
         </View>
@@ -539,12 +531,12 @@ export default class SignupForm extends React.Component {
             onSubmitEditing={() => signupRefs.addressRef.current.focus()}
             onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
             onFocus={() => {
-              validateField('image');
-              validateField('firstname');
-              validateField('lastname');
-              validateField('email');
-              validateField('password');
-              validateField('confirmpassword');
+              validate('image');
+              validate('firstname');
+              validate('lastname');
+              validate('email');
+              validate('password');
+              validate('confirmpassword');
             }}
           />
         </View>
@@ -562,13 +554,13 @@ export default class SignupForm extends React.Component {
             onSubmitEditing={() => {}}
             onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
             onFocus={() => {
-              validateField('image');
-              validateField('firstname');
-              validateField('lastname');
-              validateField('email');
-              validateField('password');
-              validateField('confirmpassword');
-              validateField('phoneno');
+              validate('image');
+              validate('firstname');
+              validate('lastname');
+              validate('email');
+              validate('password');
+              validate('confirmpassword');
+              validate('phoneno');
             }}
           />
         </View>

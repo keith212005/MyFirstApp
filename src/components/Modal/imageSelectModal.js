@@ -89,7 +89,7 @@ export default class ImageSelectModal extends Component {
         this.props.onSuccess(uri);
       })
       .catch((e) => {
-        console.log('error in handlecamera');
+        console.log(e);
       });
   };
 

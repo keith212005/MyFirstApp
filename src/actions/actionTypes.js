@@ -1,0 +1,2 @@
+export const ADD_AUTO_LOGIN = 'ADD_AUTO_LOGIN';
+export const REMOVE_AUTO_LOGIN = 'REMOVE_AUTO_LOGIN';

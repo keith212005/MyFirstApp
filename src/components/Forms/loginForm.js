@@ -72,14 +72,10 @@ export default class LoginForm extends React.Component {
         this.setState((prevState) => ({
           progressVisible: true,
         }));
-
         isSameString(email.value, 'Kj@gmail.com') &&
         isSameString(password.value, '1234')
           ? this.props.navigation.replace('DrawerNavigator')
-          : this.setState({
-              progressVisible: false,
-              failAlert: true,
-            });
+          : null;
       } else {
         validateField('email');
         validateField('password');

@@ -107,7 +107,9 @@ export default class DrawerContent extends React.Component {
                   <Feather name="settings" color={color} size={size} />
                 )}
                 label="Settings"
-                onPress={() => {}}
+                onPress={() => {
+                  this.props.navigation.navigate('Setting');
+                }}
               />
               <DrawerItem
                 icon={({color, size}) => (

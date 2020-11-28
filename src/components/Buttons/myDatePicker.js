@@ -10,29 +10,40 @@ export default class MyDatePicker extends React.Component {
   state = {
     date: new Date(),
     mode: this.props.modeType,
-    show: false,
-    dobs: this.props.value.toString(),
+    visible: this.props.visible,
+    dobValue: this.props.value,
   };
 
   render() {
     const onChange = (event, selectedDate) => {
-      const currentDate = selectedDate || this.state.date;
-      this.setState({
-        show: Platform.OS === 'ios',
-        date: currentDate,
-        dobs:
-          this.state.date.getDate() +
-          '-' +
-          (this.state.date.getMonth() + 1) +
-          '-' +
-          this.state.date.getFullYear(),
-      });
-      this.props.onSuccess(this.state.dobs);
+      // console.log(event);
+      // console.log(selectedDate);
+
+      if (event.type === 'dismissed') {
+        // console.log('event step in');
+        this.setState({
+          visible: false,
+        });
+      }
+      if (event.type === 'set') {
+        const currentDate = selectedDate || this.state.date;
+        this.setState({
+          visible: Platform.OS === 'ios',
+          date: currentDate,
+          dobValue:
+            selectedDate.getDate() +
+            '-' +
+            (selectedDate.getMonth() + 1) +
+            '-' +
+            selectedDate.getFullYear(),
+        });
+        this.props.onSuccess(this.state.dobValue);
+      }
     };
 
     const showMode = (currentMode) => {
       this.setState({
-        show: true,
+        visible: true,
         mode: currentMode,
       });
     };
@@ -54,9 +65,9 @@ export default class MyDatePicker extends React.Component {
               color={colors.gray}
               name="calendar"
             />
-            <Text style={styles.dob}>{this.state.dobs}</Text>
+            <Text style={styles.dob}>{this.state.dobValue}</Text>
 
-            {this.state.show && (
+            {this.state.visible && (
               <>
                 <DateTimePicker
                   testID="dateTimePicker"

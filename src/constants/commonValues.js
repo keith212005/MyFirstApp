@@ -52,6 +52,7 @@ export const field_object_signup = {
     value: '',
   },
   dob: {
+    visible: false,
     isError: false,
     error_text: '',
     value: 'Date of birth',
@@ -64,6 +65,7 @@ export const field_object_signup = {
   dobVisibility: false,
   isVisible: false,
   isError: false,
+  isProcessing: false,
 };
 
 export const field_object_login = {

@@ -14,9 +14,48 @@ import {Avatar, Accessory} from 'react-native-elements';
 
 import {colors, fontFamily, responsiveHeight} from '@resource';
 
-export default class ImageSelectModal extends Component {
+export default class UploadImage extends Component {
   state = {
     isVisible: this.props.isVisible,
+  };
+
+  handleCamera = () => {
+    this.props.dismiss();
+    ImagePicker.openCamera({
+      cropping: true,
+      width: 500,
+      height: 500,
+      cropperCircleOverlay: true,
+      compressImageMaxWidth: 640,
+      compressImageMaxHeight: 480,
+      freeStyleCropEnabled: true,
+      includeBase64: true,
+    })
+      .then((image) => {
+        var uri = image.path;
+        this.props.onSuccess(uri);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  handleGallery = () => {
+    this.props.dismiss();
+    ImagePicker.openPicker({
+      cropping: true,
+      width: 300,
+      height: 400,
+      cropperCircleOverlay: true,
+      freeStyleCropEnabled: true,
+      avoidEmptySpaceAroundImage: true,
+      includeBase64: true,
+    })
+      .then((image) => {
+        var uri = image.path;
+        this.props.onSuccess(uri);
+      })
+      .catch((e) => console.log(e));
   };
 
   render() {
@@ -71,45 +110,6 @@ export default class ImageSelectModal extends Component {
       </>
     );
   }
-
-  handleCamera = () => {
-    this.props.dismiss();
-    ImagePicker.openCamera({
-      cropping: true,
-      width: 500,
-      height: 500,
-      cropperCircleOverlay: true,
-      compressImageMaxWidth: 640,
-      compressImageMaxHeight: 480,
-      freeStyleCropEnabled: true,
-      includeBase64: true,
-    })
-      .then((image) => {
-        var uri = image.path;
-        this.props.onSuccess(uri);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-
-  handleGallery = () => {
-    this.props.dismiss();
-    ImagePicker.openPicker({
-      cropping: true,
-      width: 300,
-      height: 400,
-      cropperCircleOverlay: true,
-      freeStyleCropEnabled: true,
-      avoidEmptySpaceAroundImage: true,
-      includeBase64: true,
-    })
-      .then((image) => {
-        var uri = image.path;
-        this.props.onSuccess(uri);
-      })
-      .catch((e) => console.log(e));
-  };
 }
 
 const styles = StyleSheet.create({

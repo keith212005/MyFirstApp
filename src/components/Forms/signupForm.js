@@ -10,7 +10,8 @@ import LinearGradientButton from '../Buttons/linearGradientButton';
 import GenderRadioButton from '../Buttons/genderRadioButton';
 import MyDatePicker from '../Buttons/myDatePicker';
 import MyTextInput from '../TextInputs/myTextInput';
-import ImageSelectModal from '../Modal/imageSelectModal';
+import UploadImage from '../Modal/uploadImage';
+import SimpleActivityIndicator from '../ActivityIndicator/simpleActivityIndicator';
 
 export default class SignupForm extends React.Component {
   constructor(props) {
@@ -201,7 +202,7 @@ export default class SignupForm extends React.Component {
           }
           break;
         case 'dob':
-          if (dob.value === 'Date of birth') {
+          if (isEmpty) {
             this.setState((prevState) => ({
               ...prevState,
               dob: {
@@ -220,115 +221,139 @@ export default class SignupForm extends React.Component {
     // called when change text in any InputText
     const handleOnChangeText = (text, label) => {
       switch (label) {
-        case 'firstname': {
-          return this.setState((prevState) => ({
-            ...prevState,
-            firstname: {
-              ...prevState.firstname,
-              value: text,
-              isError: false,
-            },
-          }));
-        }
-        case 'lastname': {
-          return this.setState((prevState) => ({
-            ...prevState,
-            lastname: {
-              ...prevState.lastname,
-              value: text,
-              isError: false,
-            },
-          }));
-        }
-        case 'email': {
-          return this.setState((prevState) => ({
-            ...prevState,
-            email: {
-              ...prevState.email,
-              value: text.trim(),
-              isError: false,
-            },
-          }));
-        }
-        case 'password': {
-          return this.setState((prevState) => ({
-            ...prevState,
-            password: {
-              ...prevState.password,
-              value: text,
-              isError: false,
-            },
-          }));
-        }
-        case 'confirmpassword': {
-          return this.setState((prevState) => ({
-            ...prevState,
-            confirmPassword: {
-              ...prevState.confirmPassword,
-              value: text,
-              isError: false,
-            },
-          }));
-        }
-        case 'phoneno': {
-          return this.setState((prevState) => ({
-            ...prevState,
-            phoneno: {
-              ...prevState.phoneno,
-              value: text,
-              isError: false,
-            },
-          }));
-        }
-        case 'address': {
-          return this.setState((prevState) => ({
-            ...prevState,
-            address: {
-              ...prevState.address,
-              value: text,
-              isError: false,
-            },
-          }));
-        }
-        case 'gender': {
-          validate('image');
-          validate('firstname');
-          validate('lastname');
-          validate('email');
-          validate('password');
-          validate('confirmpassword');
-          validate('phoneno');
-          validate('address');
-
-          return this.setState((prevState) => ({
-            ...prevState,
-            gender: {
-              ...prevState.gender,
-              value: text,
-              isError: false,
-            },
-          }));
-        }
-        case 'dob': {
-          validate('image');
-          validate('firstname');
-          validate('lastname');
-          validate('email');
-          validate('password');
-          validate('confirmpassword');
-          validate('phoneno');
-          validate('address');
-          validate('gender');
-
-          return this.setState((prevState) => ({
-            ...prevState,
-            dob: {
-              ...prevState.dob,
-              value: text.toString(),
-              isError: false,
-            },
-          }));
-        }
+        case 'firstname':
+          {
+            this.setState((prevState) => ({
+              ...prevState,
+              firstname: {
+                ...prevState.firstname,
+                value: text,
+                isError: false,
+              },
+            }));
+          }
+          break;
+        case 'lastname':
+          {
+            this.setState((prevState) => ({
+              ...prevState,
+              lastname: {
+                ...prevState.lastname,
+                value: text,
+                isError: false,
+              },
+            }));
+          }
+          break;
+        case 'email':
+          {
+            return this.setState((prevState) => ({
+              ...prevState,
+              email: {
+                ...prevState.email,
+                value: text.trim(),
+                isError: false,
+              },
+            }));
+          }
+          break;
+        case 'password':
+          {
+            this.setState((prevState) => ({
+              ...prevState,
+              password: {
+                ...prevState.password,
+                value: text,
+                isError: false,
+              },
+            }));
+          }
+          break;
+        case 'confirmpassword':
+          {
+            this.setState((prevState) => ({
+              ...prevState,
+              confirmPassword: {
+                ...prevState.confirmPassword,
+                value: text,
+                isError: false,
+              },
+            }));
+          }
+          break;
+        case 'phoneno':
+          {
+            this.setState((prevState) => ({
+              ...prevState,
+              phoneno: {
+                ...prevState.phoneno,
+                value: text,
+                isError: false,
+              },
+            }));
+          }
+          break;
+        case 'address':
+          {
+            this.setState((prevState) => ({
+              ...prevState,
+              address: {
+                ...prevState.address,
+                value: text,
+                isError: false,
+              },
+            }));
+          }
+          break;
+        case 'gender':
+          {
+            this.setState((prevState) => ({
+              ...prevState,
+              gender: {
+                ...prevState.gender,
+                value: text,
+                isError: false,
+              },
+            }));
+            validate('image');
+            validate('firstname');
+            validate('lastname');
+            validate('email');
+            validate('password');
+            validate('confirmpassword');
+            validate('phoneno');
+            validate('address');
+          }
+          break;
+        case 'dob':
+          {
+            this.setState(
+              (prevState) => (
+                {
+                  ...prevState,
+                  dob: {
+                    ...prevState.dob,
+                    value: text.toString(),
+                    isError: false,
+                  },
+                },
+                () => {
+                  console.log('after set state');
+                  this.afterSetStateFinished();
+                }
+              ),
+            );
+            validate('image');
+            validate('firstname');
+            validate('lastname');
+            validate('email');
+            validate('password');
+            validate('confirmpassword');
+            validate('phoneno');
+            validate('address');
+            validate('gender');
+          }
+          break;
       }
     };
 
@@ -381,9 +406,11 @@ export default class SignupForm extends React.Component {
 
     return (
       <View style={commonStyle.containerFlex1}>
+        {this.state.isProcessing ? <SimpleActivityIndicator /> : null}
+
         <View style={styles.imageContainer}>
           {isVisible ? (
-            <ImageSelectModal
+            <UploadImage
               isVisible={isVisible}
               onRequestClose={(value) => this.setState({isVisible: false})}
               dismiss={() => this.setState({isVisible: false})}
@@ -576,8 +603,8 @@ export default class SignupForm extends React.Component {
 
         <View style={commonStyle.field_group}>
           <MyDatePicker
+            visible={dob.visible}
             modeType="date"
-            dob={dobVisibility}
             value={dob.value}
             isError={dob.isError}
             error_text={dob.error_text}

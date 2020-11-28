@@ -24,6 +24,7 @@ export default class Home extends React.Component {
       );
     });
   }
+
   componentWillUnmount() {
     this._unsubscribefocus();
     this._unsubscribeblur();
@@ -42,15 +43,18 @@ export default class Home extends React.Component {
   render() {
     return (
       <>
-        <View style={commonStyle.containerFlex1}>
-          <Components.CustomHeader
-            title="HOME"
-            onPress={() =>
-              this.props.navigation.dispatch(DrawerActions.toggleDrawer())
-            }
-          />
+        <Components.CustomHeader
+          title="HOME"
+          onPress={() =>
+            this.props.navigation.dispatch(DrawerActions.toggleDrawer())
+          }
+        />
 
-          <Text>Home Screen</Text>
+        <View style={[commonStyle.containerFlex1]}>
+          <Text
+            style={{textAlign: 'center', borderWidth: 1, borderColor: 'blue'}}>
+            Welcome
+          </Text>
           <Components.ExitAppDialog
             showAlert={this.state.showAlert}
             title="Exit"

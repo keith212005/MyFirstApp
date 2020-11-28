@@ -4,7 +4,7 @@ export MyDatePicker from './Buttons/myDatePicker';
 export AvatarIconButton from './Buttons/avatarIconButton';
 export MyTextInput from './TextInputs/myTextInput';
 export DrawerContent from './Drawer/DrawerContent';
-export ImageSelectModal from './Modal/imageSelectModal';
+export UploadImage from './Modal/uploadImage';
 export CustomHeader from './Header/customHeader';
 export ExitAppDialog from './Dialogs/exitAppDialog';
 export SimpleAlertDialog from './Dialogs/simpleAlertDialog';

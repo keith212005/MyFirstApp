@@ -13,23 +13,12 @@ import {
 } from 'react-native-paper';
 
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import * as Action from '@actions';
-
-const matchStateToProps = (state) => {
-  return {
-    autoLoginStatus: state.autoLogin.status,
-  };
-};
-
-const matchDispatchToProps = (dispatch) => {
-  return {
-    logout: () => dispatch(Action.removeAutoLogin()),
-  };
-};
+import {bindAutoLoginActions} from '@actions';
 
 class DrawerContent extends React.Component {
   state = {
@@ -166,7 +155,7 @@ class DrawerContent extends React.Component {
             )}
             label="Sign out"
             onPress={() => {
-              this.props.logout();
+              this.props.removeAutoLogin();
               this.props.navigation.replace('Login');
             }}
           />
@@ -217,5 +206,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
 });
+
+const matchStateToProps = (state) => {
+  return {
+    autoLoginStatus: state.autoLogin.status,
+  };
+};
+
+const matchDispatchToProps = (dispatch) =>
+  bindActionCreators(bindAutoLoginActions, dispatch);
 
 export default connect(matchStateToProps, matchDispatchToProps)(DrawerContent);

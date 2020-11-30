@@ -3,22 +3,13 @@ import {View, Text, BackHandler} from 'react-native';
 
 import {DrawerActions} from '@react-navigation/native';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 
 import {styles} from './style';
 import {commonStyle} from '@constants';
 import * as Components from '@components';
 
-const matchStateToProps = (state) => {
-  return {
-    autoLoginStatus: state.autoLogin.status,
-  };
-};
-
-const matchDispatchToProps = (dispatch) => {
-  return {
-    logout: () => dispatch(Action.removeAutoLogin()),
-  };
-};
+import {bindAutoLoginActions} from '@actions';
 
 class Home extends React.Component {
   constructor(props) {
@@ -87,5 +78,20 @@ class Home extends React.Component {
     }
   }
 }
+
+const matchStateToProps = (state) => {
+  return {
+    autoLoginStatus: state.autoLogin.status,
+  };
+};
+
+const matchDispatchToProps = (dispatch) =>
+  bindActionCreators(bindAutoLoginActions, dispatch);
+
+// const matchDispatchToProps = (dispatch) => {
+//   return {
+//     logout: () => dispatch(Action.removeAutoLogin()),
+//   };
+// };
 
 export default connect(matchStateToProps, matchDispatchToProps)(Home);

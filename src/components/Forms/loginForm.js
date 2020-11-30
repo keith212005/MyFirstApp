@@ -2,23 +2,15 @@ import React from 'react';
 import {View, Text, StyleSheet, Keyboard, TouchableOpacity} from 'react-native';
 
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 
-import * as Action from '@actions';
+import {bindAutoLoginActions} from '@actions';
 import {field_object_login, commonStyle} from '@constants';
 import {isValidEmail, isSameString, isEmpty} from '@utils';
 import LinearGradientButton from '../Buttons/linearGradientButton';
 import MyTextInput from '../TextInputs/myTextInput';
 import SimpleActivityIndicator from '../ActivityIndicator/simpleActivityIndicator';
 import {responsiveHeight, responsiveWidth, colors, fontFamily} from '@resource';
-
-const matchStateToProps = (state) => {
-  console.log(JSON.stringify(state));
-  return {currentCount: state.autoLogin.autoLoginStatus};
-};
-
-const matchDispatchToProps = (dispatch) => {
-  return {addAutoLogin: () => dispatch(Action.addAutoLogin())};
-};
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -220,5 +212,12 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
 });
+
+const matchStateToProps = (state) => {
+  return {currentCount: state.autoLogin.autoLoginStatus};
+};
+
+const matchDispatchToProps = (dispatch) =>
+  bindActionCreators(bindAutoLoginActions, dispatch);
 
 export default connect(matchStateToProps, matchDispatchToProps)(LoginForm);

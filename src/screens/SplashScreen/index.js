@@ -2,11 +2,20 @@ import React from 'react';
 import {View, Image} from 'react-native';
 
 import {styles} from './style';
+import {connect} from 'react-redux';
 
-export default class Splash extends React.Component {
+const matchStateToProps = (state) => {
+  return {
+    autoLoginStatus: state.autoLogin.status,
+  };
+};
+
+class Splash extends React.Component {
   componentDidMount() {
     setTimeout(() => {
-      this.props.navigation.replace('Start');
+      this.props.autoLoginStatus
+        ? this.props.navigation.replace('DrawerNavigator')
+        : this.props.navigation.replace('Start');
     }, 2000);
   }
   render() {
@@ -23,3 +32,5 @@ export default class Splash extends React.Component {
     );
   }
 }
+
+export default connect(matchStateToProps)(Splash);

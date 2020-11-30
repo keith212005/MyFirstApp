@@ -1,6 +1,9 @@
 import React from 'react';
 import {View, Text, StyleSheet, Keyboard, TouchableOpacity} from 'react-native';
 
+import {connect} from 'react-redux';
+
+import * as Action from '@actions';
 import {field_object_login, commonStyle} from '@constants';
 import {isValidEmail, isSameString, isEmpty} from '@utils';
 import LinearGradientButton from '../Buttons/linearGradientButton';
@@ -8,7 +11,16 @@ import MyTextInput from '../TextInputs/myTextInput';
 import SimpleActivityIndicator from '../ActivityIndicator/simpleActivityIndicator';
 import {responsiveHeight, responsiveWidth, colors, fontFamily} from '@resource';
 
-export default class LoginForm extends React.Component {
+const matchStateToProps = (state) => {
+  console.log(JSON.stringify(state));
+  return {currentCount: state.autoLogin.autoLoginStatus};
+};
+
+const matchDispatchToProps = (dispatch) => {
+  return {addAutoLogin: () => dispatch(Action.addAutoLogin())};
+};
+
+class LoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.emailRef = React.createRef();
@@ -72,13 +84,16 @@ export default class LoginForm extends React.Component {
         this.setState((prevState) => ({
           progressVisible: true,
         }));
-        isSameString(email.value, 'Kj@gmail.com') &&
-        isSameString(password.value, '1234')
-          ? this.props.navigation.replace('DrawerNavigator')
-          : null;
-      } else {
-        validateField('email');
-        validateField('password');
+        if (
+          isSameString(email.value, 'Kj@gmail.com') &&
+          isSameString(password.value, '1234')
+        ) {
+          this.props.addAutoLogin();
+          this.props.navigation.replace('DrawerNavigator');
+        } else {
+          validateField('email');
+          validateField('password');
+        }
       }
     };
 
@@ -205,3 +220,5 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
 });
+
+export default connect(matchStateToProps, matchDispatchToProps)(LoginForm);

@@ -11,12 +11,27 @@ import {
   TouchableRipple,
   Switch,
 } from 'react-native-paper';
+
+import {connect} from 'react-redux';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import * as Action from '@actions';
 
-export default class DrawerContent extends React.Component {
+const matchStateToProps = (state) => {
+  return {
+    autoLoginStatus: state.autoLogin.status,
+  };
+};
+
+const matchDispatchToProps = (dispatch) => {
+  return {
+    logout: () => dispatch(Action.removeAutoLogin()),
+  };
+};
+
+class DrawerContent extends React.Component {
   state = {
     isDarkTheme: false,
     showAlert: true,
@@ -151,8 +166,8 @@ export default class DrawerContent extends React.Component {
             )}
             label="Sign out"
             onPress={() => {
-              this.props.navigation.pop();
-              this.props.navigation.navigate('Login');
+              this.props.logout();
+              this.props.navigation.replace('Login');
             }}
           />
         </Drawer.Section>
@@ -202,3 +217,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
 });
+
+export default connect(matchStateToProps, matchDispatchToProps)(DrawerContent);

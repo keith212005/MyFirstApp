@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {View, Text, Platform, StyleSheet, Pressable} from 'react-native';
+import {
+  View,
+  Text,
+  Platform,
+  StyleSheet,
+  Pressable,
+  Keyboard,
+} from 'react-native';
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -45,10 +52,12 @@ export default class MyDatePicker extends React.Component {
     };
 
     const showDatepicker = () => {
+      Keyboard.dismiss();
       showMode('date');
     };
 
     const showTimepicker = () => {
+      Keyboard.dismiss();
       showMode('time');
     };
     return (

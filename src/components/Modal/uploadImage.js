@@ -6,6 +6,9 @@ import {
   TouchableWithoutFeedback,
   Image,
   Modal,
+  Alert,
+  PermissionsAndroid,
+  Linking,
 } from 'react-native';
 
 import {IconButton, Button, Card, Title, Paragraph} from 'react-native-paper';
@@ -36,7 +39,23 @@ export default class UploadImage extends Component {
         this.props.onSuccess(uri);
       })
       .catch((e) => {
-        console.log(e);
+        console.log(e.toString());
+        if (e.toString() === 'Error: Required permission missing') {
+          Alert.alert(
+            'Permission denied',
+            'My First App need to access your camera and storage, without this permission the ' +
+              'app is unable to take photos. Go to App permissions and enable camera and storage permissions.',
+            [
+              {
+                text: 'Cancel',
+                onPress: () => {},
+                style: 'cancel',
+              },
+              {text: 'OK', onPress: () => Linking.openSettings()},
+            ],
+            {cancelable: false},
+          );
+        }
       });
   };
 

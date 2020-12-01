@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, ScrollView, StyleSheet} from 'react-native';
+import {View, Text, ScrollView, StyleSheet, Keyboard} from 'react-native';
 
 import {Avatar, Accessory} from 'react-native-elements';
 
@@ -318,6 +318,7 @@ export default class SignupForm extends React.Component {
           break;
         case 'gender':
           {
+            Keyboard.dismiss();
             this.setState(
               (prevState) => ({
                 ...prevState,
@@ -342,6 +343,7 @@ export default class SignupForm extends React.Component {
           break;
         case 'dob':
           {
+            Keyboard.dismiss();
             this.setState(
               (prevState) => ({
                 ...prevState,

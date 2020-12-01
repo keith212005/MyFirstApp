@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Pressable} from 'react-native';
+import {View, StyleSheet, Pressable, Keyboard} from 'react-native';
 
 import {RadioButton, Text} from 'react-native-paper';
 import {colors, fontFamily} from '@resource';
@@ -12,6 +12,7 @@ export default class GenderRadioButton extends React.Component {
 
   render() {
     const handleClick = (text) => {
+      Keyboard.dismiss;
       this.setState({value: text});
       this.props.onSuccess(text);
     };
@@ -26,6 +27,7 @@ export default class GenderRadioButton extends React.Component {
               <Text
                 style={styles.title}
                 onPress={() => {
+                  Keyboard.dismiss();
                   this.setState({value: 'Male'});
                   this.props.onSuccess(this.state.value);
                 }}>
@@ -35,6 +37,7 @@ export default class GenderRadioButton extends React.Component {
               <Text
                 style={styles.title}
                 onPress={() => {
+                  Keyboard.dismiss();
                   this.setState({value: 'Female'});
                   this.props.onSuccess(this.state.value);
                 }}>

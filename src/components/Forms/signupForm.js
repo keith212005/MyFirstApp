@@ -318,51 +318,51 @@ export default class SignupForm extends React.Component {
           break;
         case 'gender':
           {
-            this.setState((prevState) => ({
-              ...prevState,
-              gender: {
-                ...prevState.gender,
-                value: text,
-                isError: false,
+            this.setState(
+              (prevState) => ({
+                ...prevState,
+                gender: {
+                  ...prevState.gender,
+                  value: text,
+                  isError: false,
+                },
+              }),
+              () => {
+                validate('image');
+                validate('firstname');
+                validate('lastname');
+                validate('email');
+                validate('password');
+                validate('confirmpassword');
+                validate('phoneno');
+                validate('address');
               },
-            }));
-            validate('image');
-            validate('firstname');
-            validate('lastname');
-            validate('email');
-            validate('password');
-            validate('confirmpassword');
-            validate('phoneno');
-            validate('address');
+            );
           }
           break;
         case 'dob':
           {
             this.setState(
-              (prevState) => (
-                {
-                  ...prevState,
-                  dob: {
-                    ...prevState.dob,
-                    value: text.toString(),
-                    isError: false,
-                  },
+              (prevState) => ({
+                ...prevState,
+                dob: {
+                  ...prevState.dob,
+                  value: text.toString(),
+                  isError: false,
                 },
-                () => {
-                  console.log('after set state');
-                  this.afterSetStateFinished();
-                }
-              ),
+              }),
+              () => {
+                validate('image');
+                validate('firstname');
+                validate('lastname');
+                validate('email');
+                validate('password');
+                validate('confirmpassword');
+                validate('phoneno');
+                validate('address');
+                validate('gender');
+              },
             );
-            validate('image');
-            validate('firstname');
-            validate('lastname');
-            validate('email');
-            validate('password');
-            validate('confirmpassword');
-            validate('phoneno');
-            validate('address');
-            validate('gender');
           }
           break;
       }

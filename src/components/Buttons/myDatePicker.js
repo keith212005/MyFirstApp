@@ -16,11 +16,7 @@ export default class MyDatePicker extends React.Component {
 
   render() {
     const onChange = (event, selectedDate) => {
-      // console.log(event);
-      // console.log(selectedDate);
-
       if (event.type === 'dismissed') {
-        // console.log('event step in');
         this.setState({
           visible: false,
         });

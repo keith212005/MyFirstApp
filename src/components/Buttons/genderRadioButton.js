@@ -25,13 +25,19 @@ export default class GenderRadioButton extends React.Component {
               <RadioButton value="Male" />
               <Text
                 style={styles.title}
-                onPress={() => this.setState({value: 'Male'})}>
+                onPress={() => {
+                  this.setState({value: 'Male'});
+                  this.props.onSuccess(this.state.value);
+                }}>
                 Male
               </Text>
               <RadioButton value="Female" />
               <Text
                 style={styles.title}
-                onPress={() => this.setState({value: 'Female'})}>
+                onPress={() => {
+                  this.setState({value: 'Female'});
+                  this.props.onSuccess(this.state.value);
+                }}>
                 Female
               </Text>
             </View>

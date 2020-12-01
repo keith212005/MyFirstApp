@@ -17,7 +17,6 @@ export default class GenderRadioButton extends React.Component {
     };
     return (
       <>
-        <Text style={styles.title}>Gender</Text>
         <View style={styles.container}>
           <RadioButton.Group
             value={this.state.value}
@@ -47,17 +46,11 @@ export default class GenderRadioButton extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    borderWidth: 1,
-    borderRadius: 5,
-    borderColor: colors.gray,
-  },
   title: {
     fontFamily: fontFamily.RobotoMedium,
     color: colors.grayFont,
   },
   radioGroup: {
-    padding: 8,
     flexDirection: 'row',
     alignItems: 'center',
   },

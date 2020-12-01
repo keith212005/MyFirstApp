@@ -4,7 +4,7 @@ import {View, Text, ScrollView, StyleSheet} from 'react-native';
 import {Avatar, Accessory} from 'react-native-elements';
 
 import {field_object_signup, signupRefs, commonStyle} from '@constants';
-import {isValidEmail, isSameString, isEmpty} from '@utils';
+import {isValidEmail, isSameString, isEmpty, isPhoneNumber} from '@utils';
 import {colors, responsiveHeight, fontFamily, responsiveWidth} from '@resource';
 import LinearGradientButton from '../Buttons/linearGradientButton';
 import GenderRadioButton from '../Buttons/genderRadioButton';
@@ -174,6 +174,17 @@ export default class SignupForm extends React.Component {
                   error_text: 'Phone number should be minimum 10 digits.',
                 },
               }));
+            } else {
+              if (!isPhoneNumber(phoneno.value)) {
+                this.setState((prevState) => ({
+                  ...prevState,
+                  phoneno: {
+                    ...prevState.phoneno,
+                    isError: true,
+                    error_text: 'Enter a valid phone number.',
+                  },
+                }));
+              }
             }
           }
           break;

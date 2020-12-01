@@ -1,5 +1,5 @@
 export const isValidEmail = (email) => {
-  let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
   if (reg.test(email) === false) {
     return false;
   } else {
@@ -13,4 +13,8 @@ export const isSameString = (str1, str2) => {
 
 export const isEmpty = (object) => {
   return object.length == 0 ? true : false;
+};
+
+export const isPhoneNumber = (str) => {
+  return /^\d+$/.test(str);
 };

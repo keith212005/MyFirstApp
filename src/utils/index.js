@@ -1,1 +1,1 @@
-export {isValidEmail, isSameString, isEmpty} from './validation';
+export * from './validation';

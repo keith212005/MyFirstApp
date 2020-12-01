@@ -8,7 +8,6 @@ import {bindActionCreators} from 'redux';
 import {styles} from './style';
 import {commonStyle} from '@constants';
 import * as Components from '@components';
-
 import {bindAutoLoginActions} from '@actions';
 
 class Home extends React.Component {

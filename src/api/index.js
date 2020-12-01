@@ -1,0 +1,1 @@
+export {checkConnectivity} from './checkConnectivity';

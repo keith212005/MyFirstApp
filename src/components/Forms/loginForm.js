@@ -1,16 +1,25 @@
 import React from 'react';
-import {View, Text, StyleSheet, Keyboard, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Keyboard,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
 import {bindAutoLoginActions} from '@actions';
 import {field_object_login, commonStyle} from '@constants';
+
 import {isValidEmail, isSameString, isEmpty} from '@utils';
 import LinearGradientButton from '../Buttons/linearGradientButton';
 import MyTextInput from '../TextInputs/myTextInput';
 import SimpleActivityIndicator from '../ActivityIndicator/simpleActivityIndicator';
 import {responsiveHeight, responsiveWidth, colors, fontFamily} from '@resource';
+import {checkConnectivity} from '@api';
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -73,19 +82,28 @@ class LoginForm extends React.Component {
         password.value.length > 0 &&
         isValidEmail(email.value)
       ) {
-        this.setState((prevState) => ({
-          progressVisible: true,
-        }));
-        if (
-          isSameString(email.value, 'Kj@gmail.com') &&
-          isSameString(password.value, '1234')
-        ) {
-          this.props.addAutoLogin();
-          this.props.navigation.replace('DrawerNavigator');
-        } else {
-          validateField('email');
-          validateField('password');
-        }
+        // this.setState((prevState) => ({
+        //   progressVisible: true,
+        // }));
+
+        // this function return promise, if resolve go to home screen else display alert
+        checkConnectivity()
+          .then(() => {
+            if (
+              isSameString(email.value, 'Kj@gmail.com') &&
+              isSameString(password.value, '1234')
+            ) {
+              this.props.addAutoLogin();
+              this.props.navigation.replace('DrawerNavigator');
+            } else {
+              validateField('email');
+              validateField('password');
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            Alert.alert('Error', error);
+          });
       }
     };
 
@@ -214,7 +232,10 @@ const styles = StyleSheet.create({
 });
 
 const matchStateToProps = (state) => {
-  return {currentCount: state.autoLogin.autoLoginStatus};
+  return {
+    currentCount: state.autoLogin.autoLoginStatus,
+    isOnline: state.connectionStatus.isOnline,
+  };
 };
 
 const matchDispatchToProps = (dispatch) =>

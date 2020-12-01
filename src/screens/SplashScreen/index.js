@@ -1,17 +1,21 @@
 import React from 'react';
 import {View, Image} from 'react-native';
 
-import {styles} from './style';
+import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import NetInfo from '@react-native-community/netinfo';
 
-const matchStateToProps = (state) => {
-  return {
-    autoLoginStatus: state.autoLogin.status,
-  };
-};
+import {styles} from './style';
+import {bindConnectionState} from '@actions';
 
 class Splash extends React.Component {
   componentDidMount() {
+    //This listener is used to listen to internet connection and storing value to connectionState reducer
+    NetInfo.addEventListener((state) => {
+      this.props.changeConnectionState(state.isConnected);
+    });
+
+    // autoLogin is true go to Home Screen else to Start screen
     setTimeout(() => {
       this.props.autoLoginStatus
         ? this.props.navigation.replace('DrawerNavigator')
@@ -33,4 +37,13 @@ class Splash extends React.Component {
   }
 }
 
-export default connect(matchStateToProps)(Splash);
+const matchStateToProps = (state) => {
+  console.log(state);
+  return {
+    autoLoginStatus: state.autoLogin.status,
+  };
+};
+const matchDispatchToProps = (dispatch) =>
+  bindActionCreators(bindConnectionState, dispatch);
+
+export default connect(matchStateToProps, matchDispatchToProps)(Splash);

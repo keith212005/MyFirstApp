@@ -39,7 +39,6 @@ export default class UploadImage extends Component {
         this.props.onSuccess(uri);
       })
       .catch((e) => {
-        console.log(e.toString());
         if (e.toString() === 'Error: Required permission missing') {
           Alert.alert(
             'Permission denied',

@@ -104,6 +104,9 @@ class LoginForm extends React.Component {
             console.log(error);
             Alert.alert('Error', error);
           });
+      } else {
+        validateField('email');
+        validateField('password');
       }
     };
 

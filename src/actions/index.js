@@ -1,8 +1,8 @@
 import * as autoLogin from './autoLogin';
-import * as connectionState from './connectionState';
+import * as addNetworkListener from './addNetworkListener';
 
 export const bindAutoLoginActions = Object.assign({}, autoLogin);
-export const bindConnectionState = Object.assign({}, connectionState);
+export const bindNetworkListener = Object.assign({}, addNetworkListener);
 
 export {
   ADD_AUTO_LOGIN,

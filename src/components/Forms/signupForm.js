@@ -3,7 +3,8 @@ import {View, Text, ScrollView, StyleSheet, Keyboard} from 'react-native';
 
 import {Avatar, Accessory} from 'react-native-elements';
 
-import {field_object_signup, signupRefs, commonStyle} from '@constants';
+import {field_object_signup, signupRefs} from '@constants';
+import {commonStyle} from '@resource';
 import {isValidEmail, isSameString, isEmpty, isPhoneNumber} from '@utils';
 import {colors, responsiveHeight, fontFamily, responsiveWidth} from '@resource';
 import LinearGradientButton from '../Buttons/linearGradientButton';

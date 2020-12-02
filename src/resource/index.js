@@ -1,10 +1,10 @@
-export {colors} from './color';
-export {fontFamily} from './font';
 export {
   screenHeight,
   screenWidth,
   responsiveHeight,
   responsiveWidth,
 } from './responsive';
-
-export {COMMON_STYLES} from './style';
+export {colors} from './color';
+export {fontFamily} from './font';
+export {commonStyle} from './commonStyle';
+export {getImageName} from './image';

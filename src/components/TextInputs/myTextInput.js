@@ -3,8 +3,7 @@ import {View, Text} from 'react-native';
 
 import {TextInput} from 'react-native-paper';
 
-import {colors} from '@resource';
-import {commonStyle} from '@constants';
+import {colors, commonStyle} from '@resource';
 
 export default class MyTextInput extends Component {
   state = {
@@ -42,6 +41,7 @@ export default class MyTextInput extends Component {
     return (
       <>
         <TextInput
+          style={{textAlignVertical: 'center'}}
           mode={props.mode ? props.mode : 'outlined'}
           keyboardType={props.keyboardType ? props.keyboardType : 'default'}
           returnKeyType={props.returnKeyType ? props.returnKeyType : 'next'}

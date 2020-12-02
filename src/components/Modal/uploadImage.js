@@ -22,6 +22,25 @@ export default class UploadImage extends Component {
     isVisible: this.props.isVisible,
   };
 
+  handleDeniedPermission = (e) => {
+    if (e.toString() === 'Error: Required permission missing') {
+      Alert.alert(
+        'Permission denied',
+        'My First App need to access your camera and storage, without this permission the ' +
+          'app is unable to take photos. Go to App permissions and enable camera and storage permissions.',
+        [
+          {
+            text: 'Cancel',
+            onPress: () => {},
+            style: 'cancel',
+          },
+          {text: 'Go to settings', onPress: () => Linking.openSettings()},
+        ],
+        {cancelable: false},
+      );
+    }
+  };
+
   handleCamera = () => {
     this.props.dismiss();
     ImagePicker.openCamera({
@@ -39,22 +58,7 @@ export default class UploadImage extends Component {
         this.props.onSuccess(uri);
       })
       .catch((e) => {
-        if (e.toString() === 'Error: Required permission missing') {
-          Alert.alert(
-            'Permission denied',
-            'My First App need to access your camera and storage, without this permission the ' +
-              'app is unable to take photos. Go to App permissions and enable camera and storage permissions.',
-            [
-              {
-                text: 'Cancel',
-                onPress: () => {},
-                style: 'cancel',
-              },
-              {text: 'OK', onPress: () => Linking.openSettings()},
-            ],
-            {cancelable: false},
-          );
-        }
+        this.handleDeniedPermission(e);
       });
   };
 
@@ -73,7 +77,10 @@ export default class UploadImage extends Component {
         var uri = image.path;
         this.props.onSuccess(uri);
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        console.log(e);
+        this.handleDeniedPermission(e);
+      });
   };
 
   render() {

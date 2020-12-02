@@ -13,8 +13,8 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  // whitelist: ['autoLogin', 'navigationReducer'], // only navigation will be persisted
-  blacklist: ['connectionStatus'], // only navigation will be persisted
+  // whitelist: ['autoLogin'], // by default all reducers in root reducer will be persisted
+  blacklist: ['connectionStatus'], // put reducers whose data you dont want to persist
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

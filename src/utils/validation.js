@@ -1,5 +1,5 @@
 export const isValidEmail = (email) => {
-  let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
+  let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,5})+$/;
   if (reg.test(email) === false) {
     return false;
   } else {

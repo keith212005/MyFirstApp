@@ -11,7 +11,7 @@ import {
 import DateTimePicker from '@react-native-community/datetimepicker';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {colors, fontFamily, responsiveWidth} from '@resource';
-import {commonStyle} from '@constants';
+import {commonStyle} from '@resource';
 
 export default class MyDatePicker extends React.Component {
   state = {

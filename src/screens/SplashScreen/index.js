@@ -10,7 +10,7 @@ import {bindConnectionState} from '@actions';
 
 class Splash extends React.Component {
   componentDidMount() {
-    //This listener is used to listen to internet connection and storing value to connectionState reducer
+    //Listen to internet connection and storing value to connectionState reducer
     NetInfo.addEventListener((state) => {
       this.props.changeConnectionState(state.isConnected);
     });

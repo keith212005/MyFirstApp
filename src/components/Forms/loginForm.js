@@ -12,7 +12,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
 import {bindAutoLoginActions} from '@actions';
-import {field_object_login, commonStyle} from '@constants';
+import {field_object_login} from '@constants';
+import {commonStyle} from '@resource';
 
 import {isValidEmail, isSameString, isEmpty} from '@utils';
 import LinearGradientButton from '../Buttons/linearGradientButton';

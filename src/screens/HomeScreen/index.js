@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
 import {styles} from './style';
-import {commonStyle} from '@constants';
+import {commonStyle} from '@resource';
 import * as Components from '@components';
 import {bindAutoLoginActions} from '@actions';
 

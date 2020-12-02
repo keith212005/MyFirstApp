@@ -92,9 +92,10 @@ export default class MyDatePicker extends React.Component {
             )}
           </View>
         </Pressable>
-        {this.props.isError ? (
-          <Text style={commonStyle.errorStyle}>{this.props.error_text}</Text>
-        ) : null}
+
+        <Text style={commonStyle.errorStyle}>
+          {this.props.isError ? this.props.error_text : null}
+        </Text>
       </>
     );
   }

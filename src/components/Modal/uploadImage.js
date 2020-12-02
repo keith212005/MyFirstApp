@@ -97,7 +97,10 @@ export default class UploadImage extends Component {
               <View style={styles.modalContainer}>
                 <View style={styles.modalSubContainer}>
                   <View style={{padding: 10}}>
-                    <Card elevation={20} style={styles.cardStyle}>
+                    <Card
+                      elevation={20}
+                      style={styles.cardStyle}
+                      onPress={() => this.handleCamera()}>
                       <Card.Actions>
                         <View>
                           <IconButton
@@ -113,7 +116,10 @@ export default class UploadImage extends Component {
                   </View>
 
                   <View style={{padding: 10}}>
-                    <Card elevation={20} style={styles.cardStyle}>
+                    <Card
+                      elevation={20}
+                      style={styles.cardStyle}
+                      onPress={() => this.handleGallery()}>
                       <Card.Actions>
                         <View>
                           <IconButton

@@ -72,12 +72,12 @@ export const field_object_login = {
   email: {
     isError: false,
     error_text: '',
-    value: 'Kj@gmail.com',
+    value: '',
   },
   password: {
     isError: false,
     error_text: '',
-    value: '1234',
+    value: '',
   },
   failAlert: false,
   progressVisible: false,

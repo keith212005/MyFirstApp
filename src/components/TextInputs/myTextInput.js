@@ -41,7 +41,6 @@ export default class MyTextInput extends Component {
     return (
       <>
         <TextInput
-          style={{textAlignVertical: 'center'}}
           mode={props.mode ? props.mode : 'outlined'}
           keyboardType={props.keyboardType ? props.keyboardType : 'default'}
           returnKeyType={props.returnKeyType ? props.returnKeyType : 'next'}
@@ -81,9 +80,10 @@ export default class MyTextInput extends Component {
             ) : null
           }
         />
-        {this.props.isError ? (
-          <Text style={commonStyle.errorStyle}>{this.props.error_text}</Text>
-        ) : null}
+
+        <Text style={commonStyle.errorStyle}>
+          {this.props.isError ? this.props.error_text : null}
+        </Text>
       </>
     );
   }

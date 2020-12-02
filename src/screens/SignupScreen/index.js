@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, ScrollView} from 'react-native';
+import {View, Text, ScrollView, KeyboardAvoidingView} from 'react-native';
 
 import {styles} from './style';
 import {SignupForm} from '@components';

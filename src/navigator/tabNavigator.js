@@ -9,7 +9,7 @@ import * as Screen from '@screens';
 const Tab = createMaterialBottomTabNavigator();
 
 export default class TabNavigator extends React.Component {
-  tabs = ({name}) => {
+  tabs = (name) => {
     let screenName = Screen[name];
     return <Tab.Screen name={name} component={screenName} />;
   };
@@ -32,11 +32,11 @@ export default class TabNavigator extends React.Component {
             );
           },
         })}>
-        {this.tabs({name: 'Home'})}
-        {this.tabs({name: 'Profile'})}
-        {this.tabs({name: 'Tab3'})}
-        {this.tabs({name: 'Tab4'})}
-        {this.tabs({name: 'Tab5'})}
+        {this.tabs('Home')}
+        {this.tabs('Profile')}
+        {this.tabs('Tab3')}
+        {this.tabs('Tab4')}
+        {this.tabs('Tab5')}
       </Tab.Navigator>
     );
   }

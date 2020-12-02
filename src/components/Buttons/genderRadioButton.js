@@ -18,37 +18,36 @@ export default class GenderRadioButton extends React.Component {
     };
     return (
       <>
-        <View style={styles.container}>
-          <RadioButton.Group
-            value={this.state.value}
-            onValueChange={(text) => handleClick(text)}>
-            <View style={styles.radioGroup}>
-              <RadioButton value="Male" />
-              <Text
-                style={styles.title}
-                onPress={() => {
-                  Keyboard.dismiss();
-                  this.setState({value: 'Male'});
-                  this.props.onSuccess(this.state.value);
-                }}>
-                Male
-              </Text>
-              <RadioButton value="Female" />
-              <Text
-                style={styles.title}
-                onPress={() => {
-                  Keyboard.dismiss();
-                  this.setState({value: 'Female'});
-                  this.props.onSuccess(this.state.value);
-                }}>
-                Female
-              </Text>
-            </View>
-          </RadioButton.Group>
-        </View>
-        {this.props.isError ? (
-          <Text style={commonStyle.errorStyle}>{this.props.error_text}</Text>
-        ) : null}
+        <RadioButton.Group
+          value={this.state.value}
+          onValueChange={(text) => handleClick(text)}>
+          <View style={styles.radioGroup}>
+            <RadioButton value="Male" />
+            <Text
+              style={styles.title}
+              onPress={() => {
+                Keyboard.dismiss();
+                this.setState({value: 'Male'});
+                this.props.onSuccess(this.state.value);
+              }}>
+              Male
+            </Text>
+            <RadioButton value="Female" />
+            <Text
+              style={styles.title}
+              onPress={() => {
+                Keyboard.dismiss();
+                this.setState({value: 'Female'});
+                this.props.onSuccess(this.state.value);
+              }}>
+              Female
+            </Text>
+          </View>
+        </RadioButton.Group>
+
+        <Text style={commonStyle.errorStyle}>
+          {this.props.isError ? this.props.error_text : null}
+        </Text>
       </>
     );
   }

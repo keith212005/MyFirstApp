@@ -11,6 +11,7 @@ import LinearGradientButton from '../Buttons/linearGradientButton';
 import GenderRadioButton from '../Buttons/genderRadioButton';
 import MyDatePicker from '../Buttons/myDatePicker';
 import MyTextInput from '../TextInputs/myTextInput';
+import MyAvatarButton from '../Buttons/myAvatarButton';
 import UploadImage from '../Modal/uploadImage';
 import SimpleActivityIndicator from '../ActivityIndicator/simpleActivityIndicator';
 
@@ -418,235 +419,203 @@ export default class SignupForm extends React.Component {
     };
 
     return (
-      <View style={commonStyle.containerFlex1}>
+      <>
         {this.state.isProcessing ? <SimpleActivityIndicator /> : null}
 
-        <View style={styles.imageContainer}>
-          {isVisible ? (
-            <UploadImage
-              isVisible={isVisible}
-              onRequestClose={(value) => this.setState({isVisible: false})}
-              dismiss={() => this.setState({isVisible: false})}
-              onSuccess={(image) => {
-                this.setState((prevState) => ({
-                  avatarSource: {
-                    ...prevState.avatarSource,
-                    value: image,
-                    isError: false,
-                  },
-                  isVisible: false,
-                }));
-              }}
-            />
-          ) : null}
-
-          <Avatar
-            rounded
-            source={{uri: avatarSource.value}}
-            icon={{name: 'user', type: 'font-awesome', color: 'gray'}}
-            containerStyle={{backgroundColor: colors.white}}
-            size="medium"
-            onPress={() => toggleAvatar()}>
-            <Accessory size={18} onPress={() => toggleAvatar()} />
-          </Avatar>
-          {avatarSource.isError ? (
-            <Text style={[commonStyle.errorStyle]}>
-              {avatarSource.error_text}
-            </Text>
-          ) : null}
-        </View>
-
-        <View style={commonStyle.field_group}>
-          <MyTextInput
-            label="First name"
-            iconName="account"
-            value={firstname.value}
-            isError={firstname.isError}
-            error_text={firstname.error_text}
-            forwardRef={signupRefs.firstNameRef}
-            onChangeText={(text) => handleOnChangeText(text, 'firstname')}
-            onSubmitEditing={() => signupRefs.lastNameRef.current.focus()}
-            onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
-            onFocus={() => validate('image')}
-          />
-        </View>
-
-        <View style={commonStyle.field_group}>
-          <MyTextInput
-            label="Last name"
-            iconName="account"
-            value={lastname.value}
-            isError={lastname.isError}
-            error_text={lastname.error_text}
-            forwardRef={signupRefs.lastNameRef}
-            onChangeText={(text) => handleOnChangeText(text, 'lastname')}
-            onSubmitEditing={() => signupRefs.emailRef.current.focus()}
-            onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
-            onFocus={() => {
-              validate('image');
-              validate('firstname');
+        {isVisible ? (
+          <UploadImage
+            isVisible={isVisible}
+            onRequestClose={(value) => this.setState({isVisible: false})}
+            dismiss={() => this.setState({isVisible: false})}
+            onSuccess={(image) => {
+              this.setState((prevState) => ({
+                avatarSource: {
+                  ...prevState.avatarSource,
+                  value: image,
+                  isError: false,
+                },
+                isVisible: false,
+              }));
             }}
           />
-        </View>
+        ) : null}
 
-        <View>
-          <MyTextInput
-            label="Email"
-            iconName="email"
-            value={email.value}
-            isError={email.isError}
-            error_text={email.error_text}
-            forwardRef={signupRefs.emailRef}
-            onChangeText={(text) => handleOnChangeText(text, 'email')}
-            onSubmitEditing={() => signupRefs.passwordRef.current.focus()}
-            onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
-            onFocus={() => {
-              validate('image');
-              validate('firstname');
-              validate('lastname');
-            }}
-          />
-        </View>
+        <MyAvatarButton
+          source={avatarSource.value}
+          isError={firstname.isError}
+          error_text={firstname.error_text}
+          onPress={() => {
+            console.log('image pressed');
+            toggleAvatar();
+          }}
+        />
 
-        <View style={commonStyle.field_group}>
-          <MyTextInput
-            label="Password"
-            iconName="lock"
-            secureTextEntry={true}
-            maxLength={10}
-            showEyeIcon={true}
-            value={password.value}
-            isError={password.isError}
-            error_text={password.error_text}
-            onChangeText={(text) => handleOnChangeText(text, 'password')}
-            forwardRef={signupRefs.passwordRef}
-            onSubmitEditing={() =>
-              signupRefs.confirmPasswordRef.current.focus()
-            }
-            onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
-            onFocus={() => {
-              validate('image');
-              validate('firstname');
-              validate('lastname');
-              validate('email');
-            }}
-          />
-        </View>
+        <MyTextInput
+          label="First name"
+          iconName="account"
+          value={firstname.value}
+          isError={firstname.isError}
+          error_text={firstname.error_text}
+          forwardRef={signupRefs.firstNameRef}
+          onChangeText={(text) => handleOnChangeText(text, 'firstname')}
+          onSubmitEditing={() => signupRefs.lastNameRef.current.focus()}
+          onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
+          onFocus={() => validate('image')}
+        />
 
-        <View style={commonStyle.field_group}>
-          <MyTextInput
-            label="Confirm password"
-            iconName="lock"
-            secureTextEntry={true}
-            maxLength={10}
-            showEyeIcon={true}
-            value={confirmPassword.value}
-            isError={confirmPassword.isError}
-            error_text={confirmPassword.error_text}
-            onChangeText={(text) => handleOnChangeText(text, 'confirmpassword')}
-            forwardRef={signupRefs.confirmPasswordRef}
-            onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
-            onSubmitEditing={() => signupRefs.phonenoRef.current.focus()}
-            onFocus={() => {
-              validate('image');
-              validate('firstname');
-              validate('lastname');
-              validate('email');
-              validate('password');
-            }}
-          />
-        </View>
+        <MyTextInput
+          label="Last name"
+          iconName="account"
+          value={lastname.value}
+          isError={lastname.isError}
+          error_text={lastname.error_text}
+          forwardRef={signupRefs.lastNameRef}
+          onChangeText={(text) => handleOnChangeText(text, 'lastname')}
+          onSubmitEditing={() => signupRefs.emailRef.current.focus()}
+          onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
+          onFocus={() => {
+            validate('image');
+            validate('firstname');
+          }}
+        />
 
-        <View style={commonStyle.field_group}>
-          <MyTextInput
-            label="Phone"
-            iconName="phone"
-            keyboardType="phone-pad"
-            maxLength={10}
-            value={phoneno.value}
-            isError={phoneno.isError}
-            error_text={phoneno.error_text}
-            onChangeText={(text) => handleOnChangeText(text, 'phoneno')}
-            forwardRef={signupRefs.phonenoRef}
-            onSubmitEditing={() => signupRefs.addressRef.current.focus()}
-            onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
-            onFocus={() => {
-              validate('image');
-              validate('firstname');
-              validate('lastname');
-              validate('email');
-              validate('password');
-              validate('confirmpassword');
-            }}
-          />
-        </View>
+        <MyTextInput
+          label="Email"
+          iconName="email"
+          value={email.value}
+          isError={email.isError}
+          error_text={email.error_text}
+          forwardRef={signupRefs.emailRef}
+          onChangeText={(text) => handleOnChangeText(text, 'email')}
+          onSubmitEditing={() => signupRefs.passwordRef.current.focus()}
+          onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
+          onFocus={() => {
+            validate('image');
+            validate('firstname');
+            validate('lastname');
+          }}
+        />
 
-        <View style={commonStyle.field_group}>
-          <MyTextInput
-            label="Address"
-            iconName="pin"
-            multiline={true}
-            value={address.value}
-            isError={address.isError}
-            error_text={address.error_text}
-            onChangeText={(text) => handleOnChangeText(text, 'address')}
-            forwardRef={signupRefs.addressRef}
-            onSubmitEditing={() => {}}
-            onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
-            onFocus={() => {
-              validate('image');
-              validate('firstname');
-              validate('lastname');
-              validate('email');
-              validate('password');
-              validate('confirmpassword');
-              validate('phoneno');
-            }}
-          />
-        </View>
+        <MyTextInput
+          label="Password"
+          iconName="lock"
+          secureTextEntry={true}
+          maxLength={10}
+          showEyeIcon={true}
+          value={password.value}
+          isError={password.isError}
+          error_text={password.error_text}
+          onChangeText={(text) => handleOnChangeText(text, 'password')}
+          forwardRef={signupRefs.passwordRef}
+          onSubmitEditing={() => signupRefs.confirmPasswordRef.current.focus()}
+          onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
+          onFocus={() => {
+            validate('image');
+            validate('firstname');
+            validate('lastname');
+            validate('email');
+          }}
+        />
 
-        <View style={commonStyle.field_group}>
-          <GenderRadioButton
-            isError={gender.isError}
-            error_text={gender.error_text}
-            onSuccess={(value) => handleOnChangeText(value, 'gender')}
-            forwardRef={signupRefs.genderRef}
-          />
-        </View>
+        <MyTextInput
+          label="Confirm password"
+          iconName="lock"
+          secureTextEntry={true}
+          maxLength={10}
+          showEyeIcon={true}
+          value={confirmPassword.value}
+          isError={confirmPassword.isError}
+          error_text={confirmPassword.error_text}
+          onChangeText={(text) => handleOnChangeText(text, 'confirmpassword')}
+          forwardRef={signupRefs.confirmPasswordRef}
+          onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
+          onSubmitEditing={() => signupRefs.phonenoRef.current.focus()}
+          onFocus={() => {
+            validate('image');
+            validate('firstname');
+            validate('lastname');
+            validate('email');
+            validate('password');
+          }}
+        />
 
-        <View style={commonStyle.field_group}>
-          <MyDatePicker
-            visible={dob.visible}
-            modeType="date"
-            value={dob.value}
-            isError={dob.isError}
-            error_text={dob.error_text}
-            onSuccess={(value) => handleOnChangeText(value, 'dob')}
-            minimumDate={new Date(1980, 0, 1)}
-            maximumDate={new Date()}
-          />
-        </View>
+        <MyTextInput
+          label="Phone"
+          iconName="phone"
+          keyboardType="phone-pad"
+          maxLength={10}
+          value={phoneno.value}
+          isError={phoneno.isError}
+          error_text={phoneno.error_text}
+          onChangeText={(text) => handleOnChangeText(text, 'phoneno')}
+          forwardRef={signupRefs.phonenoRef}
+          onSubmitEditing={() => signupRefs.addressRef.current.focus()}
+          onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
+          onFocus={() => {
+            validate('image');
+            validate('firstname');
+            validate('lastname');
+            validate('email');
+            validate('password');
+            validate('confirmpassword');
+          }}
+        />
+
+        <MyTextInput
+          label="Address"
+          iconName="pin"
+          multiline={true}
+          value={address.value}
+          isError={address.isError}
+          error_text={address.error_text}
+          onChangeText={(text) => handleOnChangeText(text, 'address')}
+          forwardRef={signupRefs.addressRef}
+          onSubmitEditing={() => {}}
+          onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
+          onFocus={() => {
+            validate('image');
+            validate('firstname');
+            validate('lastname');
+            validate('email');
+            validate('password');
+            validate('confirmpassword');
+            validate('phoneno');
+          }}
+        />
+
+        <GenderRadioButton
+          isError={gender.isError}
+          error_text={gender.error_text}
+          onSuccess={(value) => handleOnChangeText(value, 'gender')}
+          forwardRef={signupRefs.genderRef}
+        />
+
+        <MyDatePicker
+          visible={dob.visible}
+          modeType="date"
+          value={dob.value}
+          isError={dob.isError}
+          error_text={dob.error_text}
+          onSuccess={(value) => handleOnChangeText(value, 'dob')}
+          minimumDate={new Date(1980, 0, 1)}
+          maximumDate={new Date()}
+        />
 
         <View style={styles.btnContainer}>
           <LinearGradientButton
             title="Register"
-            height={responsiveHeight(13)}
+            height={responsiveHeight(15)}
             fontSize={responsiveHeight(3.25)}
             onPress={() => submit()}
           />
         </View>
-      </View>
+      </>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  imageContainer: {
-    flex: 1,
-    marginBottom: responsiveHeight(4),
-  },
   btnContainer: {
-    marginTop: 10,
     marginBottom: 30,
   },
 });

@@ -11,7 +11,7 @@ const Stack = createStackNavigator();
 
 export default class StackNavigator extends React.Component {
   //  extraProps is an object containing name and component as props
-  stack = ({name}) => {
+  stack = (name) => {
     let screenName =
       name === 'DrawerNavigator' ? DrawerNavigator : Screen[name];
 
@@ -30,11 +30,11 @@ export default class StackNavigator extends React.Component {
     return (
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Splash">
-          {this.stack({name: 'Splash'})}
-          {this.stack({name: 'Start'})}
-          {this.stack({name: 'Login'})}
-          {this.stack({name: 'Signup'})}
-          {this.stack({name: 'DrawerNavigator'})}
+          {this.stack('Splash')}
+          {this.stack('Start')}
+          {this.stack('Login')}
+          {this.stack('Signup')}
+          {this.stack('DrawerNavigator')}
         </Stack.Navigator>
       </NavigationContainer>
     );

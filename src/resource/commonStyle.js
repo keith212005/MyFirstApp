@@ -17,9 +17,4 @@ export const commonStyle = StyleSheet.create({
   containerFlex1: {
     flex: 1,
   },
-  field_group: {
-    marginTop: responsiveWidth(1),
-    borderBottomWidth: 1,
-    borderBottomColor: colors.white,
-  },
 });

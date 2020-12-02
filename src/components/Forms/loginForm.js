@@ -172,43 +172,33 @@ class LoginForm extends React.Component {
     return (
       <>
         {progressVisible ? <SimpleActivityIndicator /> : null}
-        <View style={commonStyle.containerFlex1}>
-          <View style={commonStyle.field_group}>
-            <MyTextInput {...emailProps} />
-          </View>
+        <Text style={[commonStyle.errorStyle, {textAlign: 'center'}]}>
+          {failAlert ? 'Login Failed!' : null}
+        </Text>
 
-          <View style={commonStyle.field_group}>
-            <MyTextInput {...passwordProps} />
-          </View>
+        <MyTextInput {...emailProps} />
 
-          {failAlert ? (
-            <Text style={[commonStyle.errorStyle, {textAlign: 'center'}]}>
-              Login Failed!
-            </Text>
-          ) : null}
+        <MyTextInput {...passwordProps} />
 
-          <Text style={styles.forgotpasswordtext}>Forgot password?</Text>
+        <Text style={styles.forgotpasswordtext}>Forgot password?</Text>
 
-          <View>
-            <LinearGradientButton
-              title="Sign In"
-              forwardRef={this.submitRef}
-              onPress={() => submit()}
-              height={responsiveHeight(14)}
-              fontSize={15}
-            />
-          </View>
+        <LinearGradientButton
+          title="Sign In"
+          forwardRef={this.submitRef}
+          onPress={() => submit()}
+          height={responsiveHeight(14)}
+          fontSize={15}
+        />
 
-          <View style={styles.signupBtnContainer}>
-            <TouchableOpacity
-              style={[
-                styles.signIn,
-                {borderColor: colors.primary, marginTop: 15, borderWidth: 1},
-              ]}
-              onPress={() => this.props.navigation.navigate('Signup')}>
-              <Text style={commonStyle.primaryText}>Sign Up</Text>
-            </TouchableOpacity>
-          </View>
+        <View style={styles.signupBtnContainer}>
+          <TouchableOpacity
+            style={[
+              styles.signIn,
+              {borderColor: colors.primary, marginTop: 15, borderWidth: 1},
+            ]}
+            onPress={() => this.props.navigation.navigate('Signup')}>
+            <Text style={commonStyle.primaryText}>Sign Up</Text>
+          </TouchableOpacity>
         </View>
       </>
     );
@@ -217,7 +207,6 @@ class LoginForm extends React.Component {
 
 const styles = StyleSheet.create({
   forgotpasswordtext: {
-    marginTop: responsiveHeight(2),
     marginBottom: responsiveHeight(2),
     color: colors.primary,
     fontWeight: '600',

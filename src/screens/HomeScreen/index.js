@@ -55,14 +55,7 @@ class Home extends React.Component {
           />
 
           <View style={[commonStyle.containerFlex1]}>
-            <Text
-              style={{
-                textAlign: 'center',
-                borderWidth: 1,
-                borderColor: 'blue',
-              }}>
-              Welcome
-            </Text>
+            <Text style={{textAlign: 'center'}}>Welcome</Text>
             <Components.ExitAppDialog
               showAlert={this.state.showAlert}
               title="Exit"
@@ -86,11 +79,5 @@ const matchStateToProps = (state) => {
 
 const matchDispatchToProps = (dispatch) =>
   bindActionCreators(bindAutoLoginActions, dispatch);
-
-// const matchDispatchToProps = (dispatch) => {
-//   return {
-//     logout: () => dispatch(Action.removeAutoLogin()),
-//   };
-// };
 
 export default connect(matchStateToProps, matchDispatchToProps)(Home);

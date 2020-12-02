@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Alert} from 'react-native';
 
 import {
   Avatar,
@@ -11,13 +11,13 @@ import {
   TouchableRipple,
   Switch,
 } from 'react-native-paper';
-
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+
 import {bindAutoLoginActions} from '@actions';
 
 class DrawerContent extends React.Component {
@@ -30,6 +30,29 @@ class DrawerContent extends React.Component {
     this.setState({
       isDarkTheme: !this.state.isDarkTheme,
     });
+  };
+
+  handleExitApp = () => {
+    this.props.navigation.closeDrawer();
+    Alert.alert(
+      'My First App',
+      'Are you sure you want to exit?',
+      [
+        {
+          text: 'NO',
+          onPress: () => {},
+          style: 'cancel',
+        },
+        {
+          text: 'YES',
+          onPress: () => {
+            this.props.removeAutoLogin();
+            this.props.navigation.replace('Login');
+          },
+        },
+      ],
+      {cancelable: false},
+    );
   };
 
   render(props) {
@@ -150,14 +173,11 @@ class DrawerContent extends React.Component {
                 name="exit-to-app"
                 color={color}
                 size={size}
-                onPress={() => {}}
+                onPress={() => this.handleExitApp()}
               />
             )}
             label="Sign out"
-            onPress={() => {
-              this.props.removeAutoLogin();
-              this.props.navigation.replace('Login');
-            }}
+            onPress={() => this.handleExitApp()}
           />
         </Drawer.Section>
       </View>

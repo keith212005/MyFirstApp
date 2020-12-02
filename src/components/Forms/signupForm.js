@@ -402,7 +402,6 @@ export default class SignupForm extends React.Component {
           gender: gender.value,
           dob: dob.value,
         };
-        console.log(personData);
       } else {
         validate('image');
         validate('firstname');

@@ -38,7 +38,6 @@ class Splash extends React.Component {
 }
 
 const matchStateToProps = (state) => {
-  console.log(state);
   return {
     autoLoginStatus: state.autoLogin.status,
   };

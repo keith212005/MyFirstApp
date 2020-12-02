@@ -72,23 +72,20 @@ class LoginForm extends React.Component {
       }
     };
 
-    // called after successful registration of user
-    const resetForm = () => {};
-
     // called when Sign In is pressed
     const submit = () => {
+      Keyboard.dismiss();
       if (
         email.value.length > 0 &&
         password.value.length > 0 &&
         isValidEmail(email.value)
       ) {
-        // this.setState((prevState) => ({
-        //   progressVisible: true,
-        // }));
-
         // this function return promise, if resolve go to home screen else display alert
         checkConnectivity()
           .then(() => {
+            this.setState((prevState) => ({
+              progressVisible: true,
+            }));
             if (
               isSameString(email.value, 'Kj@gmail.com') &&
               isSameString(password.value, '1234')
@@ -96,12 +93,14 @@ class LoginForm extends React.Component {
               this.props.addAutoLogin();
               this.props.navigation.replace('DrawerNavigator');
             } else {
-              validateField('email');
-              validateField('password');
+              this.setState((prevState) => ({
+                ...prevState,
+                failAlert: true,
+                progressVisible: false,
+              }));
             }
           })
           .catch((error) => {
-            console.log(error);
             Alert.alert('Error', error);
           });
       } else {

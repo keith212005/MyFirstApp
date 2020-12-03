@@ -8,6 +8,4 @@ export UploadImage from './Modal/uploadImage';
 export CustomHeader from './Header/customHeader';
 export ExitAppDialog from './Dialogs/exitAppDialog';
 export SimpleAlertDialog from './Dialogs/simpleAlertDialog';
-export LoginForm from './Forms/loginForm';
-export SignupForm from './Forms/signupForm';
 export SimpleActivityIndicator from './ActivityIndicator/simpleActivityIndicator';

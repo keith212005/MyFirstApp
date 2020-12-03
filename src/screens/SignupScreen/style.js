@@ -26,7 +26,7 @@ export const styles = StyleSheet.create({
     borderTopRightRadius: responsiveHeight(5),
   },
   scrollView: {
-    paddingHorizontal: responsiveHeight(8),
-    marginTop: responsiveHeight(5),
+    paddingHorizontal: responsiveHeight(5),
+    marginTop: responsiveHeight(1),
   },
 });

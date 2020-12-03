@@ -53,4 +53,10 @@ export const styles = StyleSheet.create({
   signupBtn: {
     marginBottom: 50,
   },
+  forgotpasswordtext: {
+    marginBottom: responsiveHeight(2),
+    color: colors.primary,
+    fontWeight: '600',
+    textAlign: 'right',
+  },
 });

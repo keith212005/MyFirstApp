@@ -31,7 +31,7 @@ export default class StackNavigator extends React.Component {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Splash">
           {this.stack('Splash')}
-          {this.stack('Start')}
+          {this.stack('StartScreen')}
           {this.stack('Login')}
           {this.stack('Signup')}
           {this.stack('DrawerNavigator')}

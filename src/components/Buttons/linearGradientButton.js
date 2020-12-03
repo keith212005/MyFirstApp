@@ -1,7 +1,6 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {Text, TouchableOpacity} from 'react-native';
 
-import {TextInput, Button} from 'react-native-paper';
 import LinearGradient from 'react-native-linear-gradient';
 
 import {colors, fontFamily, responsiveHeight, responsiveWidth} from '@resource';
@@ -16,20 +15,28 @@ export default class LinearGradientButton extends React.Component {
           ref={props.forwardRef}
           onSubmitEditing={this.props.onSubmitEditing}>
           <LinearGradient
-            colors={['#08d4c4', '#01ab9d']}
-            style={[
-              styles.gradientView,
-              {height: props.height, width: props.width},
-            ]}>
+            colors={
+              props.fillColor
+                ? props.fillColor
+                : colors.linearButtonWhiteBackground
+            }
+            style={{
+              height: props.height,
+              width: props.width,
+              justifyContent: 'center',
+              borderRadius: props.borderRadius ? props.borderRadius : null,
+              borderWidth: props.borderWidth ? props.borderWidth : null,
+              borderColor: props.borderColor ? props.borderColor : null,
+            }}>
             <Text
-              style={[
-                styles.titleText,
-                {
-                  fontSize: props.fontSize
-                    ? props.fontSize
-                    : responsiveHeight(3),
-                },
-              ]}>
+              style={{
+                textAlign: 'center',
+                fontSize: props.fontSize ? props.fontSize : 12,
+                color: props.fontColor ? props.fontColor : colors.black,
+                fontFamily: props.fontFamily
+                  ? props.fontFamily
+                  : fontFamily.RobotoRegular,
+              }}>
               {props.title}
             </Text>
           </LinearGradient>
@@ -38,15 +45,3 @@ export default class LinearGradientButton extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  gradientView: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
-  },
-  titleText: {
-    fontFamily: fontFamily.RobotoBold,
-    color: colors.white,
-  },
-});

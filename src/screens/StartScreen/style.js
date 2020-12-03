@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 
-import {responsiveHeight, responsiveWidth, colors} from '@resource';
+import {responsiveHeight, responsiveWidth, colors, fontFamily} from '@resource';
 
 export const styles = StyleSheet.create({
   container: {
@@ -28,11 +28,12 @@ export const styles = StyleSheet.create({
   title: {
     color: '#05375a',
     fontSize: 30,
-    fontWeight: 'bold',
+    fontFamily: fontFamily.PacificoRegular,
   },
   text: {
     color: 'grey',
     marginTop: 5,
+    fontFamily: fontFamily.RobotoRegula,
   },
   button: {
     alignItems: 'flex-end',

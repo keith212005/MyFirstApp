@@ -9,4 +9,6 @@ export const colors = {
   black: '#000000',
   errormessage: '#cb4242',
   grayFont: 'rgba(54, 54, 54, 0.58)',
+  themeButton: ['#08d4c4', '#01ab9d'],
+  linearButtonWhiteBackground: ['#ffffff', '#ffffff'],
 };

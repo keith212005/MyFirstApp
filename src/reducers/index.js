@@ -14,7 +14,7 @@ const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
   // whitelist: ['autoLogin'], // by default all reducers in root reducer will be persisted
-  blacklist: ['connectionStatus'], // put reducers whose data you dont want to persist
+  // blacklist: ['connectionStatus'], // put reducers whose data you dont want to persist
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

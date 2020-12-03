@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Keyboard,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
+import {View, Text, StyleSheet, Keyboard, Alert} from 'react-native';
 
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -17,6 +10,7 @@ import {commonStyle} from '@resource';
 
 import {isValidEmail, isSameString, isEmpty} from '@utils';
 import LinearGradientButton from '../Buttons/linearGradientButton';
+
 import MyTextInput from '../TextInputs/myTextInput';
 import SimpleActivityIndicator from '../ActivityIndicator/simpleActivityIndicator';
 import {responsiveHeight, responsiveWidth, colors, fontFamily} from '@resource';
@@ -188,17 +182,25 @@ class LoginForm extends React.Component {
           onPress={() => submit()}
           height={responsiveHeight(14)}
           fontSize={15}
+          borderRadius={10}
+          fillColor={colors.themeButton}
+          fontColor={colors.white}
+          fontFamily={fontFamily.RobotoBold}
         />
 
-        <View style={styles.signupBtnContainer}>
-          <TouchableOpacity
-            style={[
-              styles.signIn,
-              {borderColor: colors.primary, marginTop: 15, borderWidth: 1},
-            ]}
-            onPress={() => this.props.navigation.navigate('Signup')}>
-            <Text style={commonStyle.primaryText}>Sign Up</Text>
-          </TouchableOpacity>
+        <View style={{marginTop: 10}}>
+          <LinearGradientButton
+            title="Sign Up"
+            forwardRef={this.submitRef}
+            onPress={() => submit()}
+            height={responsiveHeight(14)}
+            fontSize={15}
+            fontColor={colors.primary}
+            borderRadius={10}
+            borderWidth={1}
+            borderColor={colors.primary}
+            onPress={() => this.props.navigation.navigate('Signup')}
+          />
         </View>
       </>
     );
@@ -212,18 +214,10 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     textAlign: 'right',
   },
-  signIn: {
-    height: responsiveHeight(14),
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
-  },
-  signupBtnContainer: {
-    marginBottom: 50,
-  },
 });
 
 const matchStateToProps = (state) => {
+  console.log(JSON.stringify(state));
   return {
     currentCount: state.autoLogin.autoLoginStatus,
     isOnline: state.connectionStatus.isOnline,

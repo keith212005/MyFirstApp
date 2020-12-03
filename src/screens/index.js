@@ -1,5 +1,5 @@
 export Splash from './SplashScreen';
-export Start from './StartScreen';
+export StartScreen from './StartScreen';
 export Login from './LoginScreen';
 export Signup from './SignupScreen';
 export Home from './HomeScreen';

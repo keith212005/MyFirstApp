@@ -8,7 +8,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {styles} from './style';
 import {colors} from '@resource';
 
-export default class Start extends React.Component {
+export default class StartScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
@@ -25,21 +25,19 @@ export default class Start extends React.Component {
         <Animatable.View style={styles.footer} animation="fadeInUpBig">
           <Text style={styles.title}>Stay connected with everyone!</Text>
           <Text style={styles.text}>Sign in with account</Text>
-          <View style={styles.button}>
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Login')}>
-              <LinearGradient
-                colors={['#08d4c4', '#01ab9d']}
-                style={styles.signIn}>
-                <Text style={styles.textSign}>Get Started</Text>
-                <MaterialIcons
-                  name="navigate-next"
-                  color={colors.white}
-                  size={20}
-                />
-              </LinearGradient>
-            </TouchableOpacity>
-          </View>
+
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => this.props.navigation.navigate('Login')}>
+            <LinearGradient colors={colors.themeButton} style={styles.signIn}>
+              <Text style={styles.textSign}>Get Started</Text>
+              <MaterialIcons
+                name="navigate-next"
+                color={colors.white}
+                size={20}
+              />
+            </LinearGradient>
+          </TouchableOpacity>
         </Animatable.View>
       </View>
     );

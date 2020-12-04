@@ -8,7 +8,7 @@ import {bindActionCreators} from 'redux';
 import {styles} from './style';
 import {commonStyle} from '@resource';
 import * as Components from '@components';
-import {bindAutoLoginActions} from '@actions';
+import {actionCreaters} from '@actions';
 
 class Home extends React.Component {
   constructor(props) {
@@ -78,6 +78,6 @@ const matchStateToProps = (state) => {
 };
 
 const matchDispatchToProps = (dispatch) =>
-  bindActionCreators(bindAutoLoginActions, dispatch);
+  bindActionCreators(actionCreaters, dispatch);
 
 export default connect(matchStateToProps, matchDispatchToProps)(Home);

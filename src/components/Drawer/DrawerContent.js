@@ -18,7 +18,7 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import {bindAutoLoginActions} from '@actions';
+import {actionCreaters} from '@actions';
 
 class DrawerContent extends React.Component {
   state = {
@@ -234,6 +234,6 @@ const matchStateToProps = (state) => {
 };
 
 const matchDispatchToProps = (dispatch) =>
-  bindActionCreators(bindAutoLoginActions, dispatch);
+  bindActionCreators(actionCreaters, dispatch);
 
 export default connect(matchStateToProps, matchDispatchToProps)(DrawerContent);

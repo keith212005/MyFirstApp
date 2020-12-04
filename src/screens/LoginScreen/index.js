@@ -13,7 +13,7 @@ import {bindActionCreators} from 'redux';
 import * as Animatable from 'react-native-animatable';
 
 import {styles} from './style';
-import {bindAutoLoginActions} from '@actions';
+import {actionCreaters} from '@actions';
 import {field_object_login} from '@constants';
 import {commonStyle} from '@resource';
 import {isValidEmail, isSameString, isEmpty} from '@utils';
@@ -230,6 +230,6 @@ const matchStateToProps = (state) => {
 };
 
 const matchDispatchToProps = (dispatch) =>
-  bindActionCreators(bindAutoLoginActions, dispatch);
+  bindActionCreators(actionCreaters, dispatch);
 
 export default connect(matchStateToProps, matchDispatchToProps)(Login);

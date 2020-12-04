@@ -6,5 +6,4 @@ export {
 import * as autoLogin from './autoLogin';
 import * as addNetworkListener from './addNetworkListener';
 
-// export const bindAutoLoginActions = Object.assign({}, autoLogin);
 export const actionCreaters = Object.assign({}, autoLogin, addNetworkListener);

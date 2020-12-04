@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 
 import DateTimePicker from '@react-native-community/datetimepicker';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {colors, fontFamily, responsiveWidth} from '@resource';
 import {commonStyle} from '@resource';
 

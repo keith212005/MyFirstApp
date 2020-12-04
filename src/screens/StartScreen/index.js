@@ -1,12 +1,11 @@
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
 
 import {styles} from './style';
-import {colors} from '@resource';
+import {colors, getImageName} from '@resource';
 
 export default class StartScreen extends React.Component {
   render() {
@@ -18,7 +17,7 @@ export default class StartScreen extends React.Component {
             duraton="1500"
             style={styles.logo}
             resizeMode="contain"
-            source={{uri: 'asset:/images/companylogo.png'}}
+            source={{uri: 'companylogo'}}
           />
         </View>
 

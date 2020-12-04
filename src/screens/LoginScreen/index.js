@@ -155,7 +155,7 @@ class Login extends React.Component {
               <Components.MyTextInput2
                 keyboardType={'email-address'}
                 label={'Email'}
-                iconName={'envelope'}
+                iconName={'envelope_96px'}
                 placeholder="Email"
                 value={email.value}
                 isError={email.isError}
@@ -169,7 +169,7 @@ class Login extends React.Component {
 
               <Components.MyTextInput2
                 label={'Password'}
-                iconName={'lock'}
+                iconName={'lock_96px'}
                 placeholder="Password"
                 value={password.value}
                 isError={password.isError}

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Alert} from 'react-native';
+import {View, StyleSheet, Alert, Image} from 'react-native';
 
 import {
   Avatar,
@@ -14,9 +14,6 @@ import {
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
-import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Feather from 'react-native-vector-icons/Feather';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {actionCreaters} from '@actions';
 
@@ -94,10 +91,10 @@ class DrawerContent extends React.Component {
             <Drawer.Section style={styles.drawerSection}>
               <DrawerItem
                 icon={({color, size}) => (
-                  <MaterialCommunityIcon
-                    name="home-outline"
-                    color={color}
-                    size={size}
+                  <Image
+                    style={{height: size, width: size}}
+                    resizeMode="contain"
+                    source={{uri: 'home_96px'}}
                   />
                 )}
                 label="Home"
@@ -107,10 +104,10 @@ class DrawerContent extends React.Component {
               />
               <DrawerItem
                 icon={({color, size}) => (
-                  <MaterialCommunityIcon
-                    name="account-outline"
-                    color={color}
-                    size={size}
+                  <Image
+                    style={{height: size, width: size}}
+                    resizeMode="contain"
+                    source={{uri: 'user_outlined_96px'}}
                   />
                 )}
                 label="Profile"
@@ -120,10 +117,10 @@ class DrawerContent extends React.Component {
               />
               <DrawerItem
                 icon={({color, size}) => (
-                  <MaterialCommunityIcon
-                    name="bookmark-outline"
-                    color={color}
-                    size={size}
+                  <Image
+                    style={{height: size, width: size}}
+                    resizeMode="contain"
+                    source={{uri: 'bookmark_96px'}}
                   />
                 )}
                 label="Bookmarks"
@@ -131,7 +128,11 @@ class DrawerContent extends React.Component {
               />
               <DrawerItem
                 icon={({color, size}) => (
-                  <Feather name="settings" color={color} size={size} />
+                  <Image
+                    style={{height: size, width: size}}
+                    resizeMode="contain"
+                    source={{uri: 'settings_96px'}}
+                  />
                 )}
                 label="Settings"
                 onPress={() => {
@@ -140,10 +141,10 @@ class DrawerContent extends React.Component {
               />
               <DrawerItem
                 icon={({color, size}) => (
-                  <MaterialIcon
-                    name="support-agent"
-                    color={color}
-                    size={size}
+                  <Image
+                    style={{height: size, width: size}}
+                    resizeMode="contain"
+                    source={{uri: 'technical_support_96px'}}
                   />
                 )}
                 label="Support"
@@ -169,11 +170,10 @@ class DrawerContent extends React.Component {
         <Drawer.Section style={styles.bottomDrawerSection}>
           <DrawerItem
             icon={({color, size}) => (
-              <MaterialCommunityIcon
-                name="exit-to-app"
-                color={color}
-                size={size}
-                onPress={() => this.handleExitApp()}
+              <Image
+                style={{height: size, width: size}}
+                resizeMode="contain"
+                source={{uri: 'exit_96px'}}
               />
             )}
             label="Sign out"

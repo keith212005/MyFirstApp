@@ -474,7 +474,7 @@ export default class Signup extends React.Component {
 
               <Components.MyTextInput2
                 label="First name"
-                iconName="user"
+                iconName="user_96px"
                 value={firstname.value}
                 placeholder="First name"
                 isError={firstname.isError}
@@ -490,7 +490,7 @@ export default class Signup extends React.Component {
 
               <Components.MyTextInput2
                 label="Last name"
-                iconName="user"
+                iconName="user_96px"
                 value={lastname.value}
                 placeholder="Last name"
                 isError={lastname.isError}
@@ -509,7 +509,7 @@ export default class Signup extends React.Component {
 
               <Components.MyTextInput2
                 label="Email"
-                iconName="envelope"
+                iconName="envelope_96px"
                 placeholder="Email"
                 value={email.value}
                 isError={email.isError}
@@ -527,7 +527,7 @@ export default class Signup extends React.Component {
 
               <Components.MyTextInput2
                 label="Password"
-                iconName="lock"
+                iconName="lock_96px"
                 secureTextEntry={true}
                 maxLength={10}
                 showEyeIcon={true}
@@ -553,7 +553,7 @@ export default class Signup extends React.Component {
 
               <Components.MyTextInput2
                 label="Confirm password"
-                iconName="lock"
+                iconName="lock_96px"
                 secureTextEntry={true}
                 maxLength={10}
                 showEyeIcon={true}
@@ -578,7 +578,7 @@ export default class Signup extends React.Component {
 
               <Components.MyTextInput2
                 label="Phone"
-                iconName="phone"
+                iconName="phone_96px"
                 keyboardType="phone-pad"
                 maxLength={10}
                 placeholder="Phone number"
@@ -603,7 +603,7 @@ export default class Signup extends React.Component {
 
               <Components.MyTextInput2
                 label="Address"
-                iconName="map-pin"
+                iconName="address_96px"
                 multiline={true}
                 placeholder="Address"
                 value={address.value}

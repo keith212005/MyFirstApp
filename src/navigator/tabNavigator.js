@@ -1,7 +1,6 @@
 import React from 'react';
 
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import {colors, getImageName} from '@resource';
 import * as Screen from '@screens';

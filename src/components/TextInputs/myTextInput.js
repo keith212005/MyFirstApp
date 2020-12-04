@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {View, Text, TextInput, StyleSheet} from 'react-native';
 
 import {TextInput as PaperTextInput} from 'react-native-paper';
-import Entypo from 'react-native-vector-icons/Entypo';
 
 import {colors, commonStyle, fontFamily} from '@resource';
 

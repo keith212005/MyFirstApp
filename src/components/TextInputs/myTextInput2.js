@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, TextInput, StyleSheet} from 'react-native';
-
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import {View, Text, TextInput, StyleSheet, Image} from 'react-native';
 
 import {colors, commonStyle, fontFamily} from '@resource';
 
@@ -55,6 +52,11 @@ export default class MyTextInput2 extends Component {
             styles.container,
             {borderColor: props.isError ? colors.red : this.state.borderColor},
           ]}>
+          <Image
+            style={{height: 20, width: 20, margin: 15}}
+            resizeMode="contain"
+            source={{uri: props.iconName}}
+          />
           <FontAwesome
             style={{margin: 15}}
             name={props.iconName}

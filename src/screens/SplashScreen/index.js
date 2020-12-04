@@ -6,21 +6,13 @@ import {connect} from 'react-redux';
 
 import {styles} from './style';
 import {actionCreaters} from '@actions';
-import NetInfo from '@react-native-community/netinfo';
 
 class Splash extends React.Component {
   constructor(props) {
     super(props);
-    // console.log(actionCreaters);
+    props.addNetworkListener();
   }
   componentDidMount() {
-    // autoLogin is true go to Home Screen else to Start screen
-    // NetInfo.addEventListener((connectionInfo) => {
-    //   console.log('Connection type', connectionInfo.type);
-    //   console.log('Is connected?', connectionInfo.isConnected);
-    // });
-
-    this.props.addNetworkListener();
     setTimeout(() => {
       this.props.navigation.replace(
         this.props.autoLoginStatus ? 'DrawerNavigator' : 'StartScreen',

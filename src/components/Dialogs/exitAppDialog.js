@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {View, StyleSheet} from 'react-native';
 
 import {Button, Paragraph, Dialog, Portal, Provider} from 'react-native-paper';
-import Feather from 'react-native-vector-icons/Feather';
 import {colors, responsiveHeight} from '@resource';
 
 export default class ExitAppDialog extends Component {

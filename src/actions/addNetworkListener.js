@@ -6,9 +6,8 @@ let handleConnectionChange;
 
 export function addNetworkListener() {
   return (dispatch) => {
-    console.log('entererer');
     handleConnectionChange = (connectionInfo) => {
-      console.log(connectionInfo);
+      console.log('addNetworkListener.js = ' + connectionInfo);
       dispatch(connectionChanged(connectionInfo));
     };
     NetInfo.addEventListener((connectionInfo) =>
@@ -42,8 +41,3 @@ function connectionChanged(connectionInfo) {
     }
   };
 }
-
-// export const addNetworkListener = (status) => ({
-//   type: Action.CHANGE_CONNECTION_STATUS,
-//   status,
-// });

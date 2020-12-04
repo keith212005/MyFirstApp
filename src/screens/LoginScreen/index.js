@@ -142,8 +142,8 @@ class Login extends React.Component {
           </View>
           <Animatable.View
             style={styles.footer}
-            animation="fadeIn"
-            duration={1500}>
+            animation="fadeInUpBig"
+            duration={1000}>
             <ScrollView
               style={styles.scrollView}
               keyboardShouldPersistTaps="handled">
@@ -152,10 +152,11 @@ class Login extends React.Component {
                 {failAlert ? 'Login Failed!' : null}
               </Text>
 
-              <Components.MyTextInput
+              <Components.MyTextInput2
                 keyboardType={'email-address'}
                 label={'Email'}
-                iconName={'email'}
+                iconName={'envelope'}
+                placeholder="Email"
                 value={email.value}
                 isError={email.isError}
                 error_text={email.error_text}
@@ -166,9 +167,10 @@ class Login extends React.Component {
                 onFocus={() => {}}
               />
 
-              <Components.MyTextInput
+              <Components.MyTextInput2
                 label={'Password'}
                 iconName={'lock'}
+                placeholder="Password"
                 value={password.value}
                 isError={password.isError}
                 error_text={password.error_text}

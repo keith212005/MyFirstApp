@@ -10,36 +10,27 @@ export default class GenderRadioButton extends React.Component {
     value: '',
   };
 
+  handleClick = (text) => {
+    Keyboard.dismiss;
+    this.setState({value: text});
+    this.props.onSuccess(text);
+  };
+
   render() {
-    const handleClick = (text) => {
-      Keyboard.dismiss;
-      this.setState({value: text});
-      this.props.onSuccess(text);
-    };
     return (
       <>
         <RadioButton.Group
           value={this.state.value}
-          onValueChange={(text) => handleClick(text)}>
+          onValueChange={(text) => this.handleClick(text)}>
           <View style={styles.radioGroup}>
             <RadioButton value="Male" />
-            <Text
-              style={styles.title}
-              onPress={() => {
-                Keyboard.dismiss();
-                this.setState({value: 'Male'});
-                this.props.onSuccess(this.state.value);
-              }}>
+            <Text style={styles.title} onPress={() => this.handleClick('Male')}>
               Male
             </Text>
             <RadioButton value="Female" />
             <Text
               style={styles.title}
-              onPress={() => {
-                Keyboard.dismiss();
-                this.setState({value: 'Female'});
-                this.props.onSuccess(this.state.value);
-              }}>
+              onPress={() => this.handleClick('Female')}>
               Female
             </Text>
           </View>

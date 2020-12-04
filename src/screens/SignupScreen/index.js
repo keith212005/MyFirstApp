@@ -2,6 +2,7 @@ import React from 'react';
 import {
   View,
   Text,
+  TextInput,
   ScrollView,
   KeyboardAvoidingView,
   StyleSheet,
@@ -10,6 +11,7 @@ import {
 
 import * as Animatable from 'react-native-animatable';
 import {Avatar, Accessory} from 'react-native-elements';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import {styles} from './style';
 import {field_object_signup, signupRefs} from '@constants';
@@ -436,10 +438,10 @@ export default class Signup extends React.Component {
           <Animatable.View
             style={styles.footer}
             animation="fadeInUpBig"
-            duration={2000}>
-            <ScrollView
+            duration={1000}>
+            <KeyboardAwareScrollView
               style={styles.scrollView}
-              keyboardShouldPersistTaps="handled">
+              keyboardShouldPersistTaps="always">
               {this.state.isProcessing ? <SimpleActivityIndicator /> : null}
 
               {isVisible ? (
@@ -470,10 +472,11 @@ export default class Signup extends React.Component {
                 }}
               />
 
-              <Components.MyTextInput
+              <Components.MyTextInput2
                 label="First name"
-                iconName="account"
+                iconName="user"
                 value={firstname.value}
+                placeholder="First name"
                 isError={firstname.isError}
                 error_text={firstname.error_text}
                 forwardRef={signupRefs.firstNameRef}
@@ -485,10 +488,11 @@ export default class Signup extends React.Component {
                 onFocus={() => this.validate('image')}
               />
 
-              <Components.MyTextInput
+              <Components.MyTextInput2
                 label="Last name"
-                iconName="account"
+                iconName="user"
                 value={lastname.value}
+                placeholder="Last name"
                 isError={lastname.isError}
                 error_text={lastname.error_text}
                 forwardRef={signupRefs.lastNameRef}
@@ -496,16 +500,17 @@ export default class Signup extends React.Component {
                   this.handleOnChangeText(text, 'lastname')
                 }
                 onSubmitEditing={() => signupRefs.emailRef.current.focus()}
-                onEndEditing={(e) => handleEndEditing(e.nativeEvent.text)}
+                onEndEditing={(e) => this.handleEndEditing(e.nativeEvent.text)}
                 onFocus={() => {
                   this.validate('image');
                   this.validate('firstname');
                 }}
               />
 
-              <Components.MyTextInput
+              <Components.MyTextInput2
                 label="Email"
-                iconName="email"
+                iconName="envelope"
+                placeholder="Email"
                 value={email.value}
                 isError={email.isError}
                 error_text={email.error_text}
@@ -520,12 +525,13 @@ export default class Signup extends React.Component {
                 }}
               />
 
-              <Components.MyTextInput
+              <Components.MyTextInput2
                 label="Password"
                 iconName="lock"
                 secureTextEntry={true}
                 maxLength={10}
                 showEyeIcon={true}
+                placeholder="Password"
                 value={password.value}
                 isError={password.isError}
                 error_text={password.error_text}
@@ -545,12 +551,13 @@ export default class Signup extends React.Component {
                 }}
               />
 
-              <Components.MyTextInput
+              <Components.MyTextInput2
                 label="Confirm password"
                 iconName="lock"
                 secureTextEntry={true}
                 maxLength={10}
                 showEyeIcon={true}
+                placeholder="Confirm Password"
                 value={confirmPassword.value}
                 isError={confirmPassword.isError}
                 error_text={confirmPassword.error_text}
@@ -569,11 +576,12 @@ export default class Signup extends React.Component {
                 }}
               />
 
-              <Components.MyTextInput
+              <Components.MyTextInput2
                 label="Phone"
                 iconName="phone"
                 keyboardType="phone-pad"
                 maxLength={10}
+                placeholder="Phone number"
                 value={phoneno.value}
                 isError={phoneno.isError}
                 error_text={phoneno.error_text}
@@ -593,13 +601,15 @@ export default class Signup extends React.Component {
                 }}
               />
 
-              <Components.MyTextInput
+              <Components.MyTextInput2
                 label="Address"
-                iconName="pin"
+                iconName="map-pin"
                 multiline={true}
+                placeholder="Address"
                 value={address.value}
                 isError={address.isError}
                 error_text={address.error_text}
+                alignItems={'center'}
                 onChangeText={(text) =>
                   this.handleOnChangeText(text, 'address')
                 }
@@ -647,7 +657,7 @@ export default class Signup extends React.Component {
                   fontFamily={fontFamily.RobotoBold}
                 />
               </View>
-            </ScrollView>
+            </KeyboardAwareScrollView>
           </Animatable.View>
         </View>
       </>

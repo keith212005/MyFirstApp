@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, TextInput, StyleSheet} from 'react-native';
 
-import {TextInput} from 'react-native-paper';
+import {TextInput as PaperTextInput} from 'react-native-paper';
+import Entypo from 'react-native-vector-icons/Entypo';
 
-import {colors, commonStyle} from '@resource';
+import {colors, commonStyle, fontFamily} from '@resource';
 
 export default class MyTextInput extends Component {
   state = {
@@ -13,34 +14,37 @@ export default class MyTextInput extends Component {
     secureTextEntry: this.props.secureTextEntry,
     value: this.props.value,
   };
+
+  handleOnFocus = () => {
+    this.setState({
+      iconColor: colors.primary,
+      eyeIconColor: colors.primary,
+    });
+    this.props.onFocus();
+  };
+
+  handleOnBlur = () => {
+    this.setState({iconColor: colors.gray, eyeIconColor: colors.gray});
+  };
+
+  togglePassword = () => {
+    if (this.state.showEyeIcon != 'eye') {
+      this.setState({showEyeIcon: 'eye', secureTextEntry: false});
+    } else {
+      this.setState({
+        showEyeIcon: 'eye-off-outline',
+        secureTextEntry: true,
+      });
+    }
+  };
+
   render() {
     let props = this.props;
-    const handleOnFocus = () => {
-      this.setState({
-        iconColor: colors.primary,
-        eyeIconColor: colors.primary,
-      });
-      this.props.onFocus();
-    };
-
-    const handleOnBlur = () => {
-      this.setState({iconColor: colors.gray, eyeIconColor: colors.gray});
-    };
-
-    const togglePassword = () => {
-      if (this.state.showEyeIcon != 'eye') {
-        this.setState({showEyeIcon: 'eye', secureTextEntry: false});
-      } else {
-        this.setState({
-          showEyeIcon: 'eye-off-outline',
-          secureTextEntry: true,
-        });
-      }
-    };
 
     return (
       <>
-        <TextInput
+        <PaperTextInput
+          error={props.isError}
           mode={props.mode ? props.mode : 'outlined'}
           keyboardType={props.keyboardType ? props.keyboardType : 'default'}
           returnKeyType={props.returnKeyType ? props.returnKeyType : 'next'}
@@ -51,31 +55,36 @@ export default class MyTextInput extends Component {
           onEndEditing={this.props.onEndEditing}
           onChangeText={(text) => this.props.onChangeText(text)}
           secureTextEntry={this.state.secureTextEntry}
-          theme={{colors: {primary: colors.primary}, roundness: 14}}
+          theme={{
+            colors: {primary: colors.primary},
+            roundness: 14,
+            fonts: {medium: fontFamily.RobotoBold},
+          }}
           blurOnSubmit={false}
           ref={props.forwardRef}
           pointerEvents="none"
           isInputValid={this.state.isInputValid}
           errorMessage={this.state.errorMessage}
-          onFocus={handleOnFocus}
-          onBlur={handleOnBlur}
+          onFocus={this.handleOnFocus}
+          onBlur={this.handleOnBlur}
           blurOnSubmit={false}
           selectTextOnFocus={true}
           selectionColor={colors.secondary}
           multiline={props.multiline ? props.multiline : false}
           left={
-            <TextInput.Icon
+            <PaperTextInput.Icon
+              forceTextInputFocus={true}
               name={props.iconName}
               color={this.state.iconColor}
             />
           }
           right={
             props.showEyeIcon === true ? (
-              <TextInput.Icon
+              <PaperTextInput.Icon
                 name={this.state.showEyeIcon}
                 color={this.state.eyeIconColor}
                 forceTextInputFocus={false}
-                onPress={() => togglePassword()}
+                onPress={() => this.togglePassword()}
               />
             ) : null
           }
@@ -88,3 +97,7 @@ export default class MyTextInput extends Component {
     );
   }
 }
+
+export const styles = StyleSheet.create({
+  textAreaInput: {},
+});

@@ -62,11 +62,12 @@ export default class MyDatePicker extends React.Component {
     };
     return (
       <>
+        <Text style={styles.label}>Date of Birth</Text>
         <Pressable onPress={() => showDatepicker()}>
           <View style={styles.container}>
             <FontAwesome
               style={styles.searchIcon}
-              size={26}
+              size={22}
               color={colors.gray}
               name="calendar"
             />
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 10,
     borderColor: colors.gray,
     padding: 14,
     marginTop: 6,
@@ -117,5 +118,9 @@ const styles = StyleSheet.create({
     color: colors.gray,
     fontSize: 16,
     textAlign: 'center',
+  },
+  label: {
+    fontFamily: fontFamily.RobotoBold,
+    color: colors.gray,
   },
 });

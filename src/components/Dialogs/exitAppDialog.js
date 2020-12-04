@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Image} from 'react-native';
 
 import {Button, Paragraph, Dialog, Portal, Provider} from 'react-native-paper';
-import {colors, responsiveHeight} from '@resource';
+import {colors, icon, responsiveHeight} from '@resource';
 
 export default class ExitAppDialog extends Component {
   render() {
@@ -12,7 +12,14 @@ export default class ExitAppDialog extends Component {
           <Portal>
             <Dialog visible={this.props.showAlert} dismissable={false}>
               <Dialog.Title>
-                <Feather name="log-out" size={34} color={colors.primary} />
+                <Image
+                  style={{
+                    height: 25,
+                    width: 25,
+                  }}
+                  resizeMode="stretch"
+                  source={{uri: icon.exit}}
+                />
               </Dialog.Title>
               <Dialog.Content>
                 <Paragraph>{this.props.content}</Paragraph>

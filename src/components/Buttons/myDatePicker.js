@@ -6,10 +6,11 @@ import {
   StyleSheet,
   Pressable,
   Keyboard,
+  Image,
 } from 'react-native';
 
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {colors, fontFamily, responsiveWidth} from '@resource';
+import {colors, fontFamily, responsiveWidth, icon} from '@resource';
 import {commonStyle} from '@resource';
 
 export default class MyDatePicker extends React.Component {
@@ -64,12 +65,12 @@ export default class MyDatePicker extends React.Component {
         <Text style={styles.label}>Date of Birth</Text>
         <Pressable onPress={() => showDatepicker()}>
           <View style={styles.container}>
-            <FontAwesome
-              style={styles.searchIcon}
-              size={22}
-              color={colors.gray}
-              name="calendar"
+            <Image
+              style={styles.image}
+              resizeMode="contain"
+              source={{uri: icon.calendar}}
             />
+
             <Text style={styles.dob}>{this.state.dobValue}</Text>
 
             {this.state.visible && (
@@ -121,5 +122,9 @@ const styles = StyleSheet.create({
   label: {
     fontFamily: fontFamily.RobotoBold,
     color: colors.gray,
+  },
+  image: {
+    height: 22,
+    width: 22,
   },
 });

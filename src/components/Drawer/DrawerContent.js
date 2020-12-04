@@ -15,6 +15,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 
+import {icon} from '@resource';
 import {actionCreaters} from '@actions';
 
 class DrawerContent extends React.Component {
@@ -49,6 +50,24 @@ class DrawerContent extends React.Component {
         },
       ],
       {cancelable: false},
+    );
+  };
+
+  drawerItem = (extraProps) => {
+    return (
+      <DrawerItem
+        icon={({color, size}) => (
+          <Image
+            style={{height: size, width: size}}
+            resizeMode="contain"
+            source={{uri: extraProps.icon}}
+          />
+        )}
+        label={extraProps.label}
+        onPress={() => {
+          this.props.navigation.navigate(extraProps.label);
+        }}
+      />
     );
   };
 
@@ -89,67 +108,14 @@ class DrawerContent extends React.Component {
             </View>
 
             <Drawer.Section style={styles.drawerSection}>
-              <DrawerItem
-                icon={({color, size}) => (
-                  <Image
-                    style={{height: size, width: size}}
-                    resizeMode="contain"
-                    source={{uri: 'home_96px'}}
-                  />
-                )}
-                label="Home"
-                onPress={() => {
-                  this.props.navigation.navigate('Home');
-                }}
-              />
-              <DrawerItem
-                icon={({color, size}) => (
-                  <Image
-                    style={{height: size, width: size}}
-                    resizeMode="contain"
-                    source={{uri: 'user_outlined_96px'}}
-                  />
-                )}
-                label="Profile"
-                onPress={() => {
-                  this.props.navigation.navigate('Profile');
-                }}
-              />
-              <DrawerItem
-                icon={({color, size}) => (
-                  <Image
-                    style={{height: size, width: size}}
-                    resizeMode="contain"
-                    source={{uri: 'bookmark_96px'}}
-                  />
-                )}
-                label="Bookmarks"
-                onPress={() => {}}
-              />
-              <DrawerItem
-                icon={({color, size}) => (
-                  <Image
-                    style={{height: size, width: size}}
-                    resizeMode="contain"
-                    source={{uri: 'settings_96px'}}
-                  />
-                )}
-                label="Settings"
-                onPress={() => {
-                  this.props.navigation.navigate('Setting');
-                }}
-              />
-              <DrawerItem
-                icon={({color, size}) => (
-                  <Image
-                    style={{height: size, width: size}}
-                    resizeMode="contain"
-                    source={{uri: 'technical_support_96px'}}
-                  />
-                )}
-                label="Support"
-                onPress={() => {}}
-              />
+              {this.drawerItem({label: 'Home', icon: icon.home})}
+              {this.drawerItem({label: 'Profile', icon: icon.user_outlined})}
+              {this.drawerItem({label: 'Bookmarks', icon: icon.bookmark})}
+              {this.drawerItem({label: 'Setting', icon: icon.settings})}
+              {this.drawerItem({
+                label: 'Support',
+                icon: icon.technical_support,
+              })}
             </Drawer.Section>
             <Drawer.Section title="Preferences">
               <TouchableRipple
@@ -173,7 +139,7 @@ class DrawerContent extends React.Component {
               <Image
                 style={{height: size, width: size}}
                 resizeMode="contain"
-                source={{uri: 'exit_96px'}}
+                source={{uri: icon.exit}}
               />
             )}
             label="Sign out"

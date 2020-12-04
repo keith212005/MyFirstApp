@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.white,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    paddingVertical: 50,
+    paddingVertical: 30,
     paddingHorizontal: 30,
   },
   logo: {
@@ -26,20 +26,21 @@ export const styles = StyleSheet.create({
     height: responsiveHeight(28),
   },
   title: {
-    color: '#05375a',
+    color: colors.gray,
     fontSize: 30,
     fontFamily: fontFamily.PacificoRegular,
   },
   text: {
     color: 'grey',
     marginTop: 5,
-    fontFamily: fontFamily.RobotoRegula,
+    fontFamily: fontFamily.RobotoRegular,
   },
+
   button: {
     alignItems: 'flex-end',
     marginTop: 30,
   },
-  signIn: {
+  lineargradient: {
     width: 150,
     height: 40,
     justifyContent: 'center',
@@ -48,7 +49,15 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   textSign: {
+    flex: 9,
+    textAlign: 'right',
     color: colors.white,
     fontWeight: 'bold',
+  },
+  image: {
+    flex: 3,
+    height: 26,
+    width: 26,
+    marginLeft: 30,
   },
 });

@@ -1,13 +1,20 @@
 import React, {Component} from 'react';
-import {View, Text, TextInput, StyleSheet, Image} from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  Image,
+  Pressable,
+} from 'react-native';
 
-import {colors, commonStyle, fontFamily} from '@resource';
+import {colors, commonStyle, fontFamily, icon} from '@resource';
 
 export default class MyTextInput2 extends Component {
   state = {
     iconColor: colors.gray,
     eyeIconColor: colors.gray,
-    showEyeIcon: 'eye-off',
+    showEyeIcon: icon.eye_off,
     secureTextEntry: this.props.secureTextEntry,
     value: this.props.value,
     borderColor: colors.gray,
@@ -31,11 +38,11 @@ export default class MyTextInput2 extends Component {
   };
 
   togglePassword = () => {
-    if (this.state.showEyeIcon != 'eye') {
-      this.setState({showEyeIcon: 'eye', secureTextEntry: false});
+    if (this.state.showEyeIcon != icon.eye_filled) {
+      this.setState({showEyeIcon: icon.eye_filled, secureTextEntry: false});
     } else {
       this.setState({
-        showEyeIcon: 'eye-off',
+        showEyeIcon: icon.eye_off,
         secureTextEntry: true,
       });
     }
@@ -55,13 +62,7 @@ export default class MyTextInput2 extends Component {
           <Image
             style={{height: 20, width: 20, margin: 15}}
             resizeMode="contain"
-            source={{uri: props.iconName}}
-          />
-          <FontAwesome
-            style={{margin: 15}}
-            name={props.iconName}
-            color={this.state.iconColor}
-            size={props.label === 'Email' ? 16 : 20}
+            source={{uri: props.iconName.toString()}}
           />
 
           <TextInput
@@ -97,15 +98,13 @@ export default class MyTextInput2 extends Component {
           />
 
           {props.showEyeIcon ? (
-            <Ionicons
-              style={{
-                padding: 10,
-              }}
-              name={this.state.showEyeIcon}
-              color={colors.gray}
-              size={22}
-              onPress={() => this.togglePassword()}
-            />
+            <Pressable onPress={() => this.togglePassword()}>
+              <Image
+                style={styles.eyeIcon}
+                resizeMode="contain"
+                source={{uri: this.state.showEyeIcon}}
+              />
+            </Pressable>
           ) : null}
         </View>
         <Text style={commonStyle.errorStyle}>
@@ -120,6 +119,11 @@ export const styles = StyleSheet.create({
   label: {
     fontFamily: fontFamily.RobotoBold,
     color: colors.gray,
+  },
+  eyeIcon: {
+    height: 23,
+    width: 23,
+    margin: 15,
   },
   input: {flex: 2},
   container: {

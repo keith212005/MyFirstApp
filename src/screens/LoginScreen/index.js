@@ -12,13 +12,19 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as Animatable from 'react-native-animatable';
 
+import {
+  responsiveHeight,
+  responsiveWidth,
+  colors,
+  fontFamily,
+  icon,
+  commonStyle,
+} from '@resource';
 import {styles} from './style';
 import {actionCreaters} from '@actions';
 import {field_object_login} from '@constants';
-import {commonStyle} from '@resource';
 import {isValidEmail, isSameString, isEmpty} from '@utils';
 import * as Components from '@components';
-import {responsiveHeight, responsiveWidth, colors, fontFamily} from '@resource';
 import {checkConnectivity} from '@api';
 
 class Login extends React.Component {
@@ -155,7 +161,7 @@ class Login extends React.Component {
               <Components.MyTextInput2
                 keyboardType={'email-address'}
                 label={'Email'}
-                iconName={'envelope_96px'}
+                iconName={icon.envelope}
                 placeholder="Email"
                 value={email.value}
                 isError={email.isError}
@@ -169,7 +175,7 @@ class Login extends React.Component {
 
               <Components.MyTextInput2
                 label={'Password'}
-                iconName={'lock_96px'}
+                iconName={icon.lock}
                 placeholder="Password"
                 value={password.value}
                 isError={password.isError}

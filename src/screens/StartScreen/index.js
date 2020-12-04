@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, Image} from 'react-native';
 
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
 
 import {styles} from './style';
-import {colors, getImageName} from '@resource';
+import {colors, getImageName, icon} from '@resource';
 
 export default class StartScreen extends React.Component {
   render() {
@@ -28,12 +28,14 @@ export default class StartScreen extends React.Component {
           <TouchableOpacity
             style={styles.button}
             onPress={() => this.props.navigation.navigate('Login')}>
-            <LinearGradient colors={colors.themeButton} style={styles.signIn}>
+            <LinearGradient
+              colors={colors.themeButton}
+              style={styles.lineargradient}>
               <Text style={styles.textSign}>Get Started</Text>
-              <MaterialIcons
-                name="navigate-next"
-                color={colors.white}
-                size={20}
+              <Image
+                style={styles.image}
+                resizeMode="contain"
+                source={{uri: icon.forward_white}}
               />
             </LinearGradient>
           </TouchableOpacity>

@@ -15,7 +15,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import {styles} from './style';
 import {field_object_signup, signupRefs} from '@constants';
-import {commonStyle} from '@resource';
+import {commonStyle, icon} from '@resource';
 import {isValidEmail, isSameString, isEmpty, isPhoneNumber} from '@utils';
 import {colors, responsiveHeight, fontFamily, responsiveWidth} from '@resource';
 import * as Components from '@components';
@@ -474,7 +474,7 @@ export default class Signup extends React.Component {
 
               <Components.MyTextInput2
                 label="First name"
-                iconName="user_96px"
+                iconName={icon.user}
                 value={firstname.value}
                 placeholder="First name"
                 isError={firstname.isError}
@@ -490,7 +490,7 @@ export default class Signup extends React.Component {
 
               <Components.MyTextInput2
                 label="Last name"
-                iconName="user_96px"
+                iconName={icon.user}
                 value={lastname.value}
                 placeholder="Last name"
                 isError={lastname.isError}
@@ -509,7 +509,7 @@ export default class Signup extends React.Component {
 
               <Components.MyTextInput2
                 label="Email"
-                iconName="envelope_96px"
+                iconName={icon.envelope}
                 placeholder="Email"
                 value={email.value}
                 isError={email.isError}
@@ -527,7 +527,7 @@ export default class Signup extends React.Component {
 
               <Components.MyTextInput2
                 label="Password"
-                iconName="lock_96px"
+                iconName={icon.lock}
                 secureTextEntry={true}
                 maxLength={10}
                 showEyeIcon={true}
@@ -553,7 +553,7 @@ export default class Signup extends React.Component {
 
               <Components.MyTextInput2
                 label="Confirm password"
-                iconName="lock_96px"
+                iconName={icon.lock}
                 secureTextEntry={true}
                 maxLength={10}
                 showEyeIcon={true}
@@ -578,7 +578,7 @@ export default class Signup extends React.Component {
 
               <Components.MyTextInput2
                 label="Phone"
-                iconName="phone_96px"
+                iconName={icon.phone}
                 keyboardType="phone-pad"
                 maxLength={10}
                 placeholder="Phone number"
@@ -603,7 +603,7 @@ export default class Signup extends React.Component {
 
               <Components.MyTextInput2
                 label="Address"
-                iconName="address_96px"
+                iconName={icon.address}
                 multiline={true}
                 placeholder="Address"
                 value={address.value}

@@ -6,25 +6,12 @@ import {bindActionCreators} from 'redux';
 import * as Animatable from 'react-native-animatable';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
-import {
-  responsiveHeight,
-  responsiveWidth,
-  colors,
-  fontFamily,
-  icon,
-  commonStyle,
-} from '@resource';
 import {styles} from './style';
 import {actionCreaters} from '@actions';
 import {field_object_login} from '@constants';
-import {
-  isValidEmail,
-  isSameString,
-  isEmpty,
-  getIcon,
-  removeSpaces,
-} from '@utils';
+import * as Utils from '@utils';
 import * as Components from '@components';
+import * as Resource from '@resource';
 import {checkConnectivity} from '@api';
 
 class Login extends React.Component {
@@ -40,7 +27,7 @@ class Login extends React.Component {
     switch (label) {
       case 'email':
         return {
-          iconName: getIcon(label),
+          iconName: Utils.getIcon(label),
           refs: this.emailRef,
           isError: this.state.email.isError,
           error_text: this.state.email.error_text,
@@ -48,7 +35,7 @@ class Login extends React.Component {
         };
       case 'password':
         return {
-          iconName: getIcon(label),
+          iconName: Utils.getIcon(label),
           refs: this.passwordRef,
           isError: this.state.password.isError,
           error_text: this.state.password.error_text,
@@ -66,7 +53,7 @@ class Login extends React.Component {
   validate = (fieldName) => {
     switch (fieldName) {
       case 'email':
-        if (isEmpty(this.state.email.value)) {
+        if (Utils.isEmpty(this.state.email.value)) {
           this.setState((prevState) => ({
             email: {
               ...prevState.email,
@@ -75,7 +62,7 @@ class Login extends React.Component {
             },
           }));
         } else {
-          if (!isValidEmail(this.state.email.value)) {
+          if (!Utils.isValidEmail(this.state.email.value)) {
             this.setState((prevState) => ({
               email: {
                 ...prevState.email,
@@ -87,7 +74,7 @@ class Login extends React.Component {
         }
         break;
       case 'password':
-        if (isEmpty(this.state.password.value)) {
+        if (Utils.isEmpty(this.state.password.value)) {
           this.setState((prevState) => ({
             password: {
               ...prevState.password,
@@ -108,7 +95,7 @@ class Login extends React.Component {
     if (
       this.state.email.value.length > 0 &&
       this.state.password.value.length > 0 &&
-      isValidEmail(this.state.email.value)
+      Utils.isValidEmail(this.state.email.value)
     ) {
       // this function return promise, if resolve go to home screen else display alert
       checkConnectivity()
@@ -117,8 +104,8 @@ class Login extends React.Component {
             progressVisible: true,
           }));
           if (
-            isSameString(this.state.email.value, 'Kj@gmail.com') &&
-            isSameString(this.state.password.value, '1234')
+            Utils.isSameString(this.state.email.value, 'Kj@gmail.com') &&
+            Utils.isSameString(this.state.password.value, '1234')
           ) {
             this.props.addAutoLogin();
             this.props.navigation.replace('DrawerNavigator');
@@ -222,19 +209,31 @@ class Login extends React.Component {
   };
 
   myButton = (props) => {
-    const labelInLowerCase = removeSpaces(props.label.toLowerCase());
+    const labelInLowerCase = Utils.removeSpaces(props.label.toLowerCase());
     return (
       <Components.LinearGradientButton
         title={props.label}
-        height={responsiveHeight(14)}
+        height={Resource.responsiveHeight(14)}
         fontSize={15}
-        fontColor={colors.primary}
+        fontColor={Resource.colors.primary}
         borderRadius={10}
         borderWidth={1}
-        borderColor={props.label === 'Sign In' ? colors.white : colors.primary}
-        fillColor={props.label === 'Sign In' ? colors.themeButton : null}
-        fontColor={props.label === 'Sign In' ? colors.white : colors.primary}
-        fontFamily={props.label === 'Sign In' ? fontFamily.RobotoBold : null}
+        borderColor={
+          props.label === 'Sign In'
+            ? Resource.colors.white
+            : Resource.colors.primary
+        }
+        fillColor={
+          props.label === 'Sign In' ? Resource.colors.themeButton : null
+        }
+        fontColor={
+          props.label === 'Sign In'
+            ? Resource.colors.white
+            : Resource.colors.primary
+        }
+        fontFamily={
+          props.label === 'Sign In' ? Resource.fontFamily.RobotoBold : null
+        }
         onPress={() => this.handleMyButtonPress(labelInLowerCase)}
       />
     );
@@ -256,7 +255,11 @@ class Login extends React.Component {
               style={styles.scrollView}
               keyboardShouldPersistTaps="always">
               {progressVisible ? <Components.SimpleActivityIndicator /> : null}
-              <Text style={[commonStyle.errorStyle, {textAlign: 'center'}]}>
+              <Text
+                style={[
+                  Resource.commonStyle.errorStyle,
+                  {textAlign: 'center'},
+                ]}>
                 {failAlert ? 'Login Failed!' : null}
               </Text>
 

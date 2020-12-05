@@ -7,16 +7,8 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import {styles} from './style';
 import {field_object_signup, signupRefs} from '@constants';
-import {commonStyle, icon} from '@resource';
-import {
-  isValidEmail,
-  isSameString,
-  isEmpty,
-  isPhoneNumber,
-  getIcon,
-  removeSpaces,
-} from '@utils';
-import {colors, responsiveHeight, fontFamily, responsiveWidth} from '@resource';
+import * as Utils from '@utils';
+import * as Resource from '@resource';
 import * as Components from '@components';
 
 export default class Signup extends React.Component {
@@ -38,7 +30,7 @@ export default class Signup extends React.Component {
     switch (label) {
       case 'firstname':
         return {
-          iconName: getIcon(label),
+          iconName: Utils.getIcon(label),
           refs: signupRefs.firstNameRef,
           isError: this.state.firstname.isError,
           error_text: this.state.firstname.error_text,
@@ -46,7 +38,7 @@ export default class Signup extends React.Component {
         };
       case 'lastname':
         return {
-          iconName: getIcon(label),
+          iconName: Utils.getIcon(label),
           refs: signupRefs.lastNameRef,
           isError: this.state.lastname.isError,
           error_text: this.state.lastname.error_text,
@@ -54,7 +46,7 @@ export default class Signup extends React.Component {
         };
       case 'email':
         return {
-          iconName: getIcon(label),
+          iconName: Utils.getIcon(label),
           refs: signupRefs.emailRef,
           isError: this.state.email.isError,
           error_text: this.state.email.error_text,
@@ -62,7 +54,7 @@ export default class Signup extends React.Component {
         };
       case 'password':
         return {
-          iconName: getIcon(label),
+          iconName: Utils.getIcon(label),
           refs: signupRefs.passwordRef,
           isError: this.state.password.isError,
           error_text: this.state.password.error_text,
@@ -70,7 +62,7 @@ export default class Signup extends React.Component {
         };
       case 'confirmpassword':
         return {
-          iconName: getIcon(label),
+          iconName: Utils.getIcon(label),
           refs: signupRefs.confirmPasswordRef,
           isError: this.state.confirmpassword.isError,
           error_text: this.state.confirmpassword.error_text,
@@ -78,7 +70,7 @@ export default class Signup extends React.Component {
         };
       case 'phone':
         return {
-          iconName: getIcon(label),
+          iconName: Utils.getIcon(label),
           refs: signupRefs.phonenoRef,
           isError: this.state.phone.isError,
           error_text: this.state.phone.error_text,
@@ -86,7 +78,7 @@ export default class Signup extends React.Component {
         };
       case 'address':
         return {
-          iconName: getIcon(label),
+          iconName: Utils.getIcon(label),
           refs: signupRefs.addressRef,
           isError: this.state.address.isError,
           error_text: this.state.address.error_text,
@@ -116,7 +108,7 @@ export default class Signup extends React.Component {
         }
         break;
       case 'firstname':
-        if (isEmpty(this.state.firstname.value)) {
+        if (Utils.isEmpty(this.state.firstname.value)) {
           this.setState((prevState) => ({
             ...prevState,
             firstname: {
@@ -140,7 +132,7 @@ export default class Signup extends React.Component {
         }
         break;
       case 'email':
-        if (isEmpty(this.state.email.value)) {
+        if (Utils.isEmpty(this.state.email.value)) {
           this.setState((prevState) => ({
             email: {
               ...prevState.email,
@@ -149,7 +141,7 @@ export default class Signup extends React.Component {
             },
           }));
         } else {
-          if (!isValidEmail(this.state.email.value)) {
+          if (!Utils.isValidEmail(this.state.email.value)) {
             this.setState((prevState) => ({
               email: {
                 ...prevState.email,
@@ -161,7 +153,7 @@ export default class Signup extends React.Component {
         }
         break;
       case 'password':
-        if (isEmpty(this.state.password.value)) {
+        if (Utils.isEmpty(this.state.password.value)) {
           this.setState((prevState) => ({
             ...prevState,
             password: {
@@ -185,7 +177,7 @@ export default class Signup extends React.Component {
         }
         break;
       case 'confirmpassword':
-        if (isEmpty(this.state.confirmpassword.value)) {
+        if (Utils.isEmpty(this.state.confirmpassword.value)) {
           this.setState((prevState) => ({
             ...prevState,
             confirmpassword: {
@@ -196,7 +188,7 @@ export default class Signup extends React.Component {
           }));
         } else {
           if (
-            !isSameString(
+            !Utils.isSameString(
               this.state.password.value,
               this.state.confirmpassword.value,
             )
@@ -213,7 +205,7 @@ export default class Signup extends React.Component {
         }
         break;
       case 'phone':
-        if (isEmpty(this.state.phone.value)) {
+        if (Utils.isEmpty(this.state.phone.value)) {
           this.setState((prevState) => ({
             ...prevState,
             phone: {
@@ -233,7 +225,7 @@ export default class Signup extends React.Component {
               },
             }));
           } else {
-            if (!isPhoneNumber(this.state.phone.value)) {
+            if (!Utils.isPhoneNumber(this.state.phone.value)) {
               this.setState((prevState) => ({
                 ...prevState,
                 phone: {
@@ -247,7 +239,7 @@ export default class Signup extends React.Component {
         }
         break;
       case 'address':
-        if (isEmpty(this.state.address.value)) {
+        if (Utils.isEmpty(this.state.address.value)) {
           this.setState((prevState) => ({
             ...prevState,
             address: {
@@ -259,7 +251,7 @@ export default class Signup extends React.Component {
         }
         break;
       case 'gender':
-        if (isEmpty(this.state.gender.value)) {
+        if (Utils.isEmpty(this.state.gender.value)) {
           this.setState((prevState) => ({
             ...prevState,
             gender: {
@@ -271,7 +263,7 @@ export default class Signup extends React.Component {
         }
         break;
       case 'dob':
-        if (isEmpty) {
+        if (Utils.isEmpty) {
           this.setState((prevState) => ({
             ...prevState,
             dob: {
@@ -509,15 +501,15 @@ export default class Signup extends React.Component {
     if (
       this.state.avatarSource.value !=
         'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg' &&
-      !isEmpty(this.state.firstname.value) &&
-      !isEmpty(this.state.lastname.value) &&
-      !isEmpty(this.state.email.value) &&
-      !isEmpty(this.state.password.value) &&
-      !isEmpty(this.state.confirmpassword.value) &&
-      !isEmpty(this.state.phone.value) &&
-      !isEmpty(this.state.address.value) &&
-      !isEmpty(this.state.gender.value) &&
-      !isEmpty(this.state.dob.value)
+      !Utils.isEmpty(this.state.firstname.value) &&
+      !Utils.isEmpty(this.state.lastname.value) &&
+      !Utils.isEmpty(this.state.email.value) &&
+      !Utils.isEmpty(this.state.password.value) &&
+      !Utils.isEmpty(this.state.confirmpassword.value) &&
+      !Utils.isEmpty(this.state.phone.value) &&
+      !Utils.isEmpty(this.state.address.value) &&
+      !Utils.isEmpty(this.state.gender.value) &&
+      !Utils.isEmpty(this.state.dob.value)
     ) {
       var personData = {
         avatarSource: this.state.avatarSource.value,
@@ -546,7 +538,7 @@ export default class Signup extends React.Component {
   };
 
   myTextInput = (props) => {
-    const labelInLowerCase = removeSpaces(props.label).toLowerCase();
+    const labelInLowerCase = Utils.removeSpaces(props.label).toLowerCase();
     const data = this.getData(labelInLowerCase);
 
     // console.log(JSON.stringify(data));
@@ -568,22 +560,6 @@ export default class Signup extends React.Component {
   };
 
   render() {
-    const {
-      firstname,
-      lastname,
-      email,
-      password,
-      confirmpassword,
-      avatarSource,
-      gender,
-      phone,
-      dob,
-      address,
-      dobVisibility,
-      isVisible,
-      isError,
-    } = this.state;
-
     return (
       <>
         <View style={styles.container}>
@@ -600,9 +576,9 @@ export default class Signup extends React.Component {
               keyboardShouldPersistTaps="always">
               {this.state.isProcessing ? <SimpleActivityIndicator /> : null}
 
-              {isVisible ? (
+              {this.state.isVisible ? (
                 <Components.UploadImage
-                  isVisible={isVisible}
+                  isVisible={this.state.isVisible}
                   onRequestClose={(value) => this.setState({isVisible: false})}
                   dismiss={() => this.setState({isVisible: false})}
                   onSuccess={(image) => {
@@ -619,9 +595,9 @@ export default class Signup extends React.Component {
               ) : null}
 
               <Components.MyAvatarButton
-                source={avatarSource.value}
-                isError={avatarSource.isError}
-                error_text={avatarSource.error_text}
+                source={this.state.avatarSource.value}
+                isError={this.state.avatarSource.isError}
+                error_text={this.state.avatarSource.error_text}
                 onPress={() => this.toggleAvatar()}
               />
 
@@ -634,18 +610,18 @@ export default class Signup extends React.Component {
               {this.myTextInput({label: 'Address'})}
 
               <Components.GenderRadioButton
-                isError={gender.isError}
-                error_text={gender.error_text}
+                isError={this.state.gender.isError}
+                error_text={this.state.gender.error_text}
                 onSuccess={(value) => this.handleOnChangeText(value, 'gender')}
                 forwardRef={signupRefs.genderRef}
               />
 
               <Components.MyDatePicker
-                visible={dob.visible}
+                visible={this.state.dob.visible}
                 modeType="date"
-                value={dob.value}
-                isError={dob.isError}
-                error_text={dob.error_text}
+                value={this.state.dob.value}
+                isError={this.state.dob.isError}
+                error_text={this.state.dob.error_text}
                 onSuccess={(value) => this.handleOnChangeText(value, 'dob')}
                 minimumDate={new Date(1980, 0, 1)}
                 maximumDate={new Date()}
@@ -655,12 +631,12 @@ export default class Signup extends React.Component {
                 <Components.LinearGradientButton
                   title="Register"
                   onPress={() => this.submit()}
-                  height={responsiveHeight(14)}
+                  height={Resource.responsiveHeight(14)}
                   fontSize={15}
                   borderRadius={5}
-                  fillColor={colors.themeButton}
-                  fontColor={colors.white}
-                  fontFamily={fontFamily.RobotoBold}
+                  fillColor={Resource.colors.themeButton}
+                  fontColor={Resource.colors.white}
+                  fontFamily={Resource.fontFamily.RobotoBold}
                 />
               </View>
             </KeyboardAwareScrollView>

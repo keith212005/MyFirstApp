@@ -18,3 +18,8 @@ export const isEmpty = (object) => {
 export const isPhoneNumber = (str) => {
   return /^\d+$/.test(str);
 };
+
+export const removeSpaces = (originalText) => {
+  let removedSpaceText;
+  return (removedSpaceText = originalText.split(' ').join(''));
+};

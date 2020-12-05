@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  ScrollView,
-  KeyboardAvoidingView,
-  StyleSheet,
-  Keyboard,
-} from 'react-native';
+import {View, Text, StyleSheet, Keyboard} from 'react-native';
 
 import * as Animatable from 'react-native-animatable';
 import {Avatar, Accessory} from 'react-native-elements';
@@ -16,7 +8,14 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {styles} from './style';
 import {field_object_signup, signupRefs} from '@constants';
 import {commonStyle, icon} from '@resource';
-import {isValidEmail, isSameString, isEmpty, isPhoneNumber} from '@utils';
+import {
+  isValidEmail,
+  isSameString,
+  isEmpty,
+  isPhoneNumber,
+  getIcon,
+  removeSpaces,
+} from '@utils';
 import {colors, responsiveHeight, fontFamily, responsiveWidth} from '@resource';
 import * as Components from '@components';
 
@@ -32,6 +31,70 @@ export default class Signup extends React.Component {
   // called when we add/edit image Avatar
   toggleAvatar = () => {
     this.setState((state) => ({isVisible: !state.isVisible}));
+  };
+
+  // getting InputText data
+  getData = (label) => {
+    switch (label) {
+      case 'firstname':
+        return {
+          iconName: getIcon(label),
+          refs: signupRefs.firstNameRef,
+          isError: this.state.firstname.isError,
+          error_text: this.state.firstname.error_text,
+          value: this.state.firstname.value,
+        };
+      case 'lastname':
+        return {
+          iconName: getIcon(label),
+          refs: signupRefs.lastNameRef,
+          isError: this.state.lastname.isError,
+          error_text: this.state.lastname.error_text,
+          value: this.state.lastname.value,
+        };
+      case 'email':
+        return {
+          iconName: getIcon(label),
+          refs: signupRefs.emailRef,
+          isError: this.state.email.isError,
+          error_text: this.state.email.error_text,
+          value: this.state.email.value,
+        };
+      case 'password':
+        return {
+          iconName: getIcon(label),
+          refs: signupRefs.passwordRef,
+          isError: this.state.password.isError,
+          error_text: this.state.password.error_text,
+          value: this.state.password.value,
+        };
+      case 'confirmpassword':
+        return {
+          iconName: getIcon(label),
+          refs: signupRefs.confirmPasswordRef,
+          isError: this.state.confirmpassword.isError,
+          error_text: this.state.confirmpassword.error_text,
+          value: this.state.confirmpassword.value,
+        };
+      case 'phone':
+        return {
+          iconName: getIcon(label),
+          refs: signupRefs.phonenoRef,
+          isError: this.state.phone.isError,
+          error_text: this.state.phone.error_text,
+          value: this.state.phone.value,
+        };
+      case 'address':
+        return {
+          iconName: getIcon(label),
+          refs: signupRefs.addressRef,
+          isError: this.state.address.isError,
+          error_text: this.state.address.error_text,
+          value: this.state.address.value,
+        };
+      default:
+        break;
+    }
   };
 
   // call this function to validate any fieldName
@@ -122,11 +185,11 @@ export default class Signup extends React.Component {
         }
         break;
       case 'confirmpassword':
-        if (isEmpty(this.state.confirmPassword.value)) {
+        if (isEmpty(this.state.confirmpassword.value)) {
           this.setState((prevState) => ({
             ...prevState,
-            confirmPassword: {
-              ...prevState.confirmPassword,
+            confirmpassword: {
+              ...prevState.confirmpassword,
               isError: true,
               error_text: 'This field is required.',
             },
@@ -135,13 +198,13 @@ export default class Signup extends React.Component {
           if (
             !isSameString(
               this.state.password.value,
-              this.state.confirmPassword.value,
+              this.state.confirmpassword.value,
             )
           ) {
             this.setState((prevState) => ({
               ...prevState,
-              confirmPassword: {
-                ...prevState.confirmPassword,
+              confirmpassword: {
+                ...prevState.confirmpassword,
                 isError: true,
                 error_text: 'Password and Confirm password does not match!',
               },
@@ -149,32 +212,32 @@ export default class Signup extends React.Component {
           }
         }
         break;
-      case 'phoneno':
-        if (isEmpty(this.state.phoneno.value)) {
+      case 'phone':
+        if (isEmpty(this.state.phone.value)) {
           this.setState((prevState) => ({
             ...prevState,
-            phoneno: {
-              ...prevState.phoneno,
+            phone: {
+              ...prevState.phone,
               isError: true,
               error_text: 'This field is required.',
             },
           }));
         } else {
-          if (this.state.phoneno.value.length < 10) {
+          if (this.state.phone.value.length < 10) {
             this.setState((prevState) => ({
               ...prevState,
-              phoneno: {
-                ...prevState.phoneno,
+              phone: {
+                ...prevState.phone,
                 isError: true,
                 error_text: 'Phone number should be minimum 10 digits.',
               },
             }));
           } else {
-            if (!isPhoneNumber(this.state.phoneno.value)) {
+            if (!isPhoneNumber(this.state.phone.value)) {
               this.setState((prevState) => ({
                 ...prevState,
-                phoneno: {
-                  ...prevState.phoneno,
+                phone: {
+                  ...prevState.phone,
                   isError: true,
                   error_text: 'Enter a valid phone number.',
                 },
@@ -279,20 +342,20 @@ export default class Signup extends React.Component {
         {
           this.setState((prevState) => ({
             ...prevState,
-            confirmPassword: {
-              ...prevState.confirmPassword,
+            confirmpassword: {
+              ...prevState.confirmpassword,
               value: text,
               isError: false,
             },
           }));
         }
         break;
-      case 'phoneno':
+      case 'phone':
         {
           this.setState((prevState) => ({
             ...prevState,
-            phoneno: {
-              ...prevState.phoneno,
+            phone: {
+              ...prevState.phone,
               value: text,
               isError: false,
             },
@@ -330,7 +393,7 @@ export default class Signup extends React.Component {
               this.validate('email');
               this.validate('password');
               this.validate('confirmpassword');
-              this.validate('phoneno');
+              this.validate('phone');
               this.validate('address');
             },
           );
@@ -355,7 +418,7 @@ export default class Signup extends React.Component {
               this.validate('email');
               this.validate('password');
               this.validate('confirmpassword');
-              this.validate('phoneno');
+              this.validate('phone');
               this.validate('address');
               this.validate('gender');
             },
@@ -365,9 +428,80 @@ export default class Signup extends React.Component {
     }
   };
 
+  // called when we submit text in anyb Input textAlign
+  handleOnSubmitEditing = (label) => {
+    switch (label) {
+      case 'firstname':
+        return signupRefs.lastNameRef.current.focus();
+      case 'lastname':
+        return signupRefs.emailRef.current.focus();
+      case 'email':
+        return signupRefs.passwordRef.current.focus();
+      case 'password':
+        return signupRefs.confirmPasswordRef.current.focus();
+      case 'confirmpassword':
+        return signupRefs.phonenoRef.current.focus();
+      case 'phone':
+        return signupRefs.addressRef.current.focus();
+      default:
+        this.validate(label);
+        Keyboard.dismiss();
+        break;
+    }
+  };
+
   // called when end editing on any InputText
   handleEndEditing = (text) => {
     console.log('handleEndEditing called... ' + text);
+  };
+
+  //valled when focus on any Text InputText
+  handleOnFocus = (label) => {
+    switch (label) {
+      case 'firstname':
+        this.validate('image');
+        break;
+      case 'lastname':
+        this.validate('image');
+        this.validate('firstname');
+        break;
+      case 'email':
+        this.validate('image');
+        this.validate('firstname');
+        this.validate('lastname');
+        break;
+      case 'password':
+        this.validate('image');
+        this.validate('firstname');
+        this.validate('lastname');
+        this.validate('email');
+        break;
+      case 'confirmpassword':
+        this.validate('image');
+        this.validate('firstname');
+        this.validate('lastname');
+        this.validate('email');
+        this.validate('password');
+        break;
+      case 'phone':
+        this.validate('image');
+        this.validate('firstname');
+        this.validate('lastname');
+        this.validate('email');
+        this.validate('password');
+        this.validate('confirmpassword');
+        break;
+      case 'address':
+        this.validate('image');
+        this.validate('firstname');
+        this.validate('lastname');
+        this.validate('email');
+        this.validate('password');
+        this.validate('confirmpassword');
+        this.validate('phone');
+        break;
+      default:
+    }
   };
 
   // called when we press register button
@@ -379,8 +513,8 @@ export default class Signup extends React.Component {
       !isEmpty(this.state.lastname.value) &&
       !isEmpty(this.state.email.value) &&
       !isEmpty(this.state.password.value) &&
-      !isEmpty(this.state.confirmPassword.value) &&
-      !isEmpty(this.state.phoneno.value) &&
+      !isEmpty(this.state.confirmpassword.value) &&
+      !isEmpty(this.state.phone.value) &&
       !isEmpty(this.state.address.value) &&
       !isEmpty(this.state.gender.value) &&
       !isEmpty(this.state.dob.value)
@@ -391,8 +525,8 @@ export default class Signup extends React.Component {
         lastname: this.state.lastname.value,
         email: this.state.email.value,
         password: this.state.password.value,
-        confirmPassword: this.state.confirmPassword.value,
-        phoneno: this.state.phoneno.value,
+        confirmpassword: this.state.confirmpassword.value,
+        phone: this.state.phone.value,
         address: this.state.address.value,
         gender: this.state.gender.value,
         dob: this.state.dob.value,
@@ -404,11 +538,33 @@ export default class Signup extends React.Component {
       this.validate('email');
       this.validate('password');
       this.validate('confirmpassword');
-      this.validate('phoneno');
+      this.validate('phone');
       this.validate('address');
       this.validate('gender');
       this.validate('dob');
     }
+  };
+
+  myTextInput = (props) => {
+    const labelInLowerCase = removeSpaces(props.label).toLowerCase();
+    const data = this.getData(labelInLowerCase);
+
+    // console.log(JSON.stringify(data));
+    return (
+      <Components.MyTextInput
+        label={props.label}
+        iconName={data.iconName}
+        value={data.value}
+        placeholder={props.label}
+        isError={data.isError}
+        error_text={data.error_text}
+        forwardRef={data.refs}
+        onChangeText={(text) => this.handleOnChangeText(text, labelInLowerCase)}
+        onSubmitEditing={() => this.handleOnSubmitEditing(labelInLowerCase)}
+        onEndEditing={(e) => this.handleEndEditing(e.nativeEvent.text)}
+        onFocus={() => this.handleOnFocus(labelInLowerCase)}
+      />
+    );
   };
 
   render() {
@@ -417,10 +573,10 @@ export default class Signup extends React.Component {
       lastname,
       email,
       password,
-      confirmPassword,
+      confirmpassword,
       avatarSource,
       gender,
-      phoneno,
+      phone,
       dob,
       address,
       dobVisibility,
@@ -464,168 +620,18 @@ export default class Signup extends React.Component {
 
               <Components.MyAvatarButton
                 source={avatarSource.value}
-                isError={firstname.isError}
-                error_text={firstname.error_text}
-                onPress={() => {
-                  console.log('image pressed');
-                  this.toggleAvatar();
-                }}
+                isError={avatarSource.isError}
+                error_text={avatarSource.error_text}
+                onPress={() => this.toggleAvatar()}
               />
 
-              <Components.MyTextInput
-                label="First name"
-                iconName={icon.user}
-                value={firstname.value}
-                placeholder="First name"
-                isError={firstname.isError}
-                error_text={firstname.error_text}
-                forwardRef={signupRefs.firstNameRef}
-                onChangeText={(text) =>
-                  this.handleOnChangeText(text, 'firstname')
-                }
-                onSubmitEditing={() => signupRefs.lastNameRef.current.focus()}
-                onEndEditing={(e) => this.handleEndEditing(e.nativeEvent.text)}
-                onFocus={() => this.validate('image')}
-              />
-
-              <Components.MyTextInput
-                label="Last name"
-                iconName={icon.user}
-                value={lastname.value}
-                placeholder="Last name"
-                isError={lastname.isError}
-                error_text={lastname.error_text}
-                forwardRef={signupRefs.lastNameRef}
-                onChangeText={(text) =>
-                  this.handleOnChangeText(text, 'lastname')
-                }
-                onSubmitEditing={() => signupRefs.emailRef.current.focus()}
-                onEndEditing={(e) => this.handleEndEditing(e.nativeEvent.text)}
-                onFocus={() => {
-                  this.validate('image');
-                  this.validate('firstname');
-                }}
-              />
-
-              <Components.MyTextInput
-                label="Email"
-                iconName={icon.envelope}
-                placeholder="Email"
-                value={email.value}
-                isError={email.isError}
-                error_text={email.error_text}
-                forwardRef={signupRefs.emailRef}
-                onChangeText={(text) => this.handleOnChangeText(text, 'email')}
-                onSubmitEditing={() => signupRefs.passwordRef.current.focus()}
-                onEndEditing={(e) => this.handleEndEditing(e.nativeEvent.text)}
-                onFocus={() => {
-                  this.validate('image');
-                  this.validate('firstname');
-                  this.validate('lastname');
-                }}
-              />
-
-              <Components.MyTextInput
-                label="Password"
-                iconName={icon.lock}
-                secureTextEntry={true}
-                maxLength={10}
-                showEyeIcon={true}
-                placeholder="Password"
-                value={password.value}
-                isError={password.isError}
-                error_text={password.error_text}
-                onChangeText={(text) =>
-                  this.handleOnChangeText(text, 'password')
-                }
-                forwardRef={signupRefs.passwordRef}
-                onSubmitEditing={() =>
-                  signupRefs.confirmPasswordRef.current.focus()
-                }
-                onEndEditing={(e) => this.handleEndEditing(e.nativeEvent.text)}
-                onFocus={() => {
-                  this.validate('image');
-                  this.validate('firstname');
-                  this.validate('lastname');
-                  this.validate('email');
-                }}
-              />
-
-              <Components.MyTextInput
-                label="Confirm password"
-                iconName={icon.lock}
-                secureTextEntry={true}
-                maxLength={10}
-                showEyeIcon={true}
-                placeholder="Confirm Password"
-                value={confirmPassword.value}
-                isError={confirmPassword.isError}
-                error_text={confirmPassword.error_text}
-                onChangeText={(text) =>
-                  this.handleOnChangeText(text, 'confirmpassword')
-                }
-                forwardRef={signupRefs.confirmPasswordRef}
-                onEndEditing={(e) => this.handleEndEditing(e.nativeEvent.text)}
-                onSubmitEditing={() => signupRefs.phonenoRef.current.focus()}
-                onFocus={() => {
-                  this.validate('image');
-                  this.validate('firstname');
-                  this.validate('lastname');
-                  this.validate('email');
-                  this.validate('password');
-                }}
-              />
-
-              <Components.MyTextInput
-                label="Phone"
-                iconName={icon.phone}
-                keyboardType="phone-pad"
-                maxLength={10}
-                placeholder="Phone number"
-                value={phoneno.value}
-                isError={phoneno.isError}
-                error_text={phoneno.error_text}
-                onChangeText={(text) =>
-                  this.handleOnChangeText(text, 'phoneno')
-                }
-                forwardRef={signupRefs.phonenoRef}
-                onSubmitEditing={() => signupRefs.addressRef.current.focus()}
-                onEndEditing={(e) => this.handleEndEditing(e.nativeEvent.text)}
-                onFocus={() => {
-                  this.validate('image');
-                  this.validate('firstname');
-                  this.validate('lastname');
-                  this.validate('email');
-                  this.validate('password');
-                  this.validate('confirmpassword');
-                }}
-              />
-
-              <Components.MyTextInput
-                label="Address"
-                iconName={icon.address}
-                multiline={true}
-                placeholder="Address"
-                value={address.value}
-                isError={address.isError}
-                error_text={address.error_text}
-                alignItems={'center'}
-                onChangeText={(text) =>
-                  this.handleOnChangeText(text, 'address')
-                }
-                forwardRef={signupRefs.addressRef}
-                onSubmitEditing={() => {}}
-                onEndEditing={(e) => this.handleEndEditing(e.nativeEvent.text)}
-                onFocus={() => {
-                  this.validate('image');
-                  this.validate('firstname');
-                  this.validate('lastname');
-                  this.validate('email');
-                  this.validate('password');
-                  this.validate('confirmpassword');
-                  this.validate('phoneno');
-                }}
-              />
+              {this.myTextInput({label: 'First name'})}
+              {this.myTextInput({label: 'Last name'})}
+              {this.myTextInput({label: 'Email'})}
+              {this.myTextInput({label: 'Password'})}
+              {this.myTextInput({label: 'Confirm Password'})}
+              {this.myTextInput({label: 'Phone'})}
+              {this.myTextInput({label: 'Address'})}
 
               <Components.GenderRadioButton
                 isError={gender.isError}

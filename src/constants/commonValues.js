@@ -30,7 +30,7 @@ export const field_object_signup = {
     error_text: '',
     value: '',
   },
-  confirmPassword: {
+  confirmpassword: {
     isError: false,
     error_text: '',
     value: '',
@@ -46,7 +46,7 @@ export const field_object_signup = {
     error_text: '',
     value: '',
   },
-  phoneno: {
+  phone: {
     isError: false,
     error_text: '',
     value: '',
@@ -70,13 +70,11 @@ export const field_object_signup = {
 
 export const field_object_login = {
   email: {
-    ref: 'emailRef',
     isError: false,
     error_text: '',
     value: '',
   },
   password: {
-    ref: 'passwordRef',
     isError: false,
     error_text: '',
     value: '',

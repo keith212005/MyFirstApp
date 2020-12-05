@@ -17,7 +17,13 @@ import {
 import {styles} from './style';
 import {actionCreaters} from '@actions';
 import {field_object_login} from '@constants';
-import {isValidEmail, isSameString, isEmpty} from '@utils';
+import {
+  isValidEmail,
+  isSameString,
+  isEmpty,
+  getIcon,
+  removeSpaces,
+} from '@utils';
 import * as Components from '@components';
 import {checkConnectivity} from '@api';
 
@@ -28,6 +34,33 @@ class Login extends React.Component {
     this.passwordRef = React.createRef();
     this.state = {...field_object_login};
   }
+
+  // getting InputText data
+  getData = (label) => {
+    switch (label) {
+      case 'email':
+        return {
+          iconName: getIcon(label),
+          refs: this.emailRef,
+          isError: this.state.email.isError,
+          error_text: this.state.email.error_text,
+          value: this.state.email.value,
+        };
+      case 'password':
+        return {
+          iconName: getIcon(label),
+          refs: this.passwordRef,
+          isError: this.state.password.isError,
+          error_text: this.state.password.error_text,
+          value: this.state.password.value,
+          secureTextEntry: true,
+          maxLength: 10,
+          showEyeIcon: true,
+        };
+      default:
+        break;
+    }
+  };
 
   // call this function to validate any field
   validate = (fieldName) => {
@@ -133,7 +166,7 @@ class Login extends React.Component {
 
   handleOnFocus = (label) => {
     switch (label) {
-      case 'Password':
+      case 'password':
         this.validate('email');
         break;
       default:
@@ -142,9 +175,9 @@ class Login extends React.Component {
 
   handleOnSubmitEditing = (label) => {
     switch (label) {
-      case 'Email':
+      case 'email':
         return this.passwordRef.current.focus();
-      case 'Password':
+      case 'password':
         return Keyboard.dismiss();
       default:
         break;
@@ -153,28 +186,56 @@ class Login extends React.Component {
 
   // custom textinput function
   myTextInput = (props) => {
-    const {email, password, failAlert, progressVisible} = this.state;
+    const labelInLowerCase = props.label.toLowerCase();
+    const data = this.getData(labelInLowerCase);
 
     return (
       <Components.MyTextInput
         label={props.label}
-        iconName={props.icon}
+        iconName={data.iconName}
         placeholder={props.label}
-        value={props.label.toLowerCase().value}
-        isError={props.label === 'Email' ? email.isError : password.isError}
-        error_text={
-          props.label === 'Email' ? email.error_text : password.error_text
-        }
-        forwardRef={props.label === 'Email' ? this.emailRef : this.passwordRef}
-        secureTextEntry={props.label === 'Password' ? true : false}
-        maxLength={props.label === 'Password' ? 10 : null}
-        showEyeIcon={props.label === 'Password' ? true : false}
-        onChangeText={(text) =>
-          this.handleOnChangeText(text, props.label.toLowerCase())
-        }
-        onSubmitEditing={() => this.handleOnSubmitEditing(props.label)}
+        value={data.value}
+        isError={data.isError}
+        error_text={data.error_text}
+        forwardRef={data.refs}
+        secureTextEntry={data.secureTextEntry}
+        maxLength={data.maxLength}
+        showEyeIcon={data.showEyeIcon}
+        onChangeText={(text) => this.handleOnChangeText(text, labelInLowerCase)}
+        onSubmitEditing={() => this.handleOnSubmitEditing(labelInLowerCase)}
         onEndEditing={(e) => {}}
-        onFocus={() => this.handleOnFocus(props.label)}
+        onFocus={() => this.handleOnFocus(labelInLowerCase)}
+      />
+    );
+  };
+
+  handleMyButtonPress = (label) => {
+    switch (label) {
+      case 'signin':
+        this.submit();
+        break;
+      case 'signup':
+        this.props.navigation.navigate('Signup');
+        break;
+      default:
+    }
+  };
+
+  myButton = (props) => {
+    const labelInLowerCase = removeSpaces(props.label.toLowerCase());
+    return (
+      <Components.LinearGradientButton
+        title={props.label}
+        height={responsiveHeight(14)}
+        fontSize={15}
+        fontColor={colors.primary}
+        borderRadius={10}
+        borderWidth={1}
+        borderColor={props.label === 'Sign In' ? colors.white : colors.primary}
+        fillColor={props.label === 'Sign In' ? colors.themeButton : null}
+        fontColor={props.label === 'Sign In' ? colors.white : colors.primary}
+        fontFamily={props.label === 'Sign In' ? fontFamily.RobotoBold : null}
+        onPress={() => this.handleMyButtonPress(labelInLowerCase)}
       />
     );
   };
@@ -199,33 +260,14 @@ class Login extends React.Component {
                 {failAlert ? 'Login Failed!' : null}
               </Text>
 
-              {this.myTextInput({label: 'Email', icon: icon.envelope})}
-              {this.myTextInput({label: 'Password', icon: icon.lock})}
+              {this.myTextInput({label: 'Email'})}
+              {this.myTextInput({label: 'Password'})}
 
               <Text style={styles.forgotpasswordtext}>Forgot password?</Text>
 
-              <Components.LinearGradientButton
-                title="Sign In"
-                onPress={() => this.submit()}
-                height={responsiveHeight(14)}
-                fontSize={15}
-                borderRadius={10}
-                fillColor={colors.themeButton}
-                fontColor={colors.white}
-                fontFamily={fontFamily.RobotoBold}
-              />
-
+              {this.myButton({label: 'Sign In'})}
               <View style={{marginTop: 10, marginBottom: 50}}>
-                <Components.LinearGradientButton
-                  title="Sign Up"
-                  height={responsiveHeight(14)}
-                  fontSize={15}
-                  fontColor={colors.primary}
-                  borderRadius={10}
-                  borderWidth={1}
-                  borderColor={colors.primary}
-                  onPress={() => this.props.navigation.navigate('Signup')}
-                />
+                {this.myButton({label: 'Sign Up'})}
               </View>
             </KeyboardAwareScrollView>
           </Animatable.View>

@@ -3,7 +3,6 @@ export GenderRadioButton from './Buttons/genderRadioButton';
 export MyDatePicker from './Buttons/myDatePicker';
 export MyAvatarButton from './Buttons/myAvatarButton';
 export MyTextInput from './TextInputs/myTextInput';
-export MyTextInput2 from './TextInputs/myTextInput2';
 export DrawerContent from './Drawer/DrawerContent';
 export UploadImage from './Modal/uploadImage';
 export CustomHeader from './Header/customHeader';

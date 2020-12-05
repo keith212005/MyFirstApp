@@ -257,8 +257,8 @@ export default class Signup extends React.Component {
             ...prevState,
             email: {
               ...prevState.email,
-              value: text.trim(),
               isError: false,
+              value: text.trim(),
             },
           }));
         }
@@ -472,7 +472,7 @@ export default class Signup extends React.Component {
                 }}
               />
 
-              <Components.MyTextInput2
+              <Components.MyTextInput
                 label="First name"
                 iconName={icon.user}
                 value={firstname.value}
@@ -488,7 +488,7 @@ export default class Signup extends React.Component {
                 onFocus={() => this.validate('image')}
               />
 
-              <Components.MyTextInput2
+              <Components.MyTextInput
                 label="Last name"
                 iconName={icon.user}
                 value={lastname.value}
@@ -507,7 +507,7 @@ export default class Signup extends React.Component {
                 }}
               />
 
-              <Components.MyTextInput2
+              <Components.MyTextInput
                 label="Email"
                 iconName={icon.envelope}
                 placeholder="Email"
@@ -525,7 +525,7 @@ export default class Signup extends React.Component {
                 }}
               />
 
-              <Components.MyTextInput2
+              <Components.MyTextInput
                 label="Password"
                 iconName={icon.lock}
                 secureTextEntry={true}
@@ -551,7 +551,7 @@ export default class Signup extends React.Component {
                 }}
               />
 
-              <Components.MyTextInput2
+              <Components.MyTextInput
                 label="Confirm password"
                 iconName={icon.lock}
                 secureTextEntry={true}
@@ -576,7 +576,7 @@ export default class Signup extends React.Component {
                 }}
               />
 
-              <Components.MyTextInput2
+              <Components.MyTextInput
                 label="Phone"
                 iconName={icon.phone}
                 keyboardType="phone-pad"
@@ -601,7 +601,7 @@ export default class Signup extends React.Component {
                 }}
               />
 
-              <Components.MyTextInput2
+              <Components.MyTextInput
                 label="Address"
                 iconName={icon.address}
                 multiline={true}

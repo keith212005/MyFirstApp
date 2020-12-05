@@ -70,11 +70,13 @@ export const field_object_signup = {
 
 export const field_object_login = {
   email: {
+    ref: 'emailRef',
     isError: false,
     error_text: '',
     value: '',
   },
   password: {
+    ref: 'passwordRef',
     isError: false,
     error_text: '',
     value: '',

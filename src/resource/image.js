@@ -19,7 +19,7 @@ export const icon = {
   lock: 'lock_96px',
   phone: 'phone_96px',
   settings: 'settings_96px',
-  technical_support: 'technical_support_96px',
+  tech_support: 'technical_support_96px',
   user: 'user_96px',
   user_outlined: 'user_outlined_96px',
 };

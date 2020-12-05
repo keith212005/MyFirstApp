@@ -53,6 +53,22 @@ class DrawerContent extends React.Component {
     );
   };
 
+  handleOnPressNavItems = (label) => {
+    switch (label) {
+      case 'Home':
+        this.props.navigation.navigate(label);
+        break;
+      case 'Setting':
+        this.props.navigation.navigate(label);
+        break;
+      case 'Sign out':
+        this.handleExitApp();
+        break;
+      default:
+        break;
+    }
+  };
+
   drawerItem = (extraProps) => {
     return (
       <DrawerItem
@@ -65,7 +81,7 @@ class DrawerContent extends React.Component {
         )}
         label={extraProps.label}
         onPress={() => {
-          this.props.navigation.navigate(extraProps.label);
+          this.handleOnPressNavItems(extraProps.label);
         }}
       />
     );
@@ -112,11 +128,9 @@ class DrawerContent extends React.Component {
               {this.drawerItem({label: 'Profile', icon: icon.user_outlined})}
               {this.drawerItem({label: 'Bookmarks', icon: icon.bookmark})}
               {this.drawerItem({label: 'Setting', icon: icon.settings})}
-              {this.drawerItem({
-                label: 'Support',
-                icon: icon.technical_support,
-              })}
+              {this.drawerItem({label: 'Support', icon: icon.tech_support})}
             </Drawer.Section>
+
             <Drawer.Section title="Preferences">
               <TouchableRipple
                 onPress={() => {
@@ -134,17 +148,7 @@ class DrawerContent extends React.Component {
         </DrawerContentScrollView>
 
         <Drawer.Section style={styles.bottomDrawerSection}>
-          <DrawerItem
-            icon={({color, size}) => (
-              <Image
-                style={{height: size, width: size}}
-                resizeMode="contain"
-                source={{uri: icon.exit}}
-              />
-            )}
-            label="Sign out"
-            onPress={() => this.handleExitApp()}
-          />
+          {this.drawerItem({label: 'Sign out', icon: icon.exit})}
         </Drawer.Section>
       </View>
     );

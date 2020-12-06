@@ -7,4 +7,4 @@ export {
 export {colors} from './color';
 export {fontFamily} from './font';
 export {commonStyle} from './commonStyle';
-export {getImageName, icon} from './image';
+export * from './image';

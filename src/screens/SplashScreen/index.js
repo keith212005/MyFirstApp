@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 
 import {styles} from './style';
 import {actionCreaters} from '@actions';
+import MySwiper from '@components';
 
 class Splash extends React.Component {
   constructor(props) {
@@ -14,9 +15,10 @@ class Splash extends React.Component {
   }
   componentDidMount() {
     setTimeout(() => {
-      this.props.navigation.replace(
-        this.props.autoLoginStatus ? 'DrawerNavigator' : 'StartScreen',
-      );
+      this.props.navigation.replace('Swiper');
+      // this.props.navigation.replace(
+      //   this.props.autoLoginStatus ? 'DrawerNavigator' : 'StartScreen',
+      // );
     }, 2000);
   }
   render() {

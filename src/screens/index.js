@@ -1,4 +1,5 @@
 export Splash from './SplashScreen';
+export Swiper from './SwipeScreen';
 export StartScreen from './StartScreen';
 export Login from './LoginScreen';
 export Signup from './SignupScreen';

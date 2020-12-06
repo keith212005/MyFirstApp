@@ -23,3 +23,9 @@ export const icon = {
   user: 'user_96px',
   user_outlined: 'user_outlined_96px',
 };
+
+export const swiper_images = [
+  'https://images.unsplash.com/photo-1504567961542-e24d9439a724?ixid=MXwxMjA3fDB8MHxzZWFyY2h8Mzd8fG5hdHVyZXxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60',
+  'https://images.unsplash.com/photo-1444464666168-49d633b86797?ixid=MXwxMjA3fDB8MHxzZWFyY2h8Mzl8fG5hdHVyZXxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60',
+  'https://images.unsplash.com/photo-1431794062232-2a99a5431c6c?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NDR8fG5hdHVyZXxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60',
+];

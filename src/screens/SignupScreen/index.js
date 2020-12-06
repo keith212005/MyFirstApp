@@ -51,6 +51,7 @@ export default class Signup extends React.Component {
           isError: this.state.email.isError,
           error_text: this.state.email.error_text,
           value: this.state.email.value,
+          keyboardType: 'email-address',
         };
       case 'password':
         return {
@@ -59,6 +60,8 @@ export default class Signup extends React.Component {
           isError: this.state.password.isError,
           error_text: this.state.password.error_text,
           value: this.state.password.value,
+          secureTextEntry: true,
+          showEyeIcon: true,
         };
       case 'confirmpassword':
         return {
@@ -67,6 +70,8 @@ export default class Signup extends React.Component {
           isError: this.state.confirmpassword.isError,
           error_text: this.state.confirmpassword.error_text,
           value: this.state.confirmpassword.value,
+          secureTextEntry: true,
+          showEyeIcon: true,
         };
       case 'phone':
         return {
@@ -75,6 +80,7 @@ export default class Signup extends React.Component {
           isError: this.state.phone.isError,
           error_text: this.state.phone.error_text,
           value: this.state.phone.value,
+          keyboardType: 'phone-pad',
         };
       case 'address':
         return {
@@ -83,6 +89,7 @@ export default class Signup extends React.Component {
           isError: this.state.address.isError,
           error_text: this.state.address.error_text,
           value: this.state.address.value,
+          multiline: true,
         };
       default:
         break;
@@ -120,7 +127,7 @@ export default class Signup extends React.Component {
         }
         break;
       case 'lastname':
-        if (isEmpty(this.state.lastname.value)) {
+        if (Utils.isEmpty(this.state.lastname.value)) {
           this.setState((prevState) => ({
             ...prevState,
             lastname: {
@@ -263,7 +270,7 @@ export default class Signup extends React.Component {
         }
         break;
       case 'dob':
-        if (Utils.isEmpty) {
+        if (Utils.isEmpty(this.state.dob.value)) {
           this.setState((prevState) => ({
             ...prevState,
             dob: {
@@ -435,9 +442,8 @@ export default class Signup extends React.Component {
         return signupRefs.phonenoRef.current.focus();
       case 'phone':
         return signupRefs.addressRef.current.focus();
-      default:
+      case 'address':
         this.validate(label);
-        Keyboard.dismiss();
         break;
     }
   };
@@ -551,6 +557,10 @@ export default class Signup extends React.Component {
         isError={data.isError}
         error_text={data.error_text}
         forwardRef={data.refs}
+        secureTextEntry={data.secureTextEntry}
+        showEyeIcon={data.showEyeIcon}
+        keyboardType={data.keyboardType}
+        multiline={data.multiline}
         onChangeText={(text) => this.handleOnChangeText(text, labelInLowerCase)}
         onSubmitEditing={() => this.handleOnSubmitEditing(labelInLowerCase)}
         onEndEditing={(e) => this.handleEndEditing(e.nativeEvent.text)}

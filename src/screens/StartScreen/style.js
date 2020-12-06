@@ -27,7 +27,7 @@ export const styles = StyleSheet.create({
   },
   title: {
     color: colors.gray,
-    fontSize: 30,
+    fontSize: 25,
     fontFamily: fontFamily.PacificoRegular,
   },
   text: {
@@ -52,7 +52,8 @@ export const styles = StyleSheet.create({
     flex: 9,
     textAlign: 'right',
     color: colors.white,
-    fontWeight: 'bold',
+    fontSize: 11,
+    fontWeight: '400',
   },
   image: {
     flex: 3,

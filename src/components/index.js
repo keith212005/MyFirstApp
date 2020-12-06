@@ -9,3 +9,4 @@ export CustomHeader from './Header/customHeader';
 export ExitAppDialog from './Dialogs/exitAppDialog';
 export SimpleAlertDialog from './Dialogs/simpleAlertDialog';
 export SimpleActivityIndicator from './ActivityIndicator/simpleActivityIndicator';
+export BackgroundCarousel from './Carousel/backgroundCarousel';

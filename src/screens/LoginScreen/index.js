@@ -165,7 +165,9 @@ class Login extends React.Component {
       case 'email':
         return this.passwordRef.current.focus();
       case 'password':
-        return Keyboard.dismiss();
+        Keyboard.dismiss();
+        this.submit();
+        break;
       default:
         break;
     }

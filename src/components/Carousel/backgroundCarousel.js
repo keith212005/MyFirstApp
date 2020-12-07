@@ -53,15 +53,34 @@ export default class BackgroundCarousel extends Component {
   setSelectedIndex = (event) => {
     const viewSize = event.nativeEvent.layoutMeasurement.width;
     const contentOffset = event.nativeEvent.contentOffset.x;
-    const selectedIndex = this.setState({
-      selectedIndex: Math.floor(contentOffset / viewSize),
+    const selectedIndex = Math.floor(contentOffset / viewSize);
+    this.setState({
+      selectedIndex,
     });
   };
 
   handleSkipAll = () => {
-    console.log('skip all pressed');
     this.props.navigation.replace(
       this.props.autoLoginStatus ? 'DrawerNavigator' : 'StartScreen',
+    );
+  };
+
+  handleNext = () => {
+    console.log('next pressed');
+    console.log(this.state.selectedIndex);
+    this.setState(
+      (prev) => {
+        selectedIndex: prev.selectedIndex + 1;
+      },
+      () => {
+        console.log('callabck');
+
+        this.scrollRef.current.scrollTo({
+          animated: true,
+          y: 0,
+          x: DEVICE_WIDTH * this.state.selectedIndex,
+        });
+      },
     );
   };
 
@@ -88,7 +107,20 @@ export default class BackgroundCarousel extends Component {
       </View>
 
       <View style={styles.footer}>
-        <Text>footer text </Text>
+        <View style={{alignItems: 'flex-end'}}>
+          <LinearGradientButton
+            title="Next"
+            height={Resource.responsiveHeight(10)}
+            width={Resource.responsiveHeight(20)}
+            fontSize={12}
+            fillColor={Resource.colors.themeButton}
+            borderRadius={50}
+            borderWidth={1}
+            borderColor={Resource.colors.white}
+            fontColor={Resource.colors.white}
+            onPress={() => this.handleNext()}
+          />
+        </View>
       </View>
     </View>
   );
@@ -101,6 +133,8 @@ export default class BackgroundCarousel extends Component {
           horizontal
           pagingEnabled
           onMomentumScrollEnd={this.setSelectedIndex}
+          scrollToOverflowEnabled={true}
+          showsHorizontalScrollIndicator={false}
           ref={this.scrollRef}>
           {quotes.map((quote, i) => (
             <this.MySwipeScreen quote={quote} key={i} />
@@ -141,8 +175,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
     paddingVertical: 30,
     paddingHorizontal: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'flex-end',
   },
   quote: {
     fontSize: 20,

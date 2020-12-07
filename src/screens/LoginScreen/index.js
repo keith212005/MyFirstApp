@@ -283,10 +283,10 @@ class Login extends React.Component {
 }
 
 const matchStateToProps = (state) => {
-  console.log(JSON.stringify(state));
+  console.log('LoginScreen = ' + JSON.stringify(state));
   return {
     currentCount: state.autoLogin.autoLoginStatus,
-    isOnline: state.connectionStatus.isOnline,
+    isOnline: state.connectionState.isOnline,
   };
 };
 

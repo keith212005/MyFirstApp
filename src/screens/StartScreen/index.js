@@ -3,11 +3,17 @@ import {View, Text, TouchableOpacity, Image} from 'react-native';
 
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
 import {styles} from './style';
 import {colors, getImageName, icon} from '@resource';
+import {actionCreaters} from '@actions';
 
-export default class StartScreen extends React.Component {
+class StartScreen extends React.Component {
+  componentDidMount() {
+    this.props.changeIsOpenFirstTime(false);
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -44,3 +50,15 @@ export default class StartScreen extends React.Component {
     );
   }
 }
+
+const matchStateToProps = (state) => {
+  console.log('StartScreen = ' + JSON.stringify(state));
+  return {
+    autoLoginStatus: state.autoLogin.status,
+  };
+};
+
+const matchDispatchToProps = (dispatch) =>
+  bindActionCreators(actionCreaters, dispatch);
+
+export default connect(matchStateToProps, matchDispatchToProps)(StartScreen);

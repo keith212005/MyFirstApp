@@ -15,10 +15,13 @@ class Splash extends React.Component {
   }
   componentDidMount() {
     setTimeout(() => {
-      this.props.navigation.replace('Swiper');
-      // this.props.navigation.replace(
-      //   this.props.autoLoginStatus ? 'DrawerNavigator' : 'StartScreen',
-      // );
+      if (this.props.isOpenFirstTime === true) {
+        this.props.navigation.replace('Swiper');
+      } else {
+        this.props.navigation.replace(
+          this.props.autoLoginStatus ? 'DrawerNavigator' : 'StartScreen',
+        );
+      }
     }, 2000);
   }
   render() {
@@ -37,7 +40,9 @@ class Splash extends React.Component {
 }
 
 const matchStateToProps = (state) => {
+  // console.log('Splashscreen = '+JSON.stringify(state));
   return {
+    isOpenFirstTime: state.isOpenFirstTime.status,
     autoLoginStatus: state.autoLogin.status,
   };
 };

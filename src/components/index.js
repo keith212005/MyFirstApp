@@ -11,3 +11,4 @@ export SimpleAlertDialog from './Dialogs/simpleAlertDialog';
 export SimpleActivityIndicator from './ActivityIndicator/simpleActivityIndicator';
 export BackgroundCarousel from './Carousel/backgroundCarousel';
 export MyCarousel from './Carousel/myCarousel';
+export MyCalendar from './Calendar/myCalendar';

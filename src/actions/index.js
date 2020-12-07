@@ -1,3 +1,4 @@
+// Note: don't forget to export action type constants below
 export {
   ADD_AUTO_LOGIN,
   REMOVE_AUTO_LOGIN,

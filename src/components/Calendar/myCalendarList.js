@@ -1,9 +1,10 @@
 /* @flow */
 
 import React, {Component} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Image} from 'react-native';
 
 import {colors} from '@resource';
+import * as Utils from '@utils';
 
 import {
   Calendar,
@@ -12,10 +13,78 @@ import {
   LocaleConfig,
 } from 'react-native-calendars';
 
+const dottedSelection = {
+  marked: true,
+};
+
 export default class MyCalendarList extends Component {
   render() {
     return (
       <CalendarList
+        current={'2020-03-01'}
+        markingType={'custom'}
+        dayComponent={({date, state, marking}) => {
+          // console.log('markign=' + JSON.stringify(marking));
+
+          return (
+            <View
+              style={{
+                flexDirection: 'row',
+              }}>
+              <View
+                style={{
+                  borderWidth: marking.marked ? 1 : null,
+                  borderColor: marking.marked ? 'red' : null,
+                  borderRadius: marking.marked ? 50 : null,
+                  borderStyle: marking.marked ? 'dotted' : null,
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  paddingTop: 5,
+                  paddingBottom: 5,
+                  height: 40,
+                  width: 40,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <Text
+                  style={{
+                    fontSize: 15,
+                    color: date.day == 21 && date.month == 4 ? 'cyan' : 'black',
+                  }}>
+                  {date.day}
+                </Text>
+              </View>
+              {(date.day == 2 && date.month == 3) ||
+              (date.day == 31 && date.month == 3) ||
+              (date.day == 21 && date.month == 4) ? (
+                <Image
+                  style={{
+                    height: 15,
+                    width: 15,
+                    position: 'absolute',
+                    paddingLeft: 66,
+                  }}
+                  resizeMode="contain"
+                  source={{uri: Utils.getIcon('camera')}}
+                />
+              ) : null}
+            </View>
+          );
+        }}
+        markedDates={{
+          '2020-03-01': {marked: true},
+          '2020-03-07': {marked: true},
+          '2020-03-08': {marked: true},
+          '2020-03-15': {marked: true},
+          '2020-03-29': {marked: true},
+          '2020-03-31': {marked: true},
+          '2020-03-07': {marked: true},
+          '2020-04-05': {marked: true},
+          '2020-04-12': {marked: true},
+          '2020-04-21': {marked: true},
+        }}
+        showScrollIndicator={false}
+        displayLoadingIndicator={false}
         onVisibleMonthsChange={(months) => {
           console.log('now these months are visible', months);
         }}
@@ -45,9 +114,6 @@ export default class MyCalendarList extends Component {
           textMonthFontSize: 16,
           textDayHeaderFontSize: 16,
         }}
-        markedDates={{}}
-        showScrollIndicator={false}
-        displayLoadingIndicator={false}
       />
     );
   }

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, ScrollView} from 'react-native';
+import {View} from 'react-native';
 
 import {DrawerActions} from '@react-navigation/native';
 
@@ -8,7 +8,9 @@ import {CustomHeader} from '@components';
 import {MyCalendar, MyCalendarList, MyAgenda} from '@components';
 
 export default class Tab3 extends React.Component {
-  componentDidMount() {}
+  state = {
+    layout: '',
+  };
   render() {
     return (
       <>
@@ -18,11 +20,10 @@ export default class Tab3 extends React.Component {
             this.props.navigation.dispatch(DrawerActions.toggleDrawer())
           }
         />
-        <MyAgenda />
 
+        <MyCalendarList />
         {/*
-            <MyCalendarList />
-
+        <MyAgenda />
         <MyCalendar />
         */}
       </>

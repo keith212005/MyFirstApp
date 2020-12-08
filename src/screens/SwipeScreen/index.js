@@ -12,7 +12,7 @@ import {
 
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import Carousel from 'react-native-snap-carousel';
+import Carousel, {Pagination} from 'react-native-snap-carousel';
 
 import {styles} from './style';
 import * as Resource from '@resource';
@@ -28,16 +28,16 @@ export default class Swiper extends Component {
       activeIndex: 0,
       carouselItems: [
         {
-          title: 'Item 1',
-          text: 'Text 1',
+          title: 'Slide 1',
+          text: 'Slide Text',
         },
         {
-          title: 'Item 2',
-          text: 'Text 2',
+          title: 'Slide 2',
+          text: 'Slide Text',
         },
         {
-          title: 'Item 3',
-          text: 'Text 3',
+          title: 'Slide 3',
+          text: 'Slide Text',
         },
       ],
     };
@@ -56,27 +56,58 @@ export default class Swiper extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={{fontSize: 30}}>{item.title}</Text>
-          <Text>{item.text}</Text>
-          <Text>Index - {index}</Text>
+          <Text style={{fontSize: 30, color: Resource.colors.white}}>
+            {item.title}
+          </Text>
+          <Text style={{color: Resource.colors.white}}>{item.text}</Text>
+          <Text style={{color: Resource.colors.white}}>Index - {index}</Text>
         </View>
         <View style={styles.footer}>
-          <View style={{alignItems: 'flex-end'}}>
-            <LinearGradientButton
-              title="Next"
-              height={Resource.responsiveHeight(10)}
-              width={Resource.responsiveHeight(20)}
-              fontSize={12}
-              fillColor={Resource.colors.themeButton}
-              borderRadius={50}
-              borderWidth={1}
-              borderColor={Resource.colors.white}
-              fontColor={Resource.colors.white}
-              onPress={this.handleNext}
-            />
-          </View>
+          {index == 2 ? (
+            <View style={{alignItems: 'flex-end'}}>
+              <LinearGradientButton
+                title="Start"
+                height={Resource.responsiveHeight(10)}
+                width={Resource.responsiveHeight(20)}
+                fontSize={12}
+                fillColor={Resource.colors.themeButton}
+                borderRadius={50}
+                borderWidth={1}
+                borderColor={Resource.colors.white}
+                fontColor={Resource.colors.white}
+                onPress={this.handleNext}
+              />
+            </View>
+          ) : null}
         </View>
       </View>
+    );
+  }
+
+  get pagination() {
+    const {carouselItems, activeIndex} = this.state;
+    return (
+      <Pagination
+        dotsLength={carouselItems.length}
+        activeDotIndex={activeIndex}
+        containerStyle={{
+          backgroundColor: Resource.colors.transparent,
+        }}
+        dotStyle={{
+          width: 7,
+          height: 7,
+          borderRadius: 5,
+          marginHorizontal: 10,
+          backgroundColor: Resource.colors.primary,
+        }}
+        inactiveDotStyle={
+          {
+            // Define styles for inactive dots here
+          }
+        }
+        inactiveDotOpacity={0.6}
+        inactiveDotScale={0.6}
+      />
     );
   }
 
@@ -96,6 +127,7 @@ export default class Swiper extends Component {
             this.carousel.snapToNext();
           }}
         />
+        {this.pagination}
       </SafeAreaView>
     );
   }

@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
 import {Dimensions, View, Text, StyleSheet} from 'react-native';
 
-const screenWidth = Dimensions.get('window').width;
-const screenHeight = Dimensions.get('window').height;
+const deviceWidth = Dimensions.get('window').width;
+const deviceHeight = Dimensions.get('window').height;
 
 const responsiveWidth = (width) => {
-  return (screenWidth * width) / 100;
+  return (deviceWidth * width) / 100;
 };
 
 const responsiveHeight = (height) => {
-  return (screenWidth * height) / 100;
+  return (deviceWidth * height) / 100;
 };
 
-export {screenHeight, screenWidth, responsiveHeight, responsiveWidth};
+export {deviceHeight, deviceWidth, responsiveHeight, responsiveWidth};

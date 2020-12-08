@@ -23,6 +23,7 @@ export const icon = {
   user_outlined: 'user_outlined_96px',
   calendar_filled: 'calendar_filled_96px',
   calendar_outlined: 'calendar_outlined_96px',
+  camera: 'camera_96px',
 };
 
 export const swiper_images = [

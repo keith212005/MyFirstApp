@@ -16,6 +16,8 @@ export const getIcon = (label) => {
       return icon.phone;
     case 'address':
       return icon.address;
+    case 'camera':
+      return icon.camera;
     default:
       break;
   }

@@ -12,3 +12,5 @@ export SimpleActivityIndicator from './ActivityIndicator/simpleActivityIndicator
 export BackgroundCarousel from './Carousel/backgroundCarousel';
 export MyCarousel from './Carousel/myCarousel';
 export MyCalendar from './Calendar/myCalendar';
+export MyCalendarList from './Calendar/myCalendarList';
+export MyAgenda from './Calendar/myAgenda';

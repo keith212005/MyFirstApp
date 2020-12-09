@@ -14,3 +14,4 @@ export MyCarousel from './Carousel/myCarousel';
 export MyCalendar from './Calendar/myCalendar';
 export MyCalendarList from './Calendar/myCalendarList';
 export MyAgenda from './Calendar/myAgenda';
+export Oval from './Svg/oval';

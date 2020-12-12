@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, BackHandler, StyleSheet} from 'react-native';
+import {View, Text, BackHandler, StyleSheet, Button} from 'react-native';
 
 import {DrawerActions} from '@react-navigation/native';
 import {styles} from './style';

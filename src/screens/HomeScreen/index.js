@@ -12,33 +12,11 @@ import {DrawerActions} from '@react-navigation/native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
-import Svg, {
-  Circle,
-  Ellipse,
-  G,
-  TSpan,
-  TextPath,
-  Path,
-  Polygon,
-  Polyline,
-  Line,
-  Rect,
-  Use,
-  Image,
-  Symbol,
-  Defs,
-  LinearGradient,
-  RadialGradient,
-  Stop,
-  ClipPath,
-  Pattern,
-  Mask,
-} from 'react-native-svg';
 
 import {styles} from './style';
+import {actionCreaters} from '@actions';
 import * as Resource from '@resource';
 import * as Components from '@components';
-import {actionCreaters} from '@actions';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 
@@ -49,6 +27,7 @@ class Home extends React.Component {
       showAlert: false,
       activeIndex: 0,
       toggle: true,
+      direction: 'up',
       carouselItems: [
         {
           title: 'One',
@@ -144,6 +123,11 @@ class Home extends React.Component {
             this.props.navigation.dispatch(DrawerActions.toggleDrawer())
           }
         />
+        <Components.MyEllipse
+          toggle={this.state.toggle}
+          activeIndex={this.state.activeIndex}
+          direction={this.state.direction}
+        />
 
         <SafeAreaView
           style={{
@@ -152,28 +136,27 @@ class Home extends React.Component {
             alignItems: 'center',
             justifyContent: 'center',
           }}>
-          <Components.MyEllipse />
           <Carousel
             layout={'default'}
             lockScrollWhileSnapping={true}
             ref={(c) => (this._carousel = c)}
             data={this.state.carouselItems}
-            sliderWidth={DEVICE_WIDTH}
-            itemWidth={DEVICE_WIDTH}
+            sliderWidth={Resource.deviceWidth}
+            itemWidth={Resource.deviceWidth}
             renderItem={this._renderItem}
             onSnapToItem={(slideIndex) => {
               this.setState({activeIndex: slideIndex});
             }}
             onScrollBeginDrag={() => {
-              this.setState((prevState) => ({
-                ...prevState,
-                toggle: !this.state.toggle,
+              this.setState((prev) => ({
+                ...prev,
+                direction: prev.activeIndex === 0 ? 'down' : 'up',
               }));
             }}
             onScrollEndDrag={() => {
-              this.setState((prevState) => ({
-                ...prevState,
-                toggle: !this.state.toggle,
+              this.setState((prev) => ({
+                ...prev,
+                direction: prev.activeIndex === 0 ? 'up' : 'down',
               }));
             }}
           />

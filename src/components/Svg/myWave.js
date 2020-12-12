@@ -23,7 +23,9 @@ const getInitialState = () => ({
       'M-23.42,3.47 C128.38,-113.97 240.12,-112.98 390.24,10.36 L390.79,160.36 L-27.36,151.47 Z',
     ],
   }),
-  buttonName: 'Log in',
+
+  signup: {name: 'Sign up', title: 'Create an account'},
+  btnName: 'Log in',
   textTitle: 'Already a user',
 });
 
@@ -32,7 +34,7 @@ export default class MyWave extends Component {
 
   runAnimation = () => {
     Animated.timing(anim, {
-      toValue: this.state.buttonName == 'Sign up' ? 1 : 0,
+      toValue: this.state.btnName === 'Sign up' ? 1 : 0,
       duration: 400,
       useNativeDriver: true,
     }).start();
@@ -40,12 +42,10 @@ export default class MyWave extends Component {
 
   handleOnPress = () => {
     this.setState(
-      (prevState) => ({
-        buttonName: prevState.buttonName == 'Sign up' ? 'Log in' : 'Sign up',
+      (prev) => ({
+        btnName: prev.btnName === 'Sign up' ? 'Log in' : 'Sign up',
         textTitle:
-          prevState.buttonName == 'Sign up'
-            ? 'Already a user'
-            : 'Create an account',
+          prev.btnName === 'Sign up' ? 'Already a user' : 'Create an account',
       }),
       () => this.runAnimation(),
     );
@@ -77,7 +77,7 @@ export default class MyWave extends Component {
         <View style={styles.container}>
           <Text style={styles.title}> {this.state.textTitle}</Text>
           <Pressable onPress={() => this.handleOnPress()}>
-            <Text style={styles.button}>{this.state.buttonName}</Text>
+            <Text style={styles.button}>{this.state.btnName}</Text>
           </Pressable>
         </View>
       </>

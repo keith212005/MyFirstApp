@@ -13,10 +13,7 @@ export default class ExitAppDialog extends Component {
             <Dialog visible={this.props.showAlert} dismissable={false}>
               <Dialog.Title>
                 <Image
-                  style={{
-                    height: 25,
-                    width: 25,
-                  }}
+                  style={styles.image}
                   resizeMode="stretch"
                   source={{uri: icon.exit}}
                 />
@@ -47,5 +44,9 @@ export default class ExitAppDialog extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  image: {
+    height: 25,
+    width: 25,
   },
 });

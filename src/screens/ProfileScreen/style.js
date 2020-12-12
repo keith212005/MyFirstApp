@@ -7,4 +7,8 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  myWave: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });

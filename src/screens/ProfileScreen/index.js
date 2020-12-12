@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, BackHandler} from 'react-native';
+import {View, Text, BackHandler, StyleSheet} from 'react-native';
 
 import {DrawerActions} from '@react-navigation/native';
 import {styles} from './style';
@@ -15,6 +15,8 @@ export default class Profile extends React.Component {
             this.props.navigation.dispatch(DrawerActions.toggleDrawer())
           }
         />
+
+        <Components.MyWave />
       </>
     );
   }

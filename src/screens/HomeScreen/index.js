@@ -48,6 +48,7 @@ class Home extends React.Component {
     this.state = {
       showAlert: false,
       activeIndex: 0,
+      toggle: true,
       carouselItems: [
         {
           title: 'One',
@@ -60,6 +61,8 @@ class Home extends React.Component {
     this._renderItem = this._renderItem.bind(this);
     this.handleonPress = this.handleOnPress.bind(this);
   }
+
+  handleExitApp = () => {};
 
   componentDidMount() {
     this._unsubscribefocus = this.props.navigation.addListener('focus', () => {
@@ -79,6 +82,7 @@ class Home extends React.Component {
   }
 
   handleBackButton = () => {
+    console.log('on back press caled');
     this.setState({showAlert: true});
     return true;
   };
@@ -113,11 +117,10 @@ class Home extends React.Component {
   };
 
   get pagination() {
-    const {carouselItems, activeIndex} = this.state;
     return (
       <Pagination
-        dotsLength={carouselItems.length}
-        activeDotIndex={activeIndex}
+        dotsLength={this.state.carouselItems.length}
+        activeDotIndex={this.state.activeIndex}
         containerStyle={{}}
         dotStyle={{
           width: 7,
@@ -126,7 +129,6 @@ class Home extends React.Component {
           marginHorizontal: 3,
           backgroundColor: Resource.colors.primary,
         }}
-        inactiveDotStyle={{}}
         inactiveDotOpacity={0.6}
         inactiveDotScale={0.6}
       />
@@ -142,6 +144,7 @@ class Home extends React.Component {
             this.props.navigation.dispatch(DrawerActions.toggleDrawer())
           }
         />
+
         <SafeAreaView
           style={{
             flex: 1,
@@ -149,33 +152,40 @@ class Home extends React.Component {
             alignItems: 'center',
             justifyContent: 'center',
           }}>
-          <Components.Oval activeIndex={this.state.activeIndex} />
+          <Components.MyEllipse />
           <Carousel
-            apparitionDelay={0}
             layout={'default'}
+            lockScrollWhileSnapping={true}
             ref={(c) => (this._carousel = c)}
             data={this.state.carouselItems}
             sliderWidth={DEVICE_WIDTH}
             itemWidth={DEVICE_WIDTH}
             renderItem={this._renderItem}
             onSnapToItem={(slideIndex) => {
-              console.log('onSnapToItem called...');
               this.setState({activeIndex: slideIndex});
             }}
-            onScrollBeginDrag={(slideIndex) => {
-              console.log('begin');
-              this.setState({activeIndex: slideIndex});
+            onScrollBeginDrag={() => {
+              this.setState((prevState) => ({
+                ...prevState,
+                toggle: !this.state.toggle,
+              }));
             }}
-            onScrollEndDrag={(slideIndex) => {
-              console.log('end');
-              this.setState({activeIndex: slideIndex});
-            }}
-            onMomentumScrollEnd={(slideIndex) => {
-              console.log('momentum begin');
-              this.setState({activeIndex: slideIndex});
+            onScrollEndDrag={() => {
+              this.setState((prevState) => ({
+                ...prevState,
+                toggle: !this.state.toggle,
+              }));
             }}
           />
+
           {this.pagination}
+
+          <Components.ExitAppDialog
+            showAlert={this.state.showAlert}
+            title="Exit"
+            content="Are you sure you want to exit?"
+            onSuccess={(value) => this.handleSuccess(value)}
+          />
         </SafeAreaView>
       </>
     );

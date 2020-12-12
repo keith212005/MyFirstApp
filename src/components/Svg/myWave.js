@@ -15,10 +15,24 @@ import Svg, {
 
 import * as Resource from '@resource';
 
+const AnimatedEllipse = Animated.createAnimatedComponent(Ellipse);
+
 export default class MyWave extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      circleRef: React.createRef(),
+      animatedValue: new Animated.ValueXY({x: 200, y: 250}),
+    };
   }
+
+  runAnimation = () => {
+    Animated.timing(this.state.animatedValue, {
+      toValue: 0,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+  };
 
   render(props) {
     return (
@@ -53,24 +67,24 @@ export default class MyWave extends Component {
           fill="url(#prefix__b)"
         />
 
+        <AnimatedEllipse
+          ref={this.state.circleRef}
+          cx={Resource.deviceWidth / 2}
+          cy={Resource.deviceHeight / 1.3}
+          rx="230"
+          ry={this.state.animatedValue.y}
+          fill="url(#prefix__b)"
+        />
         <Text
           x={Resource.deviceWidth / 2}
           y={Resource.deviceHeight / 1.3}
           textAnchor="middle"
           fontSize="20"
-          fill="black"
-          onPress={() => console.log('signup pressed')}>
+          fontWeight="bold"
+          fill="white"
+          onPress={() => this.runAnimation()}>
           Signup
         </Text>
-        {/*
-        <Ellipse
-          cx={Resource.deviceWidth / 2}
-          cy={Resource.deviceHeight / 2}
-          rx="185"
-          ry="165"
-          fill="url(#prefix__b)"
-        />
-        */}
       </Svg>
     );
   }

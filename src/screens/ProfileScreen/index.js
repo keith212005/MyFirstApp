@@ -15,7 +15,6 @@ export default class Profile extends React.Component {
             this.props.navigation.dispatch(DrawerActions.toggleDrawer())
           }
         />
-
         <Components.MyWave />
       </>
     );

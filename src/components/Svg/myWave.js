@@ -23,9 +23,9 @@ function getInitialState() {
       'M-23.42,3.47 C128.38,-113.97 240.12,-112.98 390.24,10.36 L390.79,160.36 L-27.36,151.47 Z',
     ],
   });
-  const textButtonName = 'Log in';
+  const buttonName = 'Log in';
   const textTitle = 'Already a user';
-  return {anim, path1, path2, textButtonName, textTitle};
+  return {anim, path1, path2, buttonName, textTitle};
 }
 
 export default class MyWave extends Component {
@@ -33,7 +33,7 @@ export default class MyWave extends Component {
 
   runAnimation = () => {
     Animated.timing(this.state.anim, {
-      toValue: this.state.textButtonName == 'Sign up' ? 1 : 0,
+      toValue: this.state.buttonName == 'Sign up' ? 1 : 0,
       duration: 400,
       useNativeDriver: true,
     }).start();
@@ -42,10 +42,9 @@ export default class MyWave extends Component {
   handleOnPress = () => {
     this.setState(
       (prevState) => ({
-        textButtonName:
-          prevState.textButtonName == 'Sign up' ? 'Log in' : 'Sign up',
+        buttonName: prevState.buttonName == 'Sign up' ? 'Log in' : 'Sign up',
         textTitle:
-          prevState.textButtonName == 'Sign up'
+          prevState.buttonName == 'Sign up'
             ? 'Already a user'
             : 'Create an account',
       }),
@@ -79,7 +78,7 @@ export default class MyWave extends Component {
         <View style={styles.container}>
           <Text style={styles.title}> {this.state.textTitle}</Text>
           <Pressable onPress={() => this.handleOnPress()}>
-            <Text style={styles.button}>{this.state.textButtonName}</Text>
+            <Text style={styles.button}>{this.state.buttonName}</Text>
           </Pressable>
         </View>
       </>
@@ -93,7 +92,6 @@ const styles = StyleSheet.create({
     marginTop: Resource.deviceHeight / 1.25,
     position: 'absolute',
     alignItems: 'center',
-    justifyContent: 'center',
   },
   title: {
     color: Resource.colors.white,
@@ -104,10 +102,3 @@ const styles = StyleSheet.create({
     fontFamily: Resource.fontFamily.RobotoBold,
   },
 });
-
-// path1 =
-//   'M-0.84,68.58 C149.99,150.00 126.12,-4.44 501.97,63.64 L500.00,150.00 L0.00,150.00 Z';
-// path2 =
-//   'M-1.41,32.06 C81.55,-24.17 321.95,166.28 500.00,49.98 L500.00,150.00 L0.00,150.00 Z';
-// ellipsepath =
-//   'M-23.42,3.47 C128.38,-113.97 240.12,-112.98 390.24,10.36 L390.79,160.36 L-27.36,151.47 Z';

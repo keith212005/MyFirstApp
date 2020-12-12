@@ -6,33 +6,32 @@ import Svg, {Path, Defs, Stop, LinearGradient} from 'react-native-svg';
 import * as Resource from '@resource';
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
+const anim = new Animated.Value(0);
 
-function getInitialState() {
-  const anim = new Animated.Value(0);
-  const path1 = anim.interpolate({
+const getInitialState = () => ({
+  path1: anim.interpolate({
     inputRange: [0, 1],
     outputRange: [
       'M-0.84,68.58 C149.99,150.00 126.12,-4.44 501.97,63.64 L500.00,150.00 L0.00,150.00 Z',
       'M-23.42,3.47 C128.38,-113.97 240.12,-112.98 390.24,10.36 L390.79,160.36 L-27.36,151.47 Z',
     ],
-  });
-  const path2 = anim.interpolate({
+  }),
+  path2: anim.interpolate({
     inputRange: [0, 1],
     outputRange: [
       'M-1.41,32.06 C81.55,-24.17 321.95,166.28 500.00,49.98 L500.00,150.00 L0.00,150.00 Z',
       'M-23.42,3.47 C128.38,-113.97 240.12,-112.98 390.24,10.36 L390.79,160.36 L-27.36,151.47 Z',
     ],
-  });
-  const buttonName = 'Log in';
-  const textTitle = 'Already a user';
-  return {anim, path1, path2, buttonName, textTitle};
-}
+  }),
+  buttonName: 'Log in',
+  textTitle: 'Already a user',
+});
 
 export default class MyWave extends Component {
   state = getInitialState();
 
   runAnimation = () => {
-    Animated.timing(this.state.anim, {
+    Animated.timing(anim, {
       toValue: this.state.buttonName == 'Sign up' ? 1 : 0,
       duration: 400,
       useNativeDriver: true,

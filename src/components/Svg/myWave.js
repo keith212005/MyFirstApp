@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Animated, Pressable, Button} from 'react-native';
+import {View, StyleSheet, Animated, Pressable, Text} from 'react-native';
 
-import Svg, {Path, Defs, Stop, LinearGradient, Text} from 'react-native-svg';
+import Svg, {Path, Defs, Stop, LinearGradient} from 'react-native-svg';
 
 import * as Resource from '@resource';
 
@@ -32,17 +32,28 @@ export default class MyWave extends Component {
   state = getInitialState();
 
   runAnimation = () => {
-    const {anim} = this.state;
-
-    Animated.timing(anim, {
+    Animated.timing(this.state.anim, {
       toValue: this.state.textButtonName == 'Sign up' ? 1 : 0,
       duration: 400,
       useNativeDriver: true,
     }).start();
   };
 
+  handleOnPress = () => {
+    this.setState(
+      (prevState) => ({
+        textButtonName:
+          prevState.textButtonName == 'Sign up' ? 'Log in' : 'Sign up',
+        textTitle:
+          prevState.textButtonName == 'Sign up'
+            ? 'Already a user'
+            : 'Create an account',
+      }),
+      () => this.runAnimation(),
+    );
+  };
+
   render() {
-    const {path1, path2} = this.state;
     return (
       <>
         <Svg>
@@ -52,59 +63,47 @@ export default class MyWave extends Component {
               <Stop offset="95%" stopColor="#32ded488" />
             </LinearGradient>
           </Defs>
-
           <AnimatedPath
             y={Resource.deviceHeight / 1.7}
             opacity={0.7}
-            d={path1}
+            d={this.state.path1}
             fill="url(#prefix__b)"
           />
           <AnimatedPath
             y={Resource.deviceHeight / 1.7}
             opacity={0.7}
-            d={path2}
+            d={this.state.path2}
             fill="url(#prefix__b)"
           />
-
-          <Text
-            x={Resource.deviceWidth / 2}
-            y={Resource.deviceHeight / 1.36}
-            textAnchor="middle"
-            fontFamily={Resource.fontFamily.RobotoRegular}
-            fontSize="12"
-            fill="white">
-            {this.state.textTitle}
-          </Text>
-
-          <Text
-            x={Resource.deviceWidth / 2}
-            y={Resource.deviceHeight / 1.3}
-            textAnchor="middle"
-            fontFamily={Resource.fontFamily.RobotoBold}
-            fontSize="18"
-            fill="white"
-            onPress={() => {
-              this.setState(
-                (prevState) => ({
-                  textButtonName:
-                    prevState.textButtonName == 'Sign up'
-                      ? 'Log in'
-                      : 'Sign up',
-                  textTitle:
-                    prevState.textButtonName == 'Sign up'
-                      ? 'Already a user'
-                      : 'Create an account',
-                }),
-                () => this.runAnimation(),
-              );
-            }}>
-            {this.state.textButtonName}
-          </Text>
         </Svg>
+        <View style={styles.container}>
+          <Text style={styles.title}> {this.state.textTitle}</Text>
+          <Pressable onPress={() => this.handleOnPress()}>
+            <Text style={styles.button}>{this.state.textButtonName}</Text>
+          </Pressable>
+        </View>
       </>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    width: Resource.deviceWidth,
+    marginTop: Resource.deviceHeight / 1.25,
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title: {
+    color: Resource.colors.white,
+  },
+  button: {
+    color: Resource.colors.white,
+    fontSize: 20,
+    fontFamily: Resource.fontFamily.RobotoBold,
+  },
+});
 
 // path1 =
 //   'M-0.84,68.58 C149.99,150.00 126.12,-4.44 501.97,63.64 L500.00,150.00 L0.00,150.00 Z';

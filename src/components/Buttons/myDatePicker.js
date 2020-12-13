@@ -68,7 +68,7 @@ export default class MyDatePicker extends React.Component {
             <Image
               style={styles.image}
               resizeMode="contain"
-              source={{uri: icon.calendar}}
+              source={{uri: icon.calendar_filled}}
             />
 
             <Text style={styles.dob}>{this.state.dobValue}</Text>

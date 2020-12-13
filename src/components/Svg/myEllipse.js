@@ -8,55 +8,81 @@ import {
   Easing,
 } from 'react-native';
 
-import Svg, {Ellipse, Defs, LinearGradient, Stop} from 'react-native-svg';
+import Svg, {Path, Defs, Stop, LinearGradient, Ellipse} from 'react-native-svg';
 import * as Resource from '@resource';
 
-const AnimatedEllipse = Animated.createAnimatedComponent(Ellipse);
+const AnimatedPath = Animated.createAnimatedComponent(Path);
 const anim = new Animated.Value(0);
 
-const getInitialState = (props) => ({
-  circleRef: React.createRef(),
-  activeIndex: props.activeIndex,
-  toggleState: props.toggle,
-  ry: anim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [200, 100],
+// layer1 = 'M-6.49,152.45 C139.67,271.88 304.46,271.88 508.17,21.20 L505.36,-9.38 L-5.92,-10.36 Z'
+// layer2 = 'M-18.90,98.19 C158.86,193.91 319.69,177.13 507.62,15.28 L505.36,-9.38 L-5.92,-10.36 Z'
+
+const getInitialState2 = () => ({
+  path1: anim.interpolate({
+    inputRange: [0, 1, 2],
+    outputRange: [
+      'M-6.49,152.45 C139.67,271.88 304.46,271.88 508.17,21.20 L505.36,-9.38 L-5.92,-10.36 Z',
+      'M-18.90,98.19 C158.86,193.91 319.69,177.13 507.62,15.28 L505.36,-9.38 L-5.92,-10.36 Z',
+      'M-13.26,125.81 C229.97,161.34 284.14,27.13 508.17,98.19 L506.49,-14.30 L-7.62,-6.41 Z',
+    ],
+  }),
+  path2: anim.interpolate({
+    inputRange: [0, 1, 2],
+    outputRange: [
+      'M-6.49,152.45 C139.67,271.88 304.46,271.88 508.17,21.20 L505.36,-9.38 L-5.92,-10.36 Z',
+      'M-18.90,98.19 C158.86,193.91 319.69,177.13 507.62,15.28 L505.36,-9.38 L-5.92,-10.36 Z',
+      'M-8.74,93.25 C161.68,58.70 225.45,170.22 507.05,122.86 L506.49,-14.30 L-7.62,-6.41 Z',
+    ],
   }),
 });
 
 export default class MyEllipse extends Component {
   constructor(props) {
     super(props);
-    this.state = getInitialState(props);
+    this.state = getInitialState2();
   }
 
-  shouldComponentUpdate() {
-    console.log('shouldComponentUpdate...');
+  runAnimation = (toValue) => {
     Animated.timing(anim, {
-      toValue: this.props.direction === 'up' ? 1 : 0,
+      toValue: toValue,
       duration: 400,
       useNativeDriver: true,
     }).start();
+  };
+
+  shouldComponentUpdate() {
+    console.log('shouldComponentUpdate...');
+    if (this.props.nextIndex == 0 && this.props.activeIndex == 0) {
+      this.runAnimation(0);
+    } else if (this.props.nextIndex == 1 && this.props.activeIndex == 1) {
+      this.runAnimation(1);
+    } else if (this.props.nextIndex == 2 && this.props.activeIndex == 2) {
+      this.runAnimation(2);
+    }
     return false;
   }
 
   render() {
     return (
       <>
-        <Svg style={{position: 'absolute'}}>
+        <Svg style={{position: 'absolute', borderWidth: 1, borderColor: 'red'}}>
           <Defs>
-            <LinearGradient id="grad" x1="0" y1="0" x2="1" y2="0">
-              <Stop offset="0" stopColor="#87fff6" stopOpacity="1" />
-              <Stop offset="1" stopColor="#156b64" stopOpacity="1" />
+            <LinearGradient id="prefix__b">
+              <Stop offset="5%" stopColor="#009284" />
+              <Stop offset="95%" stopColor="#32ded488" />
             </LinearGradient>
           </Defs>
-          <AnimatedEllipse
-            ref={this.state.circleRef}
-            cx={Resource.deviceWidth / 2}
-            cy={Resource.deviceHeight / 6}
-            rx="300"
-            ry={this.state.ry}
-            fill="url(#grad)"
+          <AnimatedPath
+            y="0"
+            opacity={0.7}
+            d={this.state.path1}
+            fill="url(#prefix__b)"
+          />
+          <AnimatedPath
+            y="0"
+            opacity={0.7}
+            d={this.state.path2}
+            fill="url(#prefix__b)"
           />
         </Svg>
       </>

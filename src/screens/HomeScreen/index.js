@@ -26,6 +26,7 @@ class Home extends React.Component {
     this.state = {
       showAlert: false,
       activeIndex: 0,
+      nextIndex: 0,
       toggle: true,
       direction: 'up',
       carouselItems: [
@@ -34,6 +35,9 @@ class Home extends React.Component {
         },
         {
           title: 'Two',
+        },
+        {
+          title: 'Three',
         },
       ],
     };
@@ -114,6 +118,10 @@ class Home extends React.Component {
     );
   }
 
+  handleScroll = (e) => {
+    // console.log('scroll y ', e.nativeEvent.contentOffset.x);
+  };
+
   render() {
     return (
       <>
@@ -126,6 +134,7 @@ class Home extends React.Component {
         <Components.MyEllipse
           toggle={this.state.toggle}
           activeIndex={this.state.activeIndex}
+          nextIndex={this.state.nextIndex}
           direction={this.state.direction}
         />
 
@@ -147,18 +156,28 @@ class Home extends React.Component {
             onSnapToItem={(slideIndex) => {
               this.setState({activeIndex: slideIndex});
             }}
-            onScrollBeginDrag={() => {
-              this.setState((prev) => ({
-                ...prev,
-                direction: prev.activeIndex === 0 ? 'down' : 'up',
-              }));
+            onScroll={(event) => this.handleScroll(event)}
+            pagingEnabled={true}
+            onScrollBeginDrag={(event) => {
+              console.log('scroll y ', event.nativeEvent.contentOffset.x);
+              if (this.state.activeIndex === 0) {
+                this.setState((prev) => ({
+                  ...prev,
+                  nextIndex: 1,
+                }));
+              } else if (this.state.activeIndex === 1) {
+                this.setState((prev) => ({
+                  ...prev,
+                  nextIndex: 2,
+                }));
+              } else if (this.state.activeIndex === 2) {
+                this.setState((prev) => ({
+                  ...prev,
+                  nextIndex: 1,
+                }));
+              }
             }}
-            onScrollEndDrag={() => {
-              this.setState((prev) => ({
-                ...prev,
-                direction: prev.activeIndex === 0 ? 'up' : 'down',
-              }));
-            }}
+            onScrollEndDrag={() => {}}
           />
 
           {this.pagination}

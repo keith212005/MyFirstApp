@@ -535,15 +535,14 @@ export default class Signup extends React.Component {
       !Utils.isEmpty(state.gender.value) &&
       !Utils.isEmpty(state.dob.value)
     ) {
-      let selectQuery = 'SELECT * FROM USERS WHERE EMAIL=?';
+      let selectQuery = 'SELECT EMAIL FROM USERS WHERE EMAIL=?';
       let emailValue = [state.email.value];
 
       // this method returns promise
       DB.ExecuteQuery(selectQuery, emailValue).then(
         (result) => {
-          // console.log('then block');
           // console.log('resolve values = ' + JSON.stringify(result.rows.length));
-          // if result.rows.length==0 insert data code else alert user exists
+          // if email exists show error else login user
           if (result.rows.length == 0) {
             let insert_sql =
               'INSERT INTO USERS (avatar,fName,lName,email,password,phone,address,gender,dob) VALUES (?,?,?,?,?,?,?,?,?)';

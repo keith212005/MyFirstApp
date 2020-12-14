@@ -106,41 +106,37 @@ class Login extends React.Component {
               progressVisible: true,
             }),
             () => {
-              // check username and password in db if true show dashboard or error
-
-              let sql = 'SELECT * FROM USERS WHERE EMAIL=? AND PASSWORD=?';
-              let arrValues = [
-                this.state.email.value,
-                this.state.password.value,
-              ];
+              let sql = 'SELECT EMAIL FROM USERS WHERE EMAIL=?';
+              let arrValues = [this.state.email.value];
               DB.ExecuteQuery(sql, arrValues).then((result) => {
-                // if result.rows.length==0 show alert user not found else login
+                // if email exists check for password in DB
                 if (result.rows.length != 0) {
-                  this.props.addAutoLogin();
-                  this.props.navigation.replace('DrawerNavigator');
+                  let sql = 'SELECT PASSWORD FROM USERS WHERE PASSWORD=?';
+                  let arrValues = [this.state.password.value];
+                  DB.ExecuteQuery(sql, arrValues).then((result) => {
+                    console.log('pass' + JSON.stringify(result.rows.length));
+                    // if password found login user else show error incorrect password
+                    if (result.rows.length != 0) {
+                      this.props.addAutoLogin();
+                      this.props.navigation.replace('DrawerNavigator');
+                    } else {
+                      this.setState((prevState) => ({
+                        ...prevState,
+                        failAlert: true,
+                        progressVisible: false,
+                      }));
+                      Alert.alert('Error', 'Incorrect password.');
+                    }
+                  });
                 } else {
                   this.setState((prevState) => ({
                     ...prevState,
                     failAlert: true,
                     progressVisible: false,
                   }));
-                  Alert.alert('Error', 'User not found!');
+                  Alert.alert('Error', 'Invalid Email!');
                 }
               });
-
-              // if (
-              //   Utils.isSameString(this.state.email.value, 'Kj@gmail.com') &&
-              //   Utils.isSameString(this.state.password.value, '1234')
-              // ) {
-              //   this.props.addAutoLogin();
-              //   this.props.navigation.replace('DrawerNavigator');
-              // } else {
-              //   this.setState((prevState) => ({
-              //     ...prevState,
-              //     failAlert: true,
-              //     progressVisible: false,
-              //   }));
-              // }
             },
           );
         })

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, Keyboard} from 'react-native';
+import {View, Text, StyleSheet, Keyboard, Alert} from 'react-native';
 
 import * as Animatable from 'react-native-animatable';
 import {Avatar, Accessory} from 'react-native-elements';
@@ -10,6 +10,7 @@ import {field_object_signup, signupRefs} from '@constants';
 import * as Utils from '@utils';
 import * as Resource from '@resource';
 import * as Components from '@components';
+import {DB} from '@storage';
 
 export default class Signup extends React.Component {
   constructor(props) {
@@ -270,7 +271,7 @@ export default class Signup extends React.Component {
         }
         break;
       case 'dob':
-        if (Utils.isEmpty(this.state.dob.value)) {
+        if (Utils.isSameString(this.state.dob.value, 'Date of birth')) {
           this.setState((prevState) => ({
             ...prevState,
             dob: {
@@ -284,6 +285,22 @@ export default class Signup extends React.Component {
       default:
         break;
     }
+  };
+
+  // reset resetForm
+  resetForm = () => {
+    this.setState((prev) => ({
+      firstname: '',
+      lastname: '',
+      email: '',
+      password: '',
+      confirmpassword: '',
+      avatarSource: '',
+      gender: '',
+      phone: '',
+      dob: 'Date of birth',
+      address: '',
+    }));
   };
 
   // called when change text in any InputText
@@ -504,31 +521,54 @@ export default class Signup extends React.Component {
 
   // called when we press register button
   submit = () => {
+    const state = this.state;
     if (
       this.state.avatarSource.value !=
         'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg' &&
-      !Utils.isEmpty(this.state.firstname.value) &&
-      !Utils.isEmpty(this.state.lastname.value) &&
-      !Utils.isEmpty(this.state.email.value) &&
-      !Utils.isEmpty(this.state.password.value) &&
-      !Utils.isEmpty(this.state.confirmpassword.value) &&
-      !Utils.isEmpty(this.state.phone.value) &&
-      !Utils.isEmpty(this.state.address.value) &&
-      !Utils.isEmpty(this.state.gender.value) &&
-      !Utils.isEmpty(this.state.dob.value)
+      !Utils.isEmpty(state.firstname.value) &&
+      !Utils.isEmpty(state.lastname.value) &&
+      !Utils.isEmpty(state.email.value) &&
+      !Utils.isEmpty(state.password.value) &&
+      !Utils.isEmpty(state.confirmpassword.value) &&
+      !Utils.isEmpty(state.phone.value) &&
+      !Utils.isEmpty(state.address.value) &&
+      !Utils.isEmpty(state.gender.value) &&
+      !Utils.isEmpty(state.dob.value)
     ) {
-      var personData = {
-        avatarSource: this.state.avatarSource.value,
-        firstname: this.state.firstname.value,
-        lastname: this.state.lastname.value,
-        email: this.state.email.value,
-        password: this.state.password.value,
-        confirmpassword: this.state.confirmpassword.value,
-        phone: this.state.phone.value,
-        address: this.state.address.value,
-        gender: this.state.gender.value,
-        dob: this.state.dob.value,
-      };
+      let selectQuery = 'SELECT * FROM USERS WHERE EMAIL=?';
+      let emailValue = [state.email.value];
+      DB.ExecuteQuery(selectQuery, emailValue).then(
+        (result) => {
+          // console.log('then block');
+          // console.log('resolve values = ' + JSON.stringify(result.rows.length));
+          // if result.rows.length==0 insert data code else alert user exists
+          if (result.rows.length == 0) {
+            let insert_sql =
+              'INSERT INTO USERS (avatar,fName,lName,email,password,phone,address,gender,dob) VALUES (?,?,?,?,?,?,?,?,?)';
+            let arrValues = [
+              state.avatarSource.value,
+              state.firstname.value,
+              state.lastname.value,
+              state.email.value,
+              state.password.value,
+              state.phone.value,
+              state.address.value,
+              state.gender.value === 'Male' ? 1 : 0,
+              state.dob.value,
+            ];
+            DB.insert(insert_sql, arrValues).then((result) => {
+              Alert.alert('Success', 'Successfully registered.');
+              this.resetForm();
+            });
+          } else {
+            Alert.alert('Error', 'User exists!');
+          }
+        },
+        (error) => {
+          console.log('error block');
+          console.log('reject values = ' + JSON.stringify(error));
+        },
+      );
     } else {
       this.validate('image');
       this.validate('firstname');

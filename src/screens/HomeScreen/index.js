@@ -131,12 +131,6 @@ class Home extends React.Component {
             this.props.navigation.dispatch(DrawerActions.toggleDrawer())
           }
         />
-        <Components.MyEllipse
-          toggle={this.state.toggle}
-          activeIndex={this.state.activeIndex}
-          nextIndex={this.state.nextIndex}
-          direction={this.state.direction}
-        />
 
         <SafeAreaView
           style={{
@@ -145,6 +139,12 @@ class Home extends React.Component {
             alignItems: 'center',
             justifyContent: 'center',
           }}>
+          <Components.MyEllipse
+            toggle={this.state.toggle}
+            activeIndex={this.state.activeIndex}
+            nextIndex={this.state.nextIndex}
+            direction={this.state.direction}
+          />
           <Carousel
             layout={'default'}
             lockScrollWhileSnapping={true}

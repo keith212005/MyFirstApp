@@ -537,6 +537,8 @@ export default class Signup extends React.Component {
     ) {
       let selectQuery = 'SELECT * FROM USERS WHERE EMAIL=?';
       let emailValue = [state.email.value];
+
+      // this method returns promise
       DB.ExecuteQuery(selectQuery, emailValue).then(
         (result) => {
           // console.log('then block');

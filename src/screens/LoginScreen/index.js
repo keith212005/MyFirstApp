@@ -13,6 +13,7 @@ import * as Utils from '@utils';
 import * as Components from '@components';
 import * as Resource from '@resource';
 import {checkConnectivity} from '@api';
+import {DB} from '@storage';
 
 class Login extends React.Component {
   constructor(props) {
@@ -100,22 +101,48 @@ class Login extends React.Component {
       // this function return promise, if resolve go to home screen else display alert
       checkConnectivity()
         .then(() => {
-          this.setState((prevState) => ({
-            progressVisible: true,
-          }));
-          if (
-            Utils.isSameString(this.state.email.value, 'Kj@gmail.com') &&
-            Utils.isSameString(this.state.password.value, '1234')
-          ) {
-            this.props.addAutoLogin();
-            this.props.navigation.replace('DrawerNavigator');
-          } else {
-            this.setState((prevState) => ({
-              ...prevState,
-              failAlert: true,
-              progressVisible: false,
-            }));
-          }
+          this.setState(
+            (prevState) => ({
+              progressVisible: true,
+            }),
+            () => {
+              // check username and password in db if true show dashboard or error
+
+              let sql = 'SELECT * FROM USERS WHERE EMAIL=? AND PASSWORD=?';
+              let arrValues = [
+                this.state.email.value,
+                this.state.password.value,
+              ];
+              DB.ExecuteQuery(sql, arrValues).then((result) => {
+                // if result.rows.length==0 show alert user not found else login
+                if (result.rows.length != 0) {
+                  this.props.addAutoLogin();
+                  this.props.navigation.replace('DrawerNavigator');
+                } else {
+                  this.setState((prevState) => ({
+                    ...prevState,
+                    failAlert: true,
+                    progressVisible: false,
+                  }));
+                  Alert.alert('Error', 'User not found!');
+                }
+              });
+
+              // if (
+              //   Utils.isSameString(this.state.email.value, 'Kj@gmail.com') &&
+              //   Utils.isSameString(this.state.password.value, '1234')
+              // ) {
+              //   this.props.addAutoLogin();
+              //   this.props.navigation.replace('DrawerNavigator');
+              // } else {
+              //   this.setState((prevState) => ({
+              //     ...prevState,
+              //     failAlert: true,
+              //     progressVisible: false,
+              //   }));
+              // }
+            },
+          );
         })
         .catch((error) => {
           Alert.alert('Error', error);

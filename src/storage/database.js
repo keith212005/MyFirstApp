@@ -78,7 +78,7 @@ export default class Database extends Component {
     // return userdata as object
     return new Promise((resolve, reject) => {
       let userInfoObj = {};
-      console.log('before : ' + Object.keys(userInfoObj).length);
+      // console.log('before : ' + Object.keys(userInfoObj).length);
       this.ExecuteQuery(sql, arrValues).then((result) => {
         for (let i = 0; i < result.rows.length; i++) {
           let row = result.rows.item(i);

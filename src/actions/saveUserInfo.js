@@ -1,6 +1,6 @@
 import * as Action from './actionTypes';
 
-export const addAutoLogin = (arr) => ({
+export const saveUserInfo = (data) => ({
   type: Action.SAVE_USER_INFO,
-  data: arr,
+  data: data,
 });

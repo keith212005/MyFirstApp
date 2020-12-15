@@ -112,8 +112,15 @@ class DrawerContent extends React.Component {
                   size={50}
                 />
                 <View style={{marginLeft: 15}}>
-                  <Title style={styles.title}>Ketan Jingar</Title>
-                  <Caption style={styles.caption}>@kJingar</Caption>
+                  <Title style={styles.title}>
+                    {this.props.userInfo.firstname}
+                  </Title>
+                  <Caption style={styles.caption}>
+                    {this.props.userInfo.email}
+                  </Caption>
+                  <Caption style={styles.caption}>
+                    {this.props.userInfo.phone}
+                  </Caption>
                 </View>
               </View>
 
@@ -212,8 +219,10 @@ const styles = StyleSheet.create({
 });
 
 const matchStateToProps = (state) => {
+  console.log(state);
   return {
     autoLoginStatus: state.autoLogin.status,
+    userInfo: state.saveUserInfo,
   };
 };
 

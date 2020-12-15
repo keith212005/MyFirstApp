@@ -72,13 +72,25 @@ export const field_object_login = {
   email: {
     isError: false,
     error_text: '',
-    value: '',
+    value: 'Kj@gmail.com',
   },
   password: {
     isError: false,
     error_text: '',
-    value: '',
+    value: 'password',
   },
   failAlert: false,
   progressVisible: false,
+};
+
+export const userInfoProps = {
+  id: '',
+  avatarSource: '',
+  firstname: '',
+  lastname: '',
+  email: '',
+  phone: '',
+  address: '',
+  gender: '',
+  dob: '',
 };

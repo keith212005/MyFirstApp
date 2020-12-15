@@ -90,6 +90,61 @@ class Login extends React.Component {
     }
   };
 
+  saveUserToReducer = () => {
+    this.props.saveUserInfo();
+  };
+
+  saveUserInfo = () => {
+    console.log('Saving user info...');
+    let sql = 'SELECT * FROM USERS WHERE EMAIL=? AND PASSWORD=?';
+    let arrValues = [this.state.email.value, this.state.password.value];
+    DB.getUserData(sql, arrValues).then((result) => {
+      console.log('result = ' + JSON.stringify(result));
+      // we get user data in object form as result, now you can store in reducer
+      this.saveUserToReducer();
+    });
+  };
+
+  verifyPassword = () => {
+    // if password found call saveUserInfo function
+    console.log('Verifying password...');
+    let sql = 'SELECT PASSWORD FROM USERS WHERE PASSWORD=?';
+    let arrValues = [this.state.password.value];
+    DB.verifyPassword(sql, arrValues).then(
+      (result) => {
+        this.saveUserInfo();
+      },
+      (err) => {
+        this.setState((prevState) => ({
+          ...prevState,
+          failAlert: true,
+          progressVisible: false,
+        }));
+        Alert.alert('Error', err.toString());
+      },
+    );
+  };
+
+  verifyEmail = () => {
+    // if email found check for password in DB
+    console.log('Verifying email...');
+    let sql = 'SELECT EMAIL FROM USERS WHERE EMAIL=?';
+    let arrValues = [this.state.email.value];
+    DB.verifyEmail(sql, arrValues).then(
+      (result) => {
+        this.verifyEmail();
+      },
+      (err) => {
+        this.setState((prevState) => ({
+          ...prevState,
+          failAlert: true,
+          progressVisible: false,
+        }));
+        Alert.alert('Error', err.toString());
+      },
+    );
+  };
+
   // called when Sign In is pressed
   submit = () => {
     Keyboard.dismiss();
@@ -106,37 +161,7 @@ class Login extends React.Component {
               progressVisible: true,
             }),
             () => {
-              let sql = 'SELECT EMAIL FROM USERS WHERE EMAIL=?';
-              let arrValues = [this.state.email.value];
-              DB.ExecuteQuery(sql, arrValues).then((result) => {
-                // if email exists check for password in DB
-                if (result.rows.length != 0) {
-                  let sql = 'SELECT PASSWORD FROM USERS WHERE PASSWORD=?';
-                  let arrValues = [this.state.password.value];
-                  DB.ExecuteQuery(sql, arrValues).then((result) => {
-                    console.log('pass' + JSON.stringify(result.rows.length));
-                    // if password found login user else show error incorrect password
-                    if (result.rows.length != 0) {
-                      this.props.addAutoLogin();
-                      this.props.navigation.replace('DrawerNavigator');
-                    } else {
-                      this.setState((prevState) => ({
-                        ...prevState,
-                        failAlert: true,
-                        progressVisible: false,
-                      }));
-                      Alert.alert('Error', 'Incorrect password.');
-                    }
-                  });
-                } else {
-                  this.setState((prevState) => ({
-                    ...prevState,
-                    failAlert: true,
-                    progressVisible: false,
-                  }));
-                  Alert.alert('Error', 'Invalid Email!');
-                }
-              });
+              this.verifyEmail();
             },
           );
         })
@@ -317,3 +342,6 @@ const matchDispatchToProps = (dispatch) =>
   bindActionCreators(actionCreaters, dispatch);
 
 export default connect(matchStateToProps, matchDispatchToProps)(Login);
+
+// this.props.addAutoLogin();
+// this.props.navigation.replace('DrawerNavigator');

@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, Alert, Image} from 'react-native';
 
+import {DB} from '@storage';
+
 import {
   Avatar,
   Title,
@@ -53,6 +55,11 @@ class DrawerContent extends React.Component {
     );
   };
 
+  handleDeleteAccount = () => {
+    // delete account
+    // DB.deleteAccount();
+  };
+
   handleOnPressNavItems = (label) => {
     switch (label) {
       case 'Home':
@@ -60,6 +67,9 @@ class DrawerContent extends React.Component {
         break;
       case 'Setting':
         this.props.navigation.navigate(label);
+        break;
+      case 'Delete account':
+        this.handleDeleteAccount();
         break;
       case 'Sign out':
         this.handleExitApp();
@@ -146,6 +156,10 @@ class DrawerContent extends React.Component {
             </Drawer.Section>
           </View>
         </DrawerContentScrollView>
+
+        <Drawer.Section style={styles.bottomDrawerSection}>
+          {this.drawerItem({label: 'Delete account', icon: icon.denied})}
+        </Drawer.Section>
 
         <Drawer.Section style={styles.bottomDrawerSection}>
           {this.drawerItem({label: 'Sign out', icon: icon.exit})}

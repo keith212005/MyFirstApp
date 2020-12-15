@@ -7,6 +7,7 @@ import {createLogger} from 'redux-logger';
 import autoLogin from './autoLogin';
 import connectionState from './connectionState';
 import isOpenFirstTime from './isOpenFirstTime';
+import saveUserInfo from './saveUserInfo';
 
 const logger = createLogger({collapsed: true});
 
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   autoLogin: autoLogin,
   connectionState: connectionState,
   isOpenFirstTime: isOpenFirstTime,
+  saveUserInfo: saveUserInfo,
 });
 
 const persistConfig = {

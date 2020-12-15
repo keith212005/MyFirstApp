@@ -536,10 +536,10 @@ export default class Signup extends React.Component {
       !Utils.isEmpty(state.dob.value)
     ) {
       let selectQuery = 'SELECT EMAIL FROM USERS WHERE EMAIL=?';
-      let emailValue = [state.email.value];
+      let arrValues = [state.email.value];
 
       // this method returns promise
-      DB.ExecuteQuery(selectQuery, emailValue).then(
+      DB.ExecuteQuery(selectQuery, arrValues).then(
         (result) => {
           // console.log('resolve values = ' + JSON.stringify(result.rows.length));
           // if email exists show error else login user

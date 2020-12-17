@@ -13,27 +13,27 @@ export const field_object_signup = {
   firstname: {
     isError: false,
     error_text: '',
-    value: 'Ketan',
+    value: '',
   },
   lastname: {
     isError: false,
     error_text: '',
-    value: 'Jingar',
+    value: '',
   },
   email: {
     isError: false,
     error_text: '',
-    value: 'Kj@gmail.com',
+    value: '',
   },
   password: {
     isError: false,
     error_text: '',
-    value: 'password',
+    value: '',
   },
   confirmpassword: {
     isError: false,
     error_text: '',
-    value: 'password',
+    value: '',
   },
   avatarSource: {
     isError: false,
@@ -49,7 +49,7 @@ export const field_object_signup = {
   phone: {
     isError: false,
     error_text: '',
-    value: '8160626880',
+    value: '',
   },
   dob: {
     visible: false,
@@ -60,7 +60,7 @@ export const field_object_signup = {
   address: {
     isError: false,
     error_text: '',
-    value: '123 abc st',
+    value: '',
   },
   dobVisibility: false,
   isVisible: false,
@@ -85,7 +85,7 @@ export const field_object_login = {
 
 export const userInfoProps = {
   id: '',
-  avatarSource: '',
+  avatar: '',
   firstname: '',
   lastname: '',
   email: '',

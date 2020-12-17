@@ -5,12 +5,14 @@ export {
   CHANGE_CONNECTION_STATUS,
   CHANGE_FIRST_TIME_STATUS,
   SAVE_USER_INFO,
+  RESET_STORE,
 } from './actionTypes';
 
 import * as autoLogin from './autoLogin';
 import * as addNetworkListener from './addNetworkListener';
 import * as changeIsOpenFirstTime from './changeIsOpenFirstTime';
 import * as saveUserInfo from './saveUserInfo';
+import * as resetStore from './resetStore';
 
 export const actionCreaters = Object.assign(
   {},
@@ -18,4 +20,5 @@ export const actionCreaters = Object.assign(
   addNetworkListener,
   changeIsOpenFirstTime,
   saveUserInfo,
+  resetStore,
 );

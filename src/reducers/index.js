@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {persistStore, persistReducer} from 'redux-persist';
 import thunk from 'redux-thunk';
 import {createLogger} from 'redux-logger';
+import * as Action from '@actions';
 
 import autoLogin from './autoLogin';
 import connectionState from './connectionState';
@@ -11,12 +12,19 @@ import saveUserInfo from './saveUserInfo';
 
 const logger = createLogger({collapsed: true});
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   autoLogin: autoLogin,
   connectionState: connectionState,
   isOpenFirstTime: isOpenFirstTime,
   saveUserInfo: saveUserInfo,
 });
+
+const rootReducer = (state, action) => {
+  if (action.type === Action.RESET_STORE) {
+    state = undefined;
+  }
+  return appReducer(state, action);
+};
 
 const persistConfig = {
   key: 'root',

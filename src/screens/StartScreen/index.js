@@ -52,7 +52,7 @@ class StartScreen extends React.Component {
 }
 
 const matchStateToProps = (state) => {
-  console.log('StartScreen = ' + JSON.stringify(state));
+  // console.log('StartScreen = ' + JSON.stringify(state));
   return {
     autoLoginStatus: state.autoLogin.status,
   };

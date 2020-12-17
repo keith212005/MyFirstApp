@@ -7,7 +7,7 @@ import {commonStyle} from '@resource';
 
 export default class GenderRadioButton extends React.Component {
   state = {
-    value: '',
+    value: this.props.value,
   };
 
   handleClick = (text) => {

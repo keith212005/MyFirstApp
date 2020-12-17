@@ -95,7 +95,7 @@ class Login extends React.Component {
     let sql = 'SELECT * FROM USERS WHERE EMAIL=? AND PASSWORD=?';
     let arrValues = [this.state.email.value, this.state.password.value];
     DB.getUserData(sql, arrValues).then((result) => {
-      console.log('result = ' + JSON.stringify(result));
+      console.log('getUserinfo>>>>>>' + JSON.stringify(result));
       // we get user data in object form as result, now you can store in reducer
       this.props.saveUserInfo(result);
       this.props.addAutoLogin();
@@ -329,7 +329,7 @@ class Login extends React.Component {
 }
 
 const matchStateToProps = (state) => {
-  console.log('LoginScreen = ' + JSON.stringify(state));
+  // console.log('LoginScreen = ' + JSON.stringify(state));
   return {
     currentCount: state.autoLogin.autoLoginStatus,
     isOnline: state.connectionState.isOnline,

@@ -46,8 +46,16 @@ export default class Database extends Component {
   };
 
   insert = async (sql, arrValues) => {
-    let singleinsert = await this.ExecuteQuery(sql, arrValues);
-    console.log(singleinsert);
+    return new Promise(function (resolve, reject) {
+      this.ExecuteQuery(sql, arrValues).then(
+        (result) => {
+          resolve('Success');
+        },
+        (error) => {
+          reject('Failed');
+        },
+      );
+    });
   };
 
   update = async (sql, arrValues) => {
@@ -88,6 +96,19 @@ export default class Database extends Component {
           ? resolve(userInfoObj)
           : reject('No data found');
       });
+    });
+  };
+
+  deleteAccount = (sql, arrValues) => {
+    return new Promise((resolve, reject) => {
+      this.ExecuteQuery(sql, arrValues).then(
+        (result) => {
+          resolve(`Account deleted successfully.`);
+        },
+        (error) => {
+          reject('Something went wrong!');
+        },
+      );
     });
   };
 

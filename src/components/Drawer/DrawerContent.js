@@ -55,15 +55,62 @@ class DrawerContent extends React.Component {
     );
   };
 
+  confirmDeleteAccount = () => {
+    // 1. delete account from database
+    // 2. remove userInfo values in reducer
+    // 3. logout user and go to login screen
+    let sql = 'DELETE FROM USERS WHERE ID=?';
+    let arrValues = [this.props.userInfo.id];
+    DB.deleteAccount(sql, arrValues).then(
+      (message) => {
+        Alert.alert(
+          'Success',
+          message.toString(),
+          [
+            {
+              text: 'OK',
+              onPress: () => {
+                this.props.resetStore(); // will reset store values
+                this.props.navigation.navigate('Login');
+              },
+            },
+          ],
+          {cancelable: false},
+        );
+      },
+      (error) => {
+        Alert.alert('Error', error.toString());
+      },
+    );
+  };
+
   handleDeleteAccount = () => {
-    // delete account
-    // DB.deleteAccount();
+    Alert.alert(
+      'Delete Account ?',
+      'All data will be lost. Are you sure you want to delete the account?',
+      [
+        {
+          text: 'No',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {text: 'Confirm Delete', onPress: () => this.confirmDeleteAccount()},
+      ],
+      {cancelable: false},
+    );
   };
 
   handleOnPressNavItems = (label) => {
     switch (label) {
       case 'Home':
         this.props.navigation.navigate(label);
+        break;
+      case 'Profile':
+        {
+          this.props.navigation.navigate('Signup', {
+            user: this.props.userInfo,
+          });
+        }
         break;
       case 'Setting':
         this.props.navigation.navigate(label);
@@ -98,6 +145,7 @@ class DrawerContent extends React.Component {
   };
 
   render(props) {
+    const {userInfo} = this.props;
     return (
       <View style={{flex: 1}}>
         <DrawerContentScrollView {...props}>
@@ -106,21 +154,16 @@ class DrawerContent extends React.Component {
               <View style={{flexDirection: 'row', marginTop: 15}}>
                 <Avatar.Image
                   source={{
-                    uri:
-                      'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQHCZuslFbn42wwA9qw6ywBERhtpr_yOFy3Cw&usqp=CAU',
+                    uri: userInfo.avatar
+                      ? userInfo.avatar
+                      : 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQHCZuslFbn42wwA9qw6ywBERhtpr_yOFy3Cw&usqp=CAU',
                   }}
                   size={50}
                 />
                 <View style={{marginLeft: 15}}>
-                  <Title style={styles.title}>
-                    {this.props.userInfo.firstname}
-                  </Title>
-                  <Caption style={styles.caption}>
-                    {this.props.userInfo.email}
-                  </Caption>
-                  <Caption style={styles.caption}>
-                    {this.props.userInfo.phone}
-                  </Caption>
+                  <Title style={styles.title}>{userInfo.firstname}</Title>
+                  <Caption style={styles.caption}>{userInfo.email}</Caption>
+                  <Caption style={styles.caption}>{userInfo.phone}</Caption>
                 </View>
               </View>
 
@@ -230,3 +273,11 @@ const matchDispatchToProps = (dispatch) =>
   bindActionCreators(actionCreaters, dispatch);
 
 export default connect(matchStateToProps, matchDispatchToProps)(DrawerContent);
+
+// <Avatar.Image
+//   source={{
+//     uri:
+//       'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQHCZuslFbn42wwA9qw6ywBERhtpr_yOFy3Cw&usqp=CAU',
+//   }}
+//   size={50}
+// />

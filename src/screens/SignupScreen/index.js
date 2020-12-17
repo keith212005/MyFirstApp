@@ -15,10 +15,50 @@ import {DB} from '@storage';
 export default class Signup extends React.Component {
   constructor(props) {
     super(props);
+    const user = this.props.route.params.user;
     for (var key in signupRefs) {
       signupRefs[key] = React.createRef();
     }
     this.state = {...field_object_signup};
+  }
+
+  componentDidMount() {
+    const user = this.props.route.params.user;
+    if (user.email != null) {
+      console.log('user exists');
+      // this.setState({
+      //   firstname: {
+      //     value: user.firstname,
+      //   },
+      // });
+      this.setState((prevState) => ({
+        ...prevState,
+        avatarSource: {
+          value: user.avatar,
+        },
+        firstname: {
+          value: user.firstname,
+        },
+        lastname: {
+          value: user.lastname,
+        },
+        email: {
+          value: user.email,
+        },
+        phone: {
+          value: user.phone.toString(),
+        },
+        address: {
+          value: user.address,
+        },
+        gender: {
+          value: user.gender == 0 ? 'Male' : 'Female',
+        },
+        dob: {
+          value: user.dob,
+        },
+      }));
+    }
   }
 
   // called when we add/edit image Avatar
@@ -28,6 +68,9 @@ export default class Signup extends React.Component {
 
   // getting InputText data
   getData = (label) => {
+    const user = this.props.route.params.user;
+    console.log(JSON.stringify(user));
+
     switch (label) {
       case 'firstname':
         return {
@@ -99,6 +142,7 @@ export default class Signup extends React.Component {
 
   // call this function to validate any fieldName
   validate = (fieldName) => {
+    const user = this.props.route.params.user;
     switch (fieldName) {
       case 'image':
         if (
@@ -584,6 +628,27 @@ export default class Signup extends React.Component {
     }
   };
 
+  //called when user exists and updates information
+  saveUserInfo() {
+    // 1. save to database
+    // 2. save to reducer
+
+    let insert_sql =
+      'INSERT INTO USERS (avatar,fName,lName,email,password,phone,address,gender,dob) VALUES (?,?,?,?,?,?,?,?,?)';
+    let arrValues = [
+      state.avatarSource.value,
+      state.firstname.value,
+      state.lastname.value,
+      state.email.value,
+      state.password.value,
+      state.phone.value,
+      state.address.value,
+      state.gender.value === 'Male' ? 1 : 0,
+      state.dob.value,
+    ];
+    DB.update();
+  }
+
   myTextInput = (props) => {
     const labelInLowerCase = Utils.removeSpaces(props.label).toLowerCase();
     const data = this.getData(labelInLowerCase);
@@ -611,11 +676,12 @@ export default class Signup extends React.Component {
   };
 
   render() {
+    const user = this.props.route.params.user;
     return (
       <>
         <View style={styles.container}>
           <View style={styles.header}>
-            <Text style={styles.headerText}>Sign Up</Text>
+            <Text style={styles.headerText}>{user ? 'Update' : 'Sign Up'}</Text>
           </View>
 
           <Animatable.View
@@ -646,7 +712,9 @@ export default class Signup extends React.Component {
               ) : null}
 
               <Components.MyAvatarButton
-                source={this.state.avatarSource.value}
+                source={
+                  user.avatar ? user.avatar : this.state.avatarSource.value
+                }
                 isError={this.state.avatarSource.isError}
                 error_text={this.state.avatarSource.error_text}
                 onPress={() => this.toggleAvatar()}
@@ -655,12 +723,13 @@ export default class Signup extends React.Component {
               {this.myTextInput({label: 'First name'})}
               {this.myTextInput({label: 'Last name'})}
               {this.myTextInput({label: 'Email'})}
-              {this.myTextInput({label: 'Password'})}
-              {this.myTextInput({label: 'Confirm Password'})}
+              {!user && this.myTextInput({label: 'Password'})}
+              {!user && this.myTextInput({label: 'Confirm Password'})}
               {this.myTextInput({label: 'Phone'})}
               {this.myTextInput({label: 'Address'})}
 
               <Components.GenderRadioButton
+                value={user.gender == 1 ? 'Male' : 'Female'}
                 isError={this.state.gender.isError}
                 error_text={this.state.gender.error_text}
                 onSuccess={(value) => this.handleOnChangeText(value, 'gender')}
@@ -670,7 +739,11 @@ export default class Signup extends React.Component {
               <Components.MyDatePicker
                 visible={this.state.dob.visible}
                 modeType="date"
-                value={this.state.dob.value}
+                value={
+                  this.props.route.params.user.dob
+                    ? this.props.route.params.user.dob
+                    : this.state.dob.value
+                }
                 isError={this.state.dob.isError}
                 error_text={this.state.dob.error_text}
                 onSuccess={(value) => this.handleOnChangeText(value, 'dob')}
@@ -680,8 +753,14 @@ export default class Signup extends React.Component {
 
               <View style={{marginBottom: 20}}>
                 <Components.LinearGradientButton
-                  title="Register"
-                  onPress={() => this.submit()}
+                  title={user ? 'Save' : 'Register'}
+                  onPress={() => {
+                    if (user) {
+                      this.saveUserInfo();
+                    } else {
+                      this.submit();
+                    }
+                  }}
                   height={Resource.responsiveHeight(14)}
                   fontSize={15}
                   borderRadius={5}

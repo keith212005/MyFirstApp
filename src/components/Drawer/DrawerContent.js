@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, Alert, Image} from 'react-native';
 
-import {DB} from '@storage';
-
 import {
   Avatar,
   Title,
@@ -16,7 +14,9 @@ import {
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
+import {DrawerActions} from '@react-navigation/native';
 
+import {DB} from '@storage';
 import {icon} from '@resource';
 import {actionCreaters} from '@actions';
 
@@ -70,7 +70,8 @@ class DrawerContent extends React.Component {
             {
               text: 'OK',
               onPress: () => {
-                this.props.resetStore(); // will reset store values
+                // this.props.resetStore(); // will reset store values
+                this.props.resetUserInfo();
                 this.props.navigation.navigate('Login');
               },
             },
@@ -101,6 +102,7 @@ class DrawerContent extends React.Component {
   };
 
   handleOnPressNavItems = (label) => {
+    this.props.navigation.dispatch(DrawerActions.closeDrawer());
     switch (label) {
       case 'Home':
         this.props.navigation.navigate(label);
@@ -110,6 +112,7 @@ class DrawerContent extends React.Component {
           this.props.navigation.navigate('Signup', {
             user: this.props.userInfo,
           });
+          DrawerActions.closeDrawer();
         }
         break;
       case 'Setting':

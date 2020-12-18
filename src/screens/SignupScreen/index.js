@@ -1,10 +1,13 @@
 import React from 'react';
 import {View, Text, StyleSheet, Keyboard, Alert} from 'react-native';
 
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import * as Animatable from 'react-native-animatable';
 import {Avatar, Accessory} from 'react-native-elements';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
+import {actionCreaters} from '@actions';
 import {styles} from './style';
 import {field_object_signup, signupRefs} from '@constants';
 import * as Utils from '@utils';
@@ -12,7 +15,7 @@ import * as Resource from '@resource';
 import * as Components from '@components';
 import {DB} from '@storage';
 
-export default class Signup extends React.Component {
+class Signup extends React.Component {
   constructor(props) {
     super(props);
     const user = this.props.route.params.user;
@@ -23,14 +26,8 @@ export default class Signup extends React.Component {
   }
 
   componentDidMount() {
-    const user = this.props.route.params.user;
-    if (user.email != null) {
-      console.log('user exists');
-      // this.setState({
-      //   firstname: {
-      //     value: user.firstname,
-      //   },
-      // });
+    if (this.props.route.params.user.email != null) {
+      const user = this.props.route.params.user;
       this.setState((prevState) => ({
         ...prevState,
         avatarSource: {
@@ -68,9 +65,6 @@ export default class Signup extends React.Component {
 
   // getting InputText data
   getData = (label) => {
-    const user = this.props.route.params.user;
-    console.log(JSON.stringify(user));
-
     switch (label) {
       case 'firstname':
         return {
@@ -142,7 +136,6 @@ export default class Signup extends React.Component {
 
   // call this function to validate any fieldName
   validate = (fieldName) => {
-    const user = this.props.route.params.user;
     switch (fieldName) {
       case 'image':
         if (
@@ -331,22 +324,6 @@ export default class Signup extends React.Component {
     }
   };
 
-  // reset resetForm
-  resetForm = () => {
-    this.setState((prev) => ({
-      firstname: '',
-      lastname: '',
-      email: '',
-      password: '',
-      confirmpassword: '',
-      avatarSource: '',
-      gender: '',
-      phone: '',
-      dob: 'Date of birth',
-      address: '',
-    }));
-  };
-
   // called when change text in any InputText
   handleOnChangeText = (text, label) => {
     switch (label) {
@@ -490,13 +467,17 @@ export default class Signup extends React.Component {
 
   // called when we submit text in anyb Input textAlign
   handleOnSubmitEditing = (label) => {
+    const user = this.props.route.params.user;
     switch (label) {
       case 'firstname':
         return signupRefs.lastNameRef.current.focus();
       case 'lastname':
         return signupRefs.emailRef.current.focus();
-      case 'email':
-        return signupRefs.passwordRef.current.focus();
+      case 'email': {
+        return user.email != null
+          ? signupRefs.phonenoRef.current.focus()
+          : signupRefs.passwordRef.current.focus();
+      }
       case 'password':
         return signupRefs.confirmPasswordRef.current.focus();
       case 'confirmpassword':
@@ -514,7 +495,7 @@ export default class Signup extends React.Component {
     console.log('handleEndEditing called... ' + text);
   };
 
-  //valled when focus on any Text InputText
+  // called when focus on any Text InputText
   handleOnFocus = (label) => {
     switch (label) {
       case 'firstname':
@@ -563,9 +544,56 @@ export default class Signup extends React.Component {
     }
   };
 
+  // called inside of submit function
+  updateUserData() {
+    const user = this.props.route.params.user;
+
+    let insert_sql =
+      'UPDATE USERS SET avatar=?, fName=?, lName=?, email=?, phone=?, ' +
+      'address=?, gender=?, dob=? WHERE ID=?';
+    let arrValues = [
+      this.state.avatarSource.value,
+      this.state.firstname.value,
+      this.state.lastname.value,
+      this.state.email.value,
+      this.state.phone.value,
+      this.state.address.value,
+      this.state.gender.value === 'Male' ? 1 : 0,
+      this.state.dob.value,
+      user.id,
+    ];
+    DB.update(insert_sql, arrValues).then(
+      (message) => {
+        Alert.alert('Success', message, [
+          {
+            text: 'OK',
+            onPress: () => {
+              //saving values in reducer
+              userInfo = {
+                avatar: this.state.avatarSource.value,
+                firstname: this.state.firstname.value,
+                lastname: this.state.lastname.value,
+                email: this.state.email.value,
+                phone: this.state.phone.value,
+                address: this.state.address.value,
+                gender: this.state.gender.value === 'Male' ? 1 : 0,
+                dob: this.state.dob.value,
+              };
+              console.log(userInfo);
+              this.props.updateUserInfo(userInfo);
+              this.props.navigation.goBack();
+            },
+          },
+        ]);
+      },
+      (error) => console.log('error>>>>>>>>>', error),
+    );
+  }
+
   // called when we press register button
   submit = () => {
     const state = this.state;
+    const user = this.props.route.params.user;
     if (
       this.state.avatarSource.value !=
         'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg' &&
@@ -579,17 +607,18 @@ export default class Signup extends React.Component {
       !Utils.isEmpty(state.gender.value) &&
       !Utils.isEmpty(state.dob.value)
     ) {
-      let selectQuery = 'SELECT EMAIL FROM USERS WHERE EMAIL=?';
-      let arrValues = [state.email.value];
-
-      // this method returns promise
-      DB.ExecuteQuery(selectQuery, arrValues).then(
-        (result) => {
-          // console.log('resolve values = ' + JSON.stringify(result.rows.length));
-          // if email exists show error else login user
-          if (result.rows.length == 0) {
+      // if user is already logged in update userinfo in DB and reducer else insert in Db
+      if (user.email != null) {
+        this.updateUserData();
+      } else {
+        let sql = 'SELECT EMAIL FROM USERS WHERE EMAIL=?';
+        let arrValues = [state.email.value];
+        // if user does not exists insert data
+        DB.checkIfUserExists(sql, arrValues).then(
+          (result) => {
             let insert_sql =
-              'INSERT INTO USERS (avatar,fName,lName,email,password,phone,address,gender,dob) VALUES (?,?,?,?,?,?,?,?,?)';
+              'INSERT INTO USERS (avatar,fName,lName,email,password,phone,address,gender,dob) ' +
+              'VALUES (?,?,?,?,?,?,?,?,?)';
             let arrValues = [
               state.avatarSource.value,
               state.firstname.value,
@@ -602,18 +631,26 @@ export default class Signup extends React.Component {
               state.dob.value,
             ];
             DB.insert(insert_sql, arrValues).then((result) => {
-              Alert.alert('Success', 'Successfully registered.');
-              this.resetForm();
+              Alert.alert(
+                'Success',
+                'Successfully registered.',
+                [
+                  {
+                    text: 'OK',
+                    onPress: () => {
+                      this.props.navigation.replace('Login');
+                    },
+                  },
+                ],
+                {cancelable: false},
+              );
             });
-          } else {
-            Alert.alert('Error', 'User exists!');
-          }
-        },
-        (error) => {
-          console.log('error block');
-          console.log('reject values = ' + JSON.stringify(error));
-        },
-      );
+          },
+          (error) => {
+            Alert.alert('Error', error);
+          },
+        );
+      }
     } else {
       this.validate('image');
       this.validate('firstname');
@@ -627,27 +664,6 @@ export default class Signup extends React.Component {
       this.validate('dob');
     }
   };
-
-  //called when user exists and updates information
-  saveUserInfo() {
-    // 1. save to database
-    // 2. save to reducer
-
-    let insert_sql =
-      'INSERT INTO USERS (avatar,fName,lName,email,password,phone,address,gender,dob) VALUES (?,?,?,?,?,?,?,?,?)';
-    let arrValues = [
-      state.avatarSource.value,
-      state.firstname.value,
-      state.lastname.value,
-      state.email.value,
-      state.password.value,
-      state.phone.value,
-      state.address.value,
-      state.gender.value === 'Male' ? 1 : 0,
-      state.dob.value,
-    ];
-    DB.update();
-  }
 
   myTextInput = (props) => {
     const labelInLowerCase = Utils.removeSpaces(props.label).toLowerCase();
@@ -677,11 +693,14 @@ export default class Signup extends React.Component {
 
   render() {
     const user = this.props.route.params.user;
+    const gender = user.gender == 1 ? 'Male' : 'Female';
     return (
       <>
         <View style={styles.container}>
           <View style={styles.header}>
-            <Text style={styles.headerText}>{user ? 'Update' : 'Sign Up'}</Text>
+            <Text style={styles.headerText}>
+              {!user.email ? 'Sign Up' : 'Update'}
+            </Text>
           </View>
 
           <Animatable.View
@@ -712,9 +731,7 @@ export default class Signup extends React.Component {
               ) : null}
 
               <Components.MyAvatarButton
-                source={
-                  user.avatar ? user.avatar : this.state.avatarSource.value
-                }
+                source={this.state.avatarSource.value}
                 isError={this.state.avatarSource.isError}
                 error_text={this.state.avatarSource.error_text}
                 onPress={() => this.toggleAvatar()}
@@ -723,13 +740,13 @@ export default class Signup extends React.Component {
               {this.myTextInput({label: 'First name'})}
               {this.myTextInput({label: 'Last name'})}
               {this.myTextInput({label: 'Email'})}
-              {!user && this.myTextInput({label: 'Password'})}
-              {!user && this.myTextInput({label: 'Confirm Password'})}
+              {!user.email && this.myTextInput({label: 'Password'})}
+              {!user.email && this.myTextInput({label: 'Confirm Password'})}
               {this.myTextInput({label: 'Phone'})}
               {this.myTextInput({label: 'Address'})}
 
               <Components.GenderRadioButton
-                value={user.gender == 1 ? 'Male' : 'Female'}
+                value={user.email ? gender : this.state.gender.value}
                 isError={this.state.gender.isError}
                 error_text={this.state.gender.error_text}
                 onSuccess={(value) => this.handleOnChangeText(value, 'gender')}
@@ -739,11 +756,7 @@ export default class Signup extends React.Component {
               <Components.MyDatePicker
                 visible={this.state.dob.visible}
                 modeType="date"
-                value={
-                  this.props.route.params.user.dob
-                    ? this.props.route.params.user.dob
-                    : this.state.dob.value
-                }
+                value={user.dob != null ? user.dob : this.state.dob.value}
                 isError={this.state.dob.isError}
                 error_text={this.state.dob.error_text}
                 onSuccess={(value) => this.handleOnChangeText(value, 'dob')}
@@ -753,14 +766,8 @@ export default class Signup extends React.Component {
 
               <View style={{marginBottom: 20}}>
                 <Components.LinearGradientButton
-                  title={user ? 'Save' : 'Register'}
-                  onPress={() => {
-                    if (user) {
-                      this.saveUserInfo();
-                    } else {
-                      this.submit();
-                    }
-                  }}
+                  title={user.email != null ? 'Save' : 'Register'}
+                  onPress={() => this.submit()}
                   height={Resource.responsiveHeight(14)}
                   fontSize={15}
                   borderRadius={5}
@@ -776,3 +783,8 @@ export default class Signup extends React.Component {
     );
   }
 }
+
+const matchDispatchToProps = (dispatch) =>
+  bindActionCreators(actionCreaters, dispatch);
+
+export default connect(null, matchDispatchToProps)(Signup);

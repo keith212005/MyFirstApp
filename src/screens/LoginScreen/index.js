@@ -250,7 +250,7 @@ class Login extends React.Component {
         this.submit();
         break;
       case 'signup':
-        this.props.navigation.navigate('Signup');
+        this.props.navigation.navigate('Signup', {user: {}});
         break;
       default:
     }

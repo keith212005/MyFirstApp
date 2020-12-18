@@ -25,11 +25,10 @@ export default class Database extends Component {
           params,
           (trans, results) => {
             console.log('resolve in ExecuteQuery');
-            // console.log('trans = ' + JSON.stringify(result.rows.item(0)));
             resolve(results);
           },
           (error) => {
-            console.log('reject in ExecuteQuery');
+            console.log('reject in ExecuteQuery>>>>>>', error);
             reject(error);
           },
         );
@@ -45,8 +44,8 @@ export default class Database extends Component {
     );
   };
 
-  insert = async (sql, arrValues) => {
-    return new Promise(function (resolve, reject) {
+  insert(sql, arrValues) {
+    return new Promise((resolve, reject) => {
       this.ExecuteQuery(sql, arrValues).then(
         (result) => {
           resolve('Success');
@@ -56,11 +55,20 @@ export default class Database extends Component {
         },
       );
     });
-  };
+  }
 
-  update = async (sql, arrValues) => {
-    let singleinsert = await this.ExecuteQuery(sql, arrValues);
-  };
+  update(sql, arrValues) {
+    return new Promise((resolve, reject) => {
+      this.ExecuteQuery(sql, arrValues).then(
+        (result) => {
+          resolve('Successfully updated.');
+        },
+        (error) => {
+          reject('Update Failed');
+        },
+      );
+    });
+  }
 
   verifyEmail = (sql, arrValues) => {
     return new Promise((resolve, reject) => {
@@ -81,6 +89,17 @@ export default class Database extends Component {
       });
     });
   };
+
+  checkIfUserExists(sql, arrValues) {
+    return new Promise((resolve, reject) => {
+      this.ExecuteQuery(sql, arrValues).then((result) => {
+        console.log('resolve >>>>>>>>>>>>>>>>>>', result);
+        result.rows.length > 0
+          ? reject('User is already registered with this email')
+          : resolve(result);
+      });
+    });
+  }
 
   getUserData = (sql, arrValues) => {
     // return userdata as object
@@ -103,7 +122,7 @@ export default class Database extends Component {
     return new Promise((resolve, reject) => {
       this.ExecuteQuery(sql, arrValues).then(
         (result) => {
-          resolve(`Account deleted successfully.`);
+          resolve('Account deleted successfully.');
         },
         (error) => {
           reject('Something went wrong!');

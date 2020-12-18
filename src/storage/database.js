@@ -93,7 +93,6 @@ export default class Database extends Component {
   checkIfUserExists(sql, arrValues) {
     return new Promise((resolve, reject) => {
       this.ExecuteQuery(sql, arrValues).then((result) => {
-        console.log('resolve >>>>>>>>>>>>>>>>>>', result);
         result.rows.length > 0
           ? reject('User is already registered with this email')
           : resolve(result);
@@ -135,6 +134,3 @@ export default class Database extends Component {
     return null;
   }
 }
-
-// console.log(`Record: ${row.fName}`);
-// console.log(`Record: ${JSON.stringify(row)}`);

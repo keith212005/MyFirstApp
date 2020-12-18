@@ -78,7 +78,6 @@ export default class UploadImage extends Component {
         this.props.onSuccess(uri);
       })
       .catch((e) => {
-        console.log(e);
         this.handleDeniedPermission(e);
       });
   };

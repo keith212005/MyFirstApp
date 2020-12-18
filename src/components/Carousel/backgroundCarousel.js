@@ -42,12 +42,7 @@ export default class BackgroundCarousel extends Component {
           isLoading: false,
         });
       }
-      console.log('state = ' + JSON.stringify(this.state.quotes));
-      console.log('state = ' + JSON.stringify(this.state.quotes[1]));
-    } catch (error) {
-      console.log('error occured');
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   setSelectedIndex = (event) => {
@@ -66,15 +61,11 @@ export default class BackgroundCarousel extends Component {
   };
 
   handleNext = () => {
-    console.log('next pressed');
-    console.log(this.state.selectedIndex);
     this.setState(
       (prev) => {
         selectedIndex: prev.selectedIndex + 1;
       },
       () => {
-        console.log('callabck');
-
         this.scrollRef.current.scrollTo({
           animated: true,
           y: 0,
@@ -102,7 +93,7 @@ export default class BackgroundCarousel extends Component {
       </View>
       <View style={styles.header}>
         <Text style={styles.quote}>{props.quote.text}</Text>
-        <Text></Text>
+        <Text />
         <Text style={[styles.quote]}>- {props.quote.author}</Text>
       </View>
 

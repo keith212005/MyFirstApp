@@ -265,7 +265,6 @@ const styles = StyleSheet.create({
 });
 
 const matchStateToProps = (state) => {
-  console.log(state);
   return {
     autoLoginStatus: state.autoLogin.status,
     userInfo: state.saveUserInfo,

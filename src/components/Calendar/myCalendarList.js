@@ -24,8 +24,6 @@ export default class MyCalendarList extends Component {
         current={'2020-03-01'}
         markingType={'custom'}
         dayComponent={({date, state, marking}) => {
-          // console.log('markign=' + JSON.stringify(marking));
-
           return (
             <View
               style={{

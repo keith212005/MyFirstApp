@@ -91,11 +91,9 @@ class Login extends React.Component {
   };
 
   saveUserInfo = () => {
-    console.log('Saving user info...');
     let sql = 'SELECT * FROM USERS WHERE EMAIL=? AND PASSWORD=?';
     let arrValues = [this.state.email.value, this.state.password.value];
     DB.getUserData(sql, arrValues).then((result) => {
-      console.log('getUserinfo>>>>>>' + JSON.stringify(result));
       // we get user data in object form as result, now you can store in reducer
       this.props.saveUserInfo(result);
       this.props.addAutoLogin();
@@ -105,7 +103,6 @@ class Login extends React.Component {
 
   verifyPassword = () => {
     // if password found call saveUserInfo function
-    console.log('Verifying password...');
     let sql = 'SELECT PASSWORD FROM USERS WHERE PASSWORD=?';
     let arrValues = [this.state.password.value];
     DB.verifyPassword(sql, arrValues).then(
@@ -125,7 +122,6 @@ class Login extends React.Component {
 
   verifyEmail = () => {
     // if email found check for password in DB
-    console.log('Verifying email...');
     let sql = 'SELECT EMAIL FROM USERS WHERE EMAIL=?';
     let arrValues = [this.state.email.value];
     DB.verifyEmail(sql, arrValues).then(

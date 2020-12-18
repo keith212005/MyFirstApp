@@ -51,7 +51,6 @@ export default class MyEllipse extends Component {
   };
 
   shouldComponentUpdate() {
-    console.log('shouldComponentUpdate...');
     if (this.props.nextIndex == 0 && this.props.activeIndex == 0) {
       this.runAnimation(0);
     } else if (this.props.nextIndex == 1 && this.props.activeIndex == 1) {

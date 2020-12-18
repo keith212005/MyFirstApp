@@ -46,7 +46,6 @@ export default class Swiper extends Component {
   }
 
   handleNext() {
-    console.log('next');
     this.props.navigation.replace(
       this.props.autoLoginStatus ? 'DrawerNavigator' : 'StartScreen',
     );

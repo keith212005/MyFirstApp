@@ -562,32 +562,29 @@ class Signup extends React.Component {
       this.state.dob.value,
       user.id,
     ];
-    DB.update(insert_sql, arrValues).then(
-      (message) => {
-        Alert.alert('Success', message, [
-          {
-            text: 'OK',
-            onPress: () => {
-              //saving values in reducer
-              userInfo = {
-                avatar: this.state.avatarSource.value,
-                firstname: this.state.firstname.value,
-                lastname: this.state.lastname.value,
-                email: this.state.email.value,
-                phone: this.state.phone.value,
-                address: this.state.address.value,
-                gender: this.state.gender.value === 'Male' ? 1 : 0,
-                dob: this.state.dob.value,
-              };
-              console.log(userInfo);
-              this.props.updateUserInfo(userInfo);
-              this.props.navigation.goBack();
-            },
+    DB.update(insert_sql, arrValues).then((message) => {
+      Alert.alert('Success', message, [
+        {
+          text: 'OK',
+          onPress: () => {
+            //saving values in reducer
+            userInfo = {
+              avatar: this.state.avatarSource.value,
+              firstname: this.state.firstname.value,
+              lastname: this.state.lastname.value,
+              email: this.state.email.value,
+              phone: this.state.phone.value,
+              address: this.state.address.value,
+              gender: this.state.gender.value === 'Male' ? 1 : 0,
+              dob: this.state.dob.value,
+            };
+
+            this.props.updateUserInfo(userInfo);
+            this.props.navigation.goBack();
           },
-        ]);
-      },
-      (error) => console.log('error>>>>>>>>>', error),
-    );
+        },
+      ]);
+    });
   }
 
   // called when we press register button
@@ -668,8 +665,6 @@ class Signup extends React.Component {
   myTextInput = (props) => {
     const labelInLowerCase = Utils.removeSpaces(props.label).toLowerCase();
     const data = this.getData(labelInLowerCase);
-
-    // console.log(JSON.stringify(data));
     return (
       <Components.MyTextInput
         label={props.label}

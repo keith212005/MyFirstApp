@@ -40,7 +40,6 @@ class Splash extends React.Component {
 }
 
 const matchStateToProps = (state) => {
-  // console.log('Splashscreen = '+JSON.stringify(state));
   return {
     isOpenFirstTime: state.isOpenFirstTime.status,
     autoLoginStatus: state.autoLogin.status,

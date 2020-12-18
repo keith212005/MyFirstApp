@@ -65,7 +65,6 @@ class Home extends React.Component {
   }
 
   handleBackButton = () => {
-    console.log('on back press caled');
     this.setState({showAlert: true});
     return true;
   };
@@ -118,10 +117,6 @@ class Home extends React.Component {
     );
   }
 
-  handleScroll = (e) => {
-    // console.log('scroll y ', e.nativeEvent.contentOffset.x);
-  };
-
   render() {
     return (
       <>
@@ -156,10 +151,8 @@ class Home extends React.Component {
             onSnapToItem={(slideIndex) => {
               this.setState({activeIndex: slideIndex});
             }}
-            onScroll={(event) => this.handleScroll(event)}
             pagingEnabled={true}
             onScrollBeginDrag={(event) => {
-              console.log('scroll y ', event.nativeEvent.contentOffset.x);
               if (this.state.activeIndex === 0) {
                 this.setState((prev) => ({
                   ...prev,

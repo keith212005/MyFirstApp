@@ -188,6 +188,7 @@ class Home extends React.Component {
 }
 
 const matchStateToProps = (state) => {
+  console.log('home screen = ', JSON.stringify(state));
   return {
     autoLoginStatus: state.autoLogin.status,
   };

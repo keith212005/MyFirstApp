@@ -7,12 +7,14 @@ import {connect} from 'react-redux';
 import {styles} from './style';
 import {actionCreaters} from '@actions';
 import MySwiper from '@components';
+import {FB} from '@services';
 
 class Splash extends React.Component {
   constructor(props) {
     super(props);
     props.addNetworkListener();
   }
+
   componentDidMount() {
     setTimeout(() => {
       if (this.props.isOpenFirstTime === true) {
@@ -20,6 +22,17 @@ class Splash extends React.Component {
       } else {
         this.props.navigation.replace(
           this.props.autoLoginStatus ? 'DrawerNavigator' : 'StartScreen',
+        );
+        FB.addNotificationListener().then(
+          (message) => {
+            console.log('notify in splash>>', message);
+            if (message) {
+              this.props.navigation.navigate(message.data.Screen);
+            }
+          },
+          (error) => {
+            console.log('splash errr : ', error);
+          },
         );
       }
     }, 2000);

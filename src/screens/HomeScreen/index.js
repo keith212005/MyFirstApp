@@ -57,6 +57,22 @@ class Home extends React.Component {
         this.handleBackButton,
       );
     });
+
+    // // When the application is running, but in the background.
+    // messaging().onNotificationOpenedApp((remoteMessage) => {
+    //   console.log(
+    //     'Notification caused app to open from background state:',
+    //     remoteMessage.notification,
+    //   );
+    // });
+
+    // // When the application is opened from a quit state.
+    // messaging()
+    //   .getInitialNotification()
+    //   .then((remoteMessage) => {
+    //     console.log('inside >>>>  ' + JSON.stringify(remoteMessage));
+    //     this.handleNotificationNavigation(remoteMessage);
+    //   });
   }
 
   componentWillUnmount() {
@@ -188,7 +204,6 @@ class Home extends React.Component {
 }
 
 const matchStateToProps = (state) => {
-  console.log('home screen = ', JSON.stringify(state));
   return {
     autoLoginStatus: state.autoLogin.status,
   };

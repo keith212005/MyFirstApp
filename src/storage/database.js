@@ -24,11 +24,11 @@ export default class Database extends Component {
           sql,
           params,
           (trans, results) => {
-            console.log('resolve in ExecuteQuery');
+            // console.log('resolve in ExecuteQuery');
             resolve(results);
           },
           (error) => {
-            console.log('reject in ExecuteQuery>>>>>>', error);
+            // console.log('reject in ExecuteQuery>>>>>>', error);
             reject(error);
           },
         );
@@ -36,13 +36,22 @@ export default class Database extends Component {
     });
   };
 
-  initTables = async () => {
-    await this.ExecuteQuery(
-      'CREATE TABLE USERS(Id INTEGER PRIMARY KEY AUTOINCREMENT,avatar text, fName text,' +
-        'lName text, email VARCHAR(50), password VARCHAR(50), phone INTEGER,' +
-        ' address TEXT, gender BOOLEAN, dob TEXT);',
-    );
-  };
+  initTables() {
+    return new Promise((resolve, reject) => {
+      this.ExecuteQuery(
+        'CREATE TABLE IF NOT EXISTS USERS(Id INTEGER PRIMARY KEY AUTOINCREMENT,avatar text, fName text,' +
+          'lName text, email VARCHAR(50), password VARCHAR(50), phone INTEGER,' +
+          ' address TEXT, gender BOOLEAN, dob TEXT);',
+      ).then(
+        (result) => {
+          resolve();
+        },
+        (error) => {
+          reject();
+        },
+      );
+    });
+  }
 
   insert(sql, arrValues) {
     return new Promise((resolve, reject) => {

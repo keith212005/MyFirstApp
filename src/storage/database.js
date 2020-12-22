@@ -8,7 +8,7 @@ const db = SQLite.openDatabase(
   {name: 'MyFirstAppDB.db'},
   () => {},
   (error) => {
-    console.log('Error: ' + error);
+    // console.log('Error: ' + error);
   },
 );
 

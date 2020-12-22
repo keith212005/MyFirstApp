@@ -19,7 +19,7 @@ export default class TabNavigator extends React.Component {
       <Tab.Navigator
         initialRouteName="Home"
         activeColor={colors.white}
-        backBehavior="initialRoute"
+        backBehavior="history"
         labeled={true}
         barStyle={{backgroundColor: colors.primary}}
         screenOptions={({route}) => ({

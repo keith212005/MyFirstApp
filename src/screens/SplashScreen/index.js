@@ -23,17 +23,8 @@ class Splash extends React.Component {
         this.props.navigation.replace(
           this.props.autoLoginStatus ? 'DrawerNavigator' : 'StartScreen',
         );
-        FB.addNotificationListener().then(
-          (message) => {
-            console.log('notify in splash>>', message);
-            if (message) {
-              this.props.navigation.navigate(message.data.Screen);
-            }
-          },
-          (error) => {
-            console.log('splash errr : ', error);
-          },
-        );
+
+        FB.addNotificationListener(this.props);
       }
     }, 2000);
   }

@@ -62,13 +62,13 @@ export default class MyWave extends Component {
             </LinearGradient>
           </Defs>
           <AnimatedPath
-            y={Resource.deviceHeight / 1.7}
+            y={Resource.deviceHeight / 1.6}
             opacity={0.7}
             d={this.state.path1}
             fill="url(#prefix__b)"
           />
           <AnimatedPath
-            y={Resource.deviceHeight / 1.7}
+            y={Resource.deviceHeight / 1.6}
             opacity={0.7}
             d={this.state.path2}
             fill="url(#prefix__b)"
@@ -88,7 +88,7 @@ export default class MyWave extends Component {
 const styles = StyleSheet.create({
   container: {
     width: Resource.deviceWidth,
-    marginTop: Resource.deviceHeight / 1.25,
+    marginTop: Resource.deviceHeight / 1.22,
     position: 'absolute',
     alignItems: 'center',
   },

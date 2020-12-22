@@ -5,7 +5,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+  },
+  title: {
+    textAlign: 'center',
+  },
+  footer: {
+    textAlign: 'center',
+  },
+  actionContainer: {
+    justifyContent: 'center',
+  },
+
+  button: {
+    borderWidth: 1,
+    borderColor: 'red',
+    borderRadius: 5,
+    padding: 10,
   },
 });
 

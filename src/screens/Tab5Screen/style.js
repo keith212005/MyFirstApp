@@ -22,6 +22,14 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
   },
+  author: {
+    textAlign: 'center',
+    fontSize: 14,
+  },
+  content: {
+    textAlign: 'center',
+    fontSize: 16,
+  },
 });
 
 export {styles};

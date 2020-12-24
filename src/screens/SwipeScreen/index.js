@@ -1,25 +1,14 @@
 import React, {Component} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  ScrollView,
-  Image,
-  SafeAreaView,
-  Button,
-} from 'react-native';
+import {View, Text, StyleSheet, Image, SafeAreaView} from 'react-native';
 
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 
 import {styles} from './style';
-import * as Resource from '@resource';
-import {MyCarousel, LinearGradientButton} from '@components';
+import {LinearGradientButton} from '@components';
 import {actionCreaters} from '@actions';
-
-const DEVICE_WIDTH = Dimensions.get('window').width;
+import * as Resource from '@resource';
 
 export default class Swiper extends Component {
   constructor(props) {
@@ -118,8 +107,8 @@ export default class Swiper extends Component {
           layout={'default'}
           ref={(ref) => (this.carousel = ref)}
           data={this.state.carouselItems}
-          sliderWidth={DEVICE_WIDTH}
-          itemWidth={DEVICE_WIDTH}
+          sliderWidth={Resource.deviceWidth}
+          itemWidth={Resource.deviceWidth}
           renderItem={this._renderItem}
           onSnapToItem={(index) => this.setState({activeIndex: index})}
           onPress={() => {

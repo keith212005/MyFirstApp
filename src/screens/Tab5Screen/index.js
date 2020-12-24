@@ -1,8 +1,7 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, FlatList} from 'react-native';
+import {View, Text, FlatList} from 'react-native';
 
 import {DrawerActions} from '@react-navigation/native';
-import {Avatar, Button, Card, Title, Paragraph} from 'react-native-paper';
 
 import {styles} from './style';
 import {CustomHeader} from '@components';

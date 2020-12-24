@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  BackHandler,
-  Dimensions,
-  Pressable,
-  SafeAreaView,
-} from 'react-native';
+import {View, Text, BackHandler, SafeAreaView} from 'react-native';
 
 import {DrawerActions} from '@react-navigation/native';
 import {connect} from 'react-redux';
@@ -17,8 +10,6 @@ import {styles} from './style';
 import {actionCreaters} from '@actions';
 import * as Resource from '@resource';
 import * as Components from '@components';
-
-const DEVICE_WIDTH = Dimensions.get('window').width;
 
 class Home extends React.Component {
   constructor(props) {

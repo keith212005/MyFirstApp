@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, SafeAreaView, Dimensions, Pressable} from 'react-native';
+import {View, Text, SafeAreaView, Pressable} from 'react-native';
 
 import {DrawerActions} from '@react-navigation/native';
 import Carousel from 'react-native-snap-carousel';
@@ -7,8 +7,6 @@ import Carousel from 'react-native-snap-carousel';
 import {styles} from './style';
 import * as Components from '@components';
 import * as Resource from '@resource';
-
-const DEVICE_WIDTH = Dimensions.get('window').width;
 
 export default class Tab4 extends React.Component {
   constructor() {
@@ -89,8 +87,8 @@ export default class Tab4 extends React.Component {
             layout={'default'}
             ref={(c) => (this._carousel = c)}
             data={this.state.carouselItems}
-            sliderWidth={DEVICE_WIDTH}
-            itemWidth={DEVICE_WIDTH}
+            sliderWidth={Resource.deviceWidth}
+            itemWidth={Resource.deviceWidth}
             renderItem={this._renderItem}
             onSnapToItem={(index) => this.setState({activeIndex: index})}
           />

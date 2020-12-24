@@ -1,37 +1,60 @@
 import React from 'react';
-import {View, Text, BackHandler} from 'react-native';
+import {View, Text, BackHandler, FlatList} from 'react-native';
+
+import I18n, {getLanguages} from 'react-native-i18n';
+import {RadioButton} from 'react-native-paper';
 
 import {styles} from './style';
 
+const DATA = [
+  {
+    id: '1',
+    title: 'English',
+  },
+  {
+    id: '2',
+    title: 'Hindi',
+  },
+  {
+    id: '3',
+    title: 'French',
+  },
+];
+
+const Item = ({title}) => (
+  <View style={styles.item}>
+    <Text style={styles.title}>{title}</Text>
+  </View>
+);
+
 export default class Setting extends React.Component {
-  // componentDidMount() {
-  //   this._unsubscribefocus = this.props.navigation.addListener('focus', () => {
-  //     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
-  //   });
-  //   this._unsubscribeblur = this.props.navigation.addListener('blur', () => {
-  //     BackHandler.removeEventListener(
-  //       'hardwareBackPress',
-  //       this.handleBackButton,
-  //     );
-  //   });
-  // }
-  //
-  // componentWillUnmount() {
-  //   this._unsubscribefocus();
-  //   this._unsubscribeblur();
-  // }
-  //
-  // handleBackButton = () => {
-  //   console.log('bakc butoon on settings');
-  //   this.props.navigation.pop();
-  //   return true;
-  // };
+  state = {selectedLanguage: null};
+
+  handleValue = (language) => {
+    this.setState({selectedLanguage: language});
+  };
+
+  renderItem = ({item}) => (
+    <View style={styles.renderItemContainer}>
+      <Item title={item.title} />
+      <RadioButton.Group
+        onValueChange={(newValue) => this.handleValue(newValue)}
+        value={this.state.selectedLanguage}>
+        <RadioButton value={item.title} />
+      </RadioButton.Group>
+    </View>
+  );
 
   render() {
     return (
       <>
         <View style={styles.container}>
-          <Text>Setting Screen</Text>
+          <Text style={{fontSize: 24, padding: 10}}>Select Language:</Text>
+          <FlatList
+            data={DATA}
+            renderItem={this.renderItem}
+            keyExtractor={(item) => item.id}
+          />
         </View>
       </>
     );

@@ -23,65 +23,12 @@ export default class Tab5 extends React.Component {
   }
 
   getAllQuotes() {
-    Quote.getQuote1().then(
-      (result) => {
-        this.setState((prev) => ({
-          quote: prev.quote.push(result),
-          ...prev,
-        }));
-      },
-      (error) => {
-        console.log(error);
-      },
-    );
-
-    Quote.getQuote2().then(
-      (result) => {
-        this.setState((prev) => ({
-          quote: prev.quote.push(result),
-          ...prev,
-        }));
-      },
-      (error) => {
-        console.log(error);
-      },
-    );
-
-    Quote.getQuote3().then(
-      (result) => {
-        this.setState((prev) => ({
-          quote: prev.quote.push(result),
-          ...prev,
-        }));
-      },
-      (error) => {
-        console.log(error);
-      },
-    );
-
-    Quote.getQuote4().then(
-      (result) => {
-        this.setState((prev) => ({
-          quote: prev.quote.push(result),
-          ...prev,
-        }));
-      },
-      (error) => {
-        console.log(error);
-      },
-    );
-
-    Quote.getQuote5().then(
-      (result) => {
-        this.setState((prev) => ({
-          quote: prev.quote.push(result),
-          ...prev,
-        }));
-      },
-      (error) => {
-        console.log(error);
-      },
-    );
+    Quote.getAllQuotes().then((result) => {
+      this.setState((prev) => ({
+        quote: prev.quote.push(...result),
+        ...prev,
+      }));
+    });
   }
 
   renderItem = ({item}) => (

@@ -57,18 +57,18 @@ export default class MyWave extends Component {
         <Svg>
           <Defs>
             <LinearGradient id="prefix__b">
-              <Stop offset="5%" stopColor="#009284" />
+              <Stop offset="50%" stopColor="#009284" />
               <Stop offset="95%" stopColor="#32ded488" />
             </LinearGradient>
           </Defs>
           <AnimatedPath
-            y={Resource.deviceHeight / 1.6}
+            y={Resource.deviceHeight / 1.5}
             opacity={0.7}
             d={this.state.path1}
             fill="url(#prefix__b)"
           />
           <AnimatedPath
-            y={Resource.deviceHeight / 1.6}
+            y={Resource.deviceHeight / 1.5}
             opacity={0.7}
             d={this.state.path2}
             fill="url(#prefix__b)"

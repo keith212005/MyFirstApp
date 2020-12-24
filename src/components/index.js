@@ -9,7 +9,6 @@ export CustomHeader from './Header/customHeader';
 export ExitAppDialog from './Dialogs/exitAppDialog';
 export SimpleAlertDialog from './Dialogs/simpleAlertDialog';
 export SimpleActivityIndicator from './ActivityIndicator/simpleActivityIndicator';
-export BackgroundCarousel from './Carousel/backgroundCarousel';
 export MyCarousel from './Carousel/myCarousel';
 export MyCalendar from './Calendar/myCalendar';
 export MyCalendarList from './Calendar/myCalendarList';

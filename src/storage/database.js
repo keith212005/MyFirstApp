@@ -7,9 +7,7 @@ SQLite.DEBUG(true);
 const db = SQLite.openDatabase(
   {name: 'MyFirstAppDB.db'},
   () => {},
-  (error) => {
-    // console.log('Error: ' + error);
-  },
+  (error) => console.log('Error: ' + error),
 );
 
 export default class Database extends Component {
@@ -23,14 +21,8 @@ export default class Database extends Component {
         trans.executeSql(
           sql,
           params,
-          (trans, results) => {
-            // console.log('resolve in ExecuteQuery');
-            resolve(results);
-          },
-          (error) => {
-            // console.log('reject in ExecuteQuery>>>>>>', error);
-            reject(error);
-          },
+          (trans, results) => resolve(results),
+          (error) => reject(error),
         );
       });
     });
@@ -43,12 +35,8 @@ export default class Database extends Component {
           'lName text, email VARCHAR(50), password VARCHAR(50), phone INTEGER,' +
           ' address TEXT, gender BOOLEAN, dob TEXT);',
       ).then(
-        (result) => {
-          resolve();
-        },
-        (error) => {
-          reject();
-        },
+        (result) => resolve(),
+        (error) => reject(),
       );
     });
   }
@@ -56,12 +44,8 @@ export default class Database extends Component {
   insert(sql, arrValues) {
     return new Promise((resolve, reject) => {
       this.ExecuteQuery(sql, arrValues).then(
-        (result) => {
-          resolve('Success');
-        },
-        (error) => {
-          reject('Failed');
-        },
+        (result) => resolve('Success'),
+        (error) => reject('Failed'),
       );
     });
   }
@@ -69,12 +53,8 @@ export default class Database extends Component {
   update(sql, arrValues) {
     return new Promise((resolve, reject) => {
       this.ExecuteQuery(sql, arrValues).then(
-        (result) => {
-          resolve('Successfully updated.');
-        },
-        (error) => {
-          reject('Update Failed');
-        },
+        (result) => resolve('Successfully updated.'),
+        (error) => reject('Update Failed'),
       );
     });
   }
@@ -113,7 +93,6 @@ export default class Database extends Component {
     // return userdata as object
     return new Promise((resolve, reject) => {
       let userInfoObj = {};
-      // console.log('before : ' + Object.keys(userInfoObj).length);
       this.ExecuteQuery(sql, arrValues).then((result) => {
         for (let i = 0; i < result.rows.length; i++) {
           let row = result.rows.item(i);
@@ -129,12 +108,8 @@ export default class Database extends Component {
   deleteAccount = (sql, arrValues) => {
     return new Promise((resolve, reject) => {
       this.ExecuteQuery(sql, arrValues).then(
-        (result) => {
-          resolve('Account deleted successfully.');
-        },
-        (error) => {
-          reject('Something went wrong!');
-        },
+        (result) => resolve('Account deleted successfully.'),
+        (error) => reject('Something went wrong!'),
       );
     });
   };

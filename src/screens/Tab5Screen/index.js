@@ -10,7 +10,7 @@ import {Quote} from '@api';
 
 const Item = ({author, content, requestno}) => (
   <View>
-    <Text style={styles.content}>Request No : {requestno}</Text>
+    <Text style={styles.author}>Request No : {requestno}</Text>
     <Text style={styles.content}>{content}</Text>
     <Text style={styles.author}>- {author}</Text>
   </View>
@@ -93,9 +93,7 @@ export default class Tab5 extends React.Component {
     />
   );
 
-  ItemSeparatorLine = () => (
-    <View style={{height: 0.5, width: '100%', backgroundColor: '#111a0b'}} />
-  );
+  ItemSeparatorLine = () => <View style={styles.lineseperator} />;
 
   onRefresh() {
     this.setState({isFetching: true}, function () {

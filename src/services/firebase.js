@@ -20,18 +20,17 @@ export default class Firebase extends Component {
   getFcmToken = async () => {
     const fcmToken = await messaging().getToken();
     if (fcmToken) {
-      // console.log('FCM TOKEN = ', fcmToken);
+      console.log('FCM TOKEN = ', fcmToken);
     } else {
-      // console.log('Failed No token received');
+      console.log('Failed No token received');
     }
   };
 
   requestPermission = async () => {
     try {
       await messaging().requestPermission();
-      // User has authorised
     } catch (error) {
-      // User has rejected permissions
+      console.log(error);
     }
   };
 
@@ -44,7 +43,6 @@ export default class Firebase extends Component {
 
     // Called everytime when notification is recieved
     messaging().onMessage((message) => {
-      console.log('message from firebase = ', JSON.stringify(message));
       PushNotification.localNotification({
         message: message.notification.body,
         title: message.notification.title,

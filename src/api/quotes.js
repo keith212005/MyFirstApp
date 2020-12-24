@@ -1,5 +1,3 @@
-/* @flow */
-
 import React, {Component} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
@@ -8,10 +6,7 @@ export default class Quotes extends Component {
     return new Promise(async (resolve, reject) => {
       const response = await fetch('https://api.quotable.io/random');
       let quote1 = await response.json();
-
       quote1.request = '1';
-      // console.log('new req', quote1);
-
       if (!response.ok) {
         throw new Error(quote1.author);
       }
@@ -71,23 +66,3 @@ export default class Quotes extends Component {
     return null;
   }
 }
-
-// async getQuote1() {
-//   try {
-//     const response = await fetch('https://api.quotable.io/random');
-//     const quote1 = await response.json();
-//     console.log('Quote 1 - ', quote1.author);
-//     if (!response.ok) {
-//       throw new Error(quote1.author);
-//     }
-//   } catch (error) {
-//     console.log('Opps... Something went wrong', error);
-//   }
-//   return new Promise(function (resolve, reject) {
-//     if (quote1) {
-//       resolve(quote1);
-//     } else {
-//       reject('Somethingwentwroong');
-//     }
-//   });
-// }

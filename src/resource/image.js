@@ -25,6 +25,7 @@ export const icon = {
   calendar_outlined: 'calendar_outlined_96px',
   camera: 'camera_96px',
   denied: 'denied_96px',
+  ok: 'ok_96px',
 };
 
 export const swiper_images = [

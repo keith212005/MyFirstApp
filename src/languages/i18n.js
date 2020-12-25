@@ -1,10 +1,12 @@
 import I18n from 'react-native-i18n';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
+
+import {store} from '@reducers';
 
 import en from './en';
 import fr from './fr';
 import hi from './hi';
+
+const props = store.getState();
 
 I18n.translations = {
   en,
@@ -12,6 +14,6 @@ I18n.translations = {
   hi,
 };
 I18n.fallbacks = false;
-I18n.locale = 'en';
+I18n.locale = 'hi';
 
 export default I18n;

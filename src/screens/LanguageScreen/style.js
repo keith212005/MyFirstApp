@@ -10,25 +10,30 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   renderItemContainer: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    padding: 15,
+    width: Resource.responsiveWidth(90),
   },
   titleBar: {
     flexDirection: 'row',
     alignItems: 'center',
   },
+  title: {
+    fontSize: 18,
+  },
   titleText: {
     color: Resource.colors.gray,
     fontSize: 24,
     padding: 10,
-    borderColor: 'blue',
-    borderWidth: 1,
-    flex: 8,
     textAlign: 'center',
   },
-  nextBtn: {
-    flex: 2,
+  itemSeparator: {
+    height: 1,
+    width: '100%',
+    backgroundColor: Resource.colors.gray,
   },
 });
 

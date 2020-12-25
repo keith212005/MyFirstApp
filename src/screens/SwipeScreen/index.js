@@ -35,13 +35,9 @@ class Swiper extends Component {
   }
 
   handleNext() {
-    if (this.props.language === '') {
-      this.props.navigation.replace('Language');
-    } else {
-      this.props.navigation.replace(
-        this.props.autoLoginStatus ? 'DrawerNavigator' : 'StartScreen',
-      );
-    }
+    this.props.navigation.replace(
+      this.props.autoLoginStatus ? 'DrawerNavigator' : 'StartScreen',
+    );
   }
 
   _renderItem({item, index}) {

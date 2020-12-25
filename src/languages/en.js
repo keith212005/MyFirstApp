@@ -1,5 +1,6 @@
 export default {
   greeting: 'Hi!',
-  Setting: 'Setting',
+  Setting: 'Settings',
   ChangeLanguage: 'Change Language',
+  OtherSettings: 'Other Settings',
 };

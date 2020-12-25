@@ -14,6 +14,14 @@ class StartScreen extends React.Component {
   componentDidMount() {
     this.props.changeIsOpenFirstTime(false);
   }
+
+  handleNext = () => {
+    // if language is not set set language in reduceer
+    this.props.navigation.navigate(
+      this.props.language === '' ? 'Language' : 'Login',
+    );
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -31,9 +39,7 @@ class StartScreen extends React.Component {
           <Text style={styles.title}>Stay connected with everyone!</Text>
           <Text style={styles.text}>Sign in with account</Text>
 
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => this.props.navigation.navigate('Login')}>
+          <TouchableOpacity style={styles.button} onPress={this.handleNext}>
             <LinearGradient
               colors={colors.themeButton}
               style={styles.lineargradient}>
@@ -52,8 +58,9 @@ class StartScreen extends React.Component {
 }
 
 const matchStateToProps = (state) => {
+  console.log('start>>>>', state);
   return {
-    autoLoginStatus: state.autoLogin.status,
+    language: state.setAppLanguage.language,
   };
 };
 

@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableHighlight,
+  Image,
+} from 'react-native';
 
 import {RadioButton} from 'react-native-paper';
 import {Button} from 'react-native-elements';
@@ -12,6 +19,7 @@ import {I18n} from '@languages';
 import {actionCreaters} from '@actions';
 import * as Constant from '@constants';
 import * as Components from '@components';
+import * as Resource from '@resource';
 
 const Item = ({title}) => (
   <View style={styles.item}>
@@ -20,33 +28,41 @@ const Item = ({title}) => (
 );
 
 class Language extends Component {
-  constructor() {
-    super();
-    this.handleOnPress = this.handleOnPress.bind(this);
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedLanguage:
+        this.props.language === '' ? undefined : this.props.language,
+    };
   }
-  state = {selectedLanguage: undefined};
 
-  handleOnPress = () => {
-    //set language to reducer and go to start screen
-    this.props.setAppLanguage(this.state.selectedLanguage);
-    this.props.navigation.replace('StartScreen');
-  };
+  ItemSeparator = () => <View style={styles.itemSeparator} />;
 
   handleValue = (newValue) => {
     console.log('new : ', newValue);
-    this.setState({selectedLanguage: newValue});
+    this.setState({selectedLanguage: newValue}, () => {
+      this.props.setAppLanguage(this.state.selectedLanguage);
+      this.props.navigation.goBack();
+    });
   };
 
-  renderItem = ({item}) => (
-    <View style={styles.renderItemContainer}>
-      <Item title={item.language} />
-      <RadioButton.Group
-        onValueChange={(newValue) => this.handleValue(newValue)}
-        value={this.state.selectedLanguage}>
-        <RadioButton value={item.code} />
-      </RadioButton.Group>
-    </View>
-  );
+  renderItem = ({item}) => {
+    return (
+      <>
+        <TouchableHighlight onPress={() => this.handleValue(item.code)}>
+          <View style={styles.renderItemContainer}>
+            <Text style={{fontSize: 18}}>{item.language}</Text>
+            {this.state.selectedLanguage === item.code ? (
+              <Image
+                style={{width: 20, height: 20}}
+                source={{uri: Resource.icon.ok}}
+              />
+            ) : null}
+          </View>
+        </TouchableHighlight>
+      </>
+    );
+  };
 
   render() {
     return (
@@ -54,19 +70,12 @@ class Language extends Component {
         <View style={styles.container}>
           <View style={styles.titleBar}>
             <Text style={styles.titleText}>Select Language</Text>
-            {this.state.selectedLanguage != undefined ? (
-              <View style={styles.nextBtn}>
-                <Components.SquareButton
-                  title="Next"
-                  onPress={this.handleOnPress}
-                />
-              </View>
-            ) : null}
           </View>
           <FlatList
             data={Constant.getLanguages}
             renderItem={this.renderItem}
             keyExtractor={(item, index) => item.code}
+            ItemSeparatorComponent={this.ItemSeparator}
           />
         </View>
       </>

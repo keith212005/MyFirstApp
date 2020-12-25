@@ -1,5 +1,6 @@
 export default {
   greeting: 'नमस्ते',
-  Setting: 'स्क्रीन सेटिंग',
+  Setting: 'सेटिंग',
   ChangeLanguage: 'भाषा बदलो',
+  OtherSettings: 'अन्य सेटिंग',
 };

@@ -18,7 +18,7 @@ const DATA = [
     title: I18n.t('ChangeLanguage'),
   },
   {
-    title: 'Other settings',
+    title: I18n.t('OtherSettings'),
   },
 ];
 

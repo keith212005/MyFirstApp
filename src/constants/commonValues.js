@@ -94,3 +94,10 @@ export const userInfoProps = {
   gender: '',
   dob: '',
 };
+
+export const getLanguages = [
+  {language: 'English', code: 'en'},
+  {language: 'Hindi', code: 'hi'},
+  {language: 'Spanish', code: 'es'},
+  {language: 'French', code: 'fr'},
+];

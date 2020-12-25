@@ -14,19 +14,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  itemContainer: {
-    padding: 15,
-    width: Resource.deviceWidth,
+  titleBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  screenTitle: {
+  titleText: {
+    color: Resource.colors.gray,
     fontSize: 24,
     padding: 10,
+    borderColor: 'blue',
+    borderWidth: 1,
+    flex: 8,
+    textAlign: 'center',
   },
-  itemTitle: {fontSize: 18, color: Resource.colors.gray},
-  itemSeparator: {
-    height: 1,
-    width: '100%',
-    backgroundColor: Resource.colors.gray,
+  nextBtn: {
+    flex: 2,
   },
 });
 

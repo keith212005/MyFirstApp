@@ -10,7 +10,7 @@ import {LinearGradientButton} from '@components';
 import {actionCreaters} from '@actions';
 import * as Resource from '@resource';
 
-export default class Swiper extends Component {
+class Swiper extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,9 +35,13 @@ export default class Swiper extends Component {
   }
 
   handleNext() {
-    this.props.navigation.replace(
-      this.props.autoLoginStatus ? 'DrawerNavigator' : 'StartScreen',
-    );
+    if (this.props.language === '') {
+      this.props.navigation.replace('Language');
+    } else {
+      this.props.navigation.replace(
+        this.props.autoLoginStatus ? 'DrawerNavigator' : 'StartScreen',
+      );
+    }
   }
 
   _renderItem({item, index}) {
@@ -121,4 +125,13 @@ export default class Swiper extends Component {
   }
 }
 
-// <BackgroundCarousel {...this.props} />
+const matchStateToProps = (state) => {
+  console.log('Swiper Store = ', JSON.stringify(state));
+  return {
+    language: state.setAppLanguage.language,
+  };
+};
+const matchDispatchToProps = (dispatch) =>
+  bindActionCreators(actionCreaters, dispatch);
+
+export default connect(matchStateToProps, matchDispatchToProps)(Swiper);

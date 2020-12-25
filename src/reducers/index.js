@@ -9,6 +9,7 @@ import autoLogin from './autoLogin';
 import connectionState from './connectionState';
 import isOpenFirstTime from './isOpenFirstTime';
 import saveUserInfo from './saveUserInfo';
+import setAppLanguage from './setAppLanguage';
 
 const logger = createLogger({collapsed: true});
 
@@ -17,6 +18,7 @@ const appReducer = combineReducers({
   connectionState: connectionState,
   isOpenFirstTime: isOpenFirstTime,
   saveUserInfo: saveUserInfo,
+  setAppLanguage: setAppLanguage,
 });
 
 const rootReducer = (state, action) => {
@@ -30,7 +32,7 @@ const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
   // whitelist: ['autoLogin'], // by default all reducers in root reducer will be persisted
-  // blacklist: ['isOpenFirstTime'], // put reducers whose data you dont want to persist
+  // blacklist: ['setAppLanguage'], // put reducers whose data you dont want to persist
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

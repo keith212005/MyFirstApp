@@ -1,5 +1,6 @@
 export Splash from './SplashScreen';
 export Swiper from './SwipeScreen';
+export Language from './LanguageScreen';
 export StartScreen from './StartScreen';
 export Login from './LoginScreen';
 export Signup from './SignupScreen';

@@ -6,3 +6,4 @@ export const SAVE_USER_INFO = 'SAVE_USER_INFO';
 export const UPDATE_USER_INFO = 'UPDATE_USER_INFO';
 export const RESET_USER_INFO = 'RESET_USER_INFO';
 export const RESET_STORE = 'RESET_STORE';
+export const SET_APP_LANGUAGE = 'SET_APP_LANGUAGE';

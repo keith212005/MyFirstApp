@@ -8,6 +8,7 @@ export {
   UPDATE_USER_INFO,
   RESET_USER_INFO,
   RESET_STORE,
+  SET_APP_LANGUAGE,
 } from './actionTypes';
 
 import * as autoLogin from './autoLogin';
@@ -15,6 +16,7 @@ import * as addNetworkListener from './addNetworkListener';
 import * as changeIsOpenFirstTime from './changeIsOpenFirstTime';
 import * as saveUserInfo from './saveUserInfo';
 import * as resetStore from './resetStore';
+import * as setAppLanguage from './setAppLanguage';
 
 export const actionCreaters = Object.assign(
   {},
@@ -23,4 +25,5 @@ export const actionCreaters = Object.assign(
   changeIsOpenFirstTime,
   saveUserInfo,
   resetStore,
+  setAppLanguage,
 );

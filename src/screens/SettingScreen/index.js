@@ -1,59 +1,67 @@
 import React from 'react';
-import {View, Text, BackHandler, FlatList} from 'react-native';
+import {
+  View,
+  Text,
+  BackHandler,
+  FlatList,
+  TouchableHighlight,
+} from 'react-native';
 
-import I18n, {getLanguages} from 'react-native-i18n';
 import {RadioButton} from 'react-native-paper';
+import * as RNLocalize from 'react-native-localize';
+import {I18n} from '@languages';
 
 import {styles} from './style';
 
 const DATA = [
   {
-    id: '1',
-    title: 'English',
+    title: I18n.t('ChangeLanguage'),
   },
   {
-    id: '2',
-    title: 'Hindi',
-  },
-  {
-    id: '3',
-    title: 'French',
+    title: 'Other settings',
   },
 ];
 
 const Item = ({title}) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{title}</Text>
+  <View style={styles.itemContainer}>
+    <Text style={styles.itemTitle}>{title}</Text>
   </View>
 );
 
 export default class Setting extends React.Component {
-  state = {selectedLanguage: null};
+  ItemSeparator = () => <View style={styles.itemSeparator} />;
+
+  handleLocalizationChange() {
+    console.log(RNLocalize.getLocales());
+  }
 
   handleValue = (language) => {
     this.setState({selectedLanguage: language});
   };
 
+  handleOnPress = (title) => {
+    console.log(title);
+    this.props.navigation.navigate('Language');
+  };
+
   renderItem = ({item}) => (
-    <View style={styles.renderItemContainer}>
+    <TouchableHighlight
+      style={styles.renderItemContainer}
+      onPress={() => this.handleOnPress(item.title)}>
       <Item title={item.title} />
-      <RadioButton.Group
-        onValueChange={(newValue) => this.handleValue(newValue)}
-        value={this.state.selectedLanguage}>
-        <RadioButton value={item.title} />
-      </RadioButton.Group>
-    </View>
+    </TouchableHighlight>
   );
 
   render() {
     return (
       <>
         <View style={styles.container}>
-          <Text style={{fontSize: 24, padding: 10}}>Select Language:</Text>
+          <Text style={styles.screenTitle}>{I18n.t('Setting')}</Text>
           <FlatList
             data={DATA}
             renderItem={this.renderItem}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.title}
+            ItemSeparatorComponent={this.ItemSeparator}
           />
         </View>
       </>

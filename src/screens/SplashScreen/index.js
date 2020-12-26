@@ -17,7 +17,7 @@ class Splash extends React.Component {
 
   componentDidMount() {
     setTimeout(() => {
-      if (this.props.isOpenFirstTime === true) {
+      if (this.props.isOpenFirstTime) {
         this.props.navigation.replace('Swiper');
       } else {
         this.props.navigation.replace(

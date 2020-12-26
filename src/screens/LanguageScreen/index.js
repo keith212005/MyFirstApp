@@ -34,15 +34,12 @@ class Language extends Component {
   }
 
   handleLanguageChange = (newValue) => {
-    // console.log('new : ', newValue);
     this.setState({selectedLanguage: newValue}, () => {
       this.props.setAppLanguage(this.state.selectedLanguage);
       I18n.locale = newValue;
-      if (this.props.autoLoginStatus === true) {
-        this.props.navigation.pop();
-      } else {
-        this.props.navigation.navigate('Login');
-      }
+      this.props.autoLoginStatus
+        ? this.props.navigation.pop()
+        : this.props.navigation.navigate('Login');
     });
   };
 

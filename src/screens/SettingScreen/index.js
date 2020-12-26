@@ -15,7 +15,6 @@ import * as Constant from '@constants';
 class Setting extends React.Component {
   constructor(props) {
     super(props);
-    console.log('consgsfsdfsdf');
     this.state = {
       stateOfLocale: props.language,
     };

@@ -15,17 +15,14 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import {styles} from './style';
+
 import {I18n} from '@languages';
 import {actionCreaters} from '@actions';
 import * as Constant from '@constants';
 import * as Components from '@components';
 import * as Resource from '@resource';
 
-const Item = ({title}) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{title}</Text>
-  </View>
-);
+const ItemSeparator = () => <View style={styles.itemSeparator} />;
 
 class Language extends Component {
   constructor(props) {
@@ -36,20 +33,26 @@ class Language extends Component {
     };
   }
 
-  ItemSeparator = () => <View style={styles.itemSeparator} />;
-
-  handleValue = (newValue) => {
-    console.log('new : ', newValue);
+  handleLanguageChange = (newValue) => {
+    // console.log('new : ', newValue);
     this.setState({selectedLanguage: newValue}, () => {
       this.props.setAppLanguage(this.state.selectedLanguage);
-      this.props.navigation.goBack();
+      I18n.locale = newValue;
+      if (this.props.autoLoginStatus === true) {
+        this.props.navigation.pop();
+      } else {
+        this.props.navigation.navigate('Login');
+      }
     });
   };
 
   renderItem = ({item}) => {
     return (
       <>
-        <TouchableHighlight onPress={() => this.handleValue(item.code)}>
+        <TouchableHighlight
+          activeOpacity={0.6}
+          underlayColor="#DDDDDD"
+          onPress={() => this.handleLanguageChange(item.code)}>
           <View style={styles.renderItemContainer}>
             <Text style={{fontSize: 18}}>{item.language}</Text>
             {this.state.selectedLanguage === item.code ? (
@@ -75,7 +78,7 @@ class Language extends Component {
             data={Constant.getLanguages}
             renderItem={this.renderItem}
             keyExtractor={(item, index) => item.code}
-            ItemSeparatorComponent={this.ItemSeparator}
+            ItemSeparatorComponent={ItemSeparator}
           />
         </View>
       </>
@@ -84,7 +87,6 @@ class Language extends Component {
 }
 
 const matchStateToProps = (state) => {
-  console.log('Swiper Store = ', JSON.stringify(state));
   return {
     language: state.setAppLanguage.language,
     autoLoginStatus: state.autoLogin.status,

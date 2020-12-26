@@ -1,3 +1,5 @@
+import {I18n} from '@languages';
+
 export const signupRefs = {
   firstNameRef: '',
   lastNameRef: '',

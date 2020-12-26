@@ -122,7 +122,6 @@ class Swiper extends Component {
 }
 
 const matchStateToProps = (state) => {
-  console.log('Swiper Store = ', JSON.stringify(state));
   return {
     language: state.setAppLanguage.language,
   };

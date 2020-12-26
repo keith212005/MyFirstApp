@@ -1,70 +1,81 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  BackHandler,
-  FlatList,
-  TouchableHighlight,
-} from 'react-native';
+import {View, Text, BackHandler, FlatList, Pressable} from 'react-native';
 
 import {RadioButton} from 'react-native-paper';
 import * as RNLocalize from 'react-native-localize';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+
 import {I18n} from '@languages';
-
+import {Card, ListItem, Button, Icon} from 'react-native-elements';
 import {styles} from './style';
+import {actionCreaters} from '@actions';
+import * as Constant from '@constants';
 
-const DATA = [
-  {
-    title: I18n.t('ChangeLanguage'),
-  },
-  {
-    title: I18n.t('OtherSettings'),
-  },
-];
-
-const Item = ({title}) => (
-  <View style={styles.itemContainer}>
-    <Text style={styles.itemTitle}>{title}</Text>
-  </View>
-);
-
-export default class Setting extends React.Component {
-  ItemSeparator = () => <View style={styles.itemSeparator} />;
-
-  handleLocalizationChange() {
-    console.log(RNLocalize.getLocales());
+class Setting extends React.Component {
+  constructor(props) {
+    super(props);
+    console.log('consgsfsdfsdf');
+    this.state = {
+      stateOfLocale: props.language,
+    };
+    I18n.locale = this.state.stateOfLocale;
   }
 
-  handleValue = (language) => {
-    this.setState({selectedLanguage: language});
+  handleOnClick = (label) => {
+    switch (label) {
+      case I18n.t('ChangeLanguage'):
+        console.log('lang');
+        this.props.navigation.navigate('Language');
+        break;
+      case I18n.t('OtherSettings'):
+        console.log('other');
+        break;
+      default:
+    }
   };
 
-  handleOnPress = (title) => {
-    console.log(title);
-    this.props.navigation.navigate('Language');
+  Item = (value) => {
+    return (
+      <Pressable
+        style={styles.pressable}
+        activeOpacity={0.6}
+        underlayColor="#818181"
+        onPress={() => this.handleOnClick(value)}>
+        <Text style={styles.listItem}>{value}</Text>
+      </Pressable>
+    );
   };
-
-  renderItem = ({item}) => (
-    <TouchableHighlight
-      style={styles.renderItemContainer}
-      onPress={() => this.handleOnPress(item.title)}>
-      <Item title={item.title} />
-    </TouchableHighlight>
-  );
 
   render() {
     return (
       <>
         <View style={styles.container}>
-          <Text style={styles.screenTitle}>{I18n.t('Setting')}</Text>
-          <FlatList
-            data={DATA}
-            renderItem={this.renderItem}
-            keyExtractor={(item) => item.title}
-            ItemSeparatorComponent={this.ItemSeparator}
-          />
+          <Card containerStyle={{width: '90%'}}>
+            <Card.Title style={styles.screenTitle}>
+              {I18n.t('Setting')}
+            </Card.Title>
+
+            {this.Item(I18n.t('ChangeLanguage'))}
+
+            <Card.Divider />
+
+            {this.Item(I18n.t('OtherSettings'))}
+          </Card>
         </View>
       </>
     );
   }
 }
+
+const matchStateToProps = (state) => {
+  return {
+    isOpenFirstTime: state.isOpenFirstTime.status,
+    autoLoginStatus: state.autoLogin.status,
+    language: state.setAppLanguage.language,
+  };
+};
+const matchDispatchToProps = (dispatch) =>
+  bindActionCreators(actionCreaters, dispatch);
+
+export default connect(matchStateToProps, matchDispatchToProps)(Setting);

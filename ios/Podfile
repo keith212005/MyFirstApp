@@ -8,18 +8,18 @@ target 'MyFirstApp' do
 
   use_react_native!(:path => config["reactNativePath"])
 
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+  # pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+  #
+  # pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
 
-  pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
+  # pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
 
-  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
+  # pod 'RNImageCropPicker', :path => '../node_modules/react-native-image-crop-picker'
 
-  pod 'RNImageCropPicker', :path => '../node_modules/react-native-image-crop-picker'
-
-  target 'MyFirstAppTests' do
-    inherit! :complete
-    # Pods for testing
-  end
+  # target 'MyFirstAppTests' do
+  #   inherit! :complete
+  #   # Pods for testing
+  # end
 
   # Enables Flipper.
   #
@@ -28,14 +28,5 @@ target 'MyFirstApp' do
   use_flipper!
   post_install do |installer|
     flipper_post_install(installer)
-  end
-end
-
-target 'MyFirstApp-tvOS' do
-  # Pods for MyFirstApp-tvOS
-
-  target 'MyFirstApp-tvOSTests' do
-    inherit! :search_paths
-    # Pods for testing
   end
 end

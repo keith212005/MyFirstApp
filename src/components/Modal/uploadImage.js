@@ -15,6 +15,12 @@ import {
 import {IconButton, Button, Card, Title, Paragraph} from 'react-native-paper';
 import ImagePicker from 'react-native-image-crop-picker';
 import {Avatar, Accessory} from 'react-native-elements';
+import {
+  openSettings,
+  request,
+  RESULTS,
+  PERMISSIONS,
+} from 'react-native-permissions';
 
 import {colors, fontFamily, responsiveHeight} from '@resource';
 import {DP} from '@services';
@@ -52,9 +58,9 @@ export default class UploadImage extends Component {
 
   handleCamera = () => {
     this.props.dismiss();
-    DP.reuestCameraPermission().then(
+    var result = DP.requestCameraPermission();
+    DP.requestCameraPermission().then(
       (result) => {
-        console.log(result);
         ImagePicker.openCamera({
           cropping: true,
           width: 500,
@@ -74,27 +80,31 @@ export default class UploadImage extends Component {
           });
       },
       (error) => {
-        Alert.alert(
-          'Request Permission',
-          'Please grant access to camera to proceed furthur.',
-          [
-            {
-              text: 'Cancel',
-              onPress: () => console.log('Cancel Pressed'),
-              style: 'cancel',
-            },
-            {
-              text: 'OK',
-              onPress: () => {
-                this.props.dismiss();
-                openSettings().catch(() =>
-                  console.warn('cannot open settings'),
-                );
+        if (error === 'denied') {
+          request(PERMISSIONS.IOS.CAMERA).then().catch();
+        } else if (error === 'blocked') {
+          this.props.dismiss();
+          Alert.alert(
+            'Requesting Camera Permission',
+            'Please allow My First App to access camera.',
+            [
+              {
+                text: 'Cancel',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel',
               },
-            },
-          ],
-          {cancelable: false},
-        );
+              {
+                text: 'OK',
+                onPress: () => {
+                  openSettings().catch(() =>
+                    console.warn('cannot open setting'),
+                  );
+                },
+              },
+            ],
+            {cancelable: false},
+          );
+        }
       },
     );
   };

@@ -10,6 +10,7 @@ import connectionState from './connectionState';
 import isOpenFirstTime from './isOpenFirstTime';
 import saveUserInfo from './saveUserInfo';
 import setAppLanguage from './setAppLanguage';
+import setSafeAreaInsets from './setSafeAreaInsets';
 
 const logger = createLogger({collapsed: true});
 
@@ -19,6 +20,7 @@ const appReducer = combineReducers({
   isOpenFirstTime: isOpenFirstTime,
   saveUserInfo: saveUserInfo,
   setAppLanguage: setAppLanguage,
+  setSafeAreaInsets: setSafeAreaInsets,
 });
 
 const rootReducer = (state, action) => {

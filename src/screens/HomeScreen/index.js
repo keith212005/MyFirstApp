@@ -8,7 +8,7 @@ import Carousel, {Pagination} from 'react-native-snap-carousel';
 
 import {styles} from './style';
 import {actionCreaters} from '@actions';
-import * as Resource from '@resource';
+import {deviceWidth, colors} from '@resource';
 import * as Components from '@components';
 
 class Home extends React.Component {
@@ -100,7 +100,7 @@ class Home extends React.Component {
           height: 7,
           borderRadius: 5,
           marginHorizontal: 3,
-          backgroundColor: Resource.colors.primary,
+          backgroundColor: colors.primary,
         }}
         inactiveDotOpacity={0.6}
         inactiveDotScale={0.6}
@@ -109,78 +109,69 @@ class Home extends React.Component {
   }
 
   render() {
+    const {navigation, insets} = this.props;
     return (
-      <>
+      <View style={styles.container(insets)}>
+        <Components.MyEllipse
+          toggle={this.state.toggle}
+          activeIndex={this.state.activeIndex}
+          nextIndex={this.state.nextIndex}
+          direction={this.state.direction}
+        />
         <Components.CustomHeader
           title="HOME"
-          onPress={() =>
-            this.props.navigation.dispatch(DrawerActions.toggleDrawer())
-          }
+          onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
         />
 
-        <SafeAreaView
-          style={{
-            flex: 1,
-            height: 50,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-          <Components.MyEllipse
-            toggle={this.state.toggle}
-            activeIndex={this.state.activeIndex}
-            nextIndex={this.state.nextIndex}
-            direction={this.state.direction}
-          />
-          <Carousel
-            layout={'default'}
-            lockScrollWhileSnapping={true}
-            ref={(c) => (this._carousel = c)}
-            data={this.state.carouselItems}
-            sliderWidth={Resource.deviceWidth}
-            itemWidth={Resource.deviceWidth}
-            renderItem={this._renderItem}
-            onSnapToItem={(slideIndex) => {
-              this.setState({activeIndex: slideIndex});
-            }}
-            pagingEnabled={true}
-            onScrollBeginDrag={(event) => {
-              if (this.state.activeIndex === 0) {
-                this.setState((prev) => ({
-                  ...prev,
-                  nextIndex: 1,
-                }));
-              } else if (this.state.activeIndex === 1) {
-                this.setState((prev) => ({
-                  ...prev,
-                  nextIndex: 2,
-                }));
-              } else if (this.state.activeIndex === 2) {
-                this.setState((prev) => ({
-                  ...prev,
-                  nextIndex: 1,
-                }));
-              }
-            }}
-            onScrollEndDrag={() => {}}
-          />
+        <Carousel
+          layout={'default'}
+          lockScrollWhileSnapping={true}
+          ref={(c) => (this._carousel = c)}
+          data={this.state.carouselItems}
+          sliderWidth={deviceWidth}
+          itemWidth={deviceWidth}
+          renderItem={this._renderItem}
+          onSnapToItem={(slideIndex) => {
+            this.setState({activeIndex: slideIndex});
+          }}
+          pagingEnabled={true}
+          onScrollBeginDrag={(event) => {
+            if (this.state.activeIndex === 0) {
+              this.setState((prev) => ({
+                ...prev,
+                nextIndex: 1,
+              }));
+            } else if (this.state.activeIndex === 1) {
+              this.setState((prev) => ({
+                ...prev,
+                nextIndex: 2,
+              }));
+            } else if (this.state.activeIndex === 2) {
+              this.setState((prev) => ({
+                ...prev,
+                nextIndex: 1,
+              }));
+            }
+          }}
+          onScrollEndDrag={() => {}}
+        />
 
-          {this.pagination}
+        {this.pagination}
 
-          <Components.ExitAppDialog
-            showAlert={this.state.showAlert}
-            title="Exit"
-            content="Are you sure you want to exit?"
-            onSuccess={(value) => this.handleSuccess(value)}
-          />
-        </SafeAreaView>
-      </>
+        <Components.ExitAppDialog
+          showAlert={this.state.showAlert}
+          title="Exit"
+          content="Are you sure you want to exit?"
+          onSuccess={(value) => this.handleSuccess(value)}
+        />
+      </View>
     );
   }
 }
 
 const matchStateToProps = (state) => {
   return {
-    autoLoginStatus: state.autoLogin.status,
+    insets: state.setSafeAreaInsets.insets,
   };
 };
 

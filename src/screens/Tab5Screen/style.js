@@ -4,10 +4,12 @@ import {StyleSheet} from 'react-native';
 import {colors, fontFamily} from '@resource';
 
 const styles = StyleSheet.create({
-  container: {
+  container: (insets) => ({
     flex: 1,
     justifyContent: 'center',
-  },
+    paddingTop: insets.top,
+    paddingBottom: insets.bottom,
+  }),
   author: {
     textAlign: 'center',
     fontSize: 14,

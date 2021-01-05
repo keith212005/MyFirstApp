@@ -64,7 +64,7 @@ export default class MyEllipse extends Component {
   render() {
     return (
       <>
-        <Svg style={{position: 'absolute', borderWidth: 1, borderColor: 'red'}}>
+        <Svg style={{position: 'absolute'}}>
           <Defs>
             <LinearGradient id="prefix__b">
               <Stop offset="5%" stopColor="#009284" />

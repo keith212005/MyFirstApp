@@ -2,10 +2,13 @@ import React from 'react';
 import {View, Text, FlatList} from 'react-native';
 
 import {DrawerActions} from '@react-navigation/native';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 
 import {styles} from './style';
 import {CustomHeader} from '@components';
 import {Quote} from '@api';
+import {actionCreaters} from '@actions';
 
 const Item = ({author, content, requestno}) => (
   <View>
@@ -15,7 +18,7 @@ const Item = ({author, content, requestno}) => (
   </View>
 );
 
-export default class Tab5 extends React.Component {
+class Tab5 extends React.Component {
   state = {quote: [], isFetching: false};
 
   componentDidMount() {
@@ -50,8 +53,9 @@ export default class Tab5 extends React.Component {
 
   render() {
     const {quote} = this.state;
+    const {insets} = this.props;
     return (
-      <>
+      <View style={styles.container(insets)}>
         <CustomHeader
           title="Tab 5 Screen"
           onPress={() =>
@@ -59,17 +63,26 @@ export default class Tab5 extends React.Component {
           }
         />
 
-        <View style={styles.container}>
-          <FlatList
-            data={quote}
-            renderItem={this.renderItem}
-            keyExtractor={(item, index) => index.toString()}
-            ItemSeparatorComponent={this.ItemSeparatorLine}
-            onRefresh={() => this.onRefresh()}
-            refreshing={this.state.isFetching}
-          />
-        </View>
-      </>
+        <FlatList
+          data={quote}
+          renderItem={this.renderItem}
+          keyExtractor={(item, index) => index.toString()}
+          ItemSeparatorComponent={this.ItemSeparatorLine}
+          onRefresh={() => this.onRefresh()}
+          refreshing={this.state.isFetching}
+        />
+      </View>
     );
   }
 }
+
+const matchStateToProps = (state) => {
+  return {
+    insets: state.setSafeAreaInsets.insets,
+  };
+};
+
+const matchDispatchToProps = (dispatch) =>
+  bindActionCreators(actionCreaters, dispatch);
+
+export default connect(matchStateToProps, matchDispatchToProps)(Tab5);

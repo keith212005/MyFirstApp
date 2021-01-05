@@ -704,6 +704,7 @@ class Signup extends React.Component {
             duration={1000}>
             <KeyboardAwareScrollView
               style={styles.scrollView}
+              showsVerticalScrollIndicator={false}
               keyboardShouldPersistTaps="always">
               {this.state.isProcessing ? <SimpleActivityIndicator /> : null}
 

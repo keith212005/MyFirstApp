@@ -7,11 +7,19 @@ import {
   Pressable,
   Keyboard,
   Image,
+  Button,
 } from 'react-native';
 
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {colors, fontFamily, responsiveWidth, icon} from '@resource';
-import {commonStyle} from '@resource';
+import {
+  colors,
+  fontFamily,
+  responsiveWidth,
+  icon,
+  commonStyle,
+} from '@resource';
+
+import moment from 'moment';
 
 export default class MyDatePicker extends React.Component {
   state = {
@@ -21,82 +29,94 @@ export default class MyDatePicker extends React.Component {
     dobValue: this.props.value,
   };
 
-  render() {
-    const onChange = (event, selectedDate) => {
-      if (event.type === 'dismissed') {
-        this.setState({
-          visible: false,
-        });
-      }
-      if (event.type === 'set') {
-        const currentDate = selectedDate || this.state.date;
-        this.setState({
+  onChange = (event, selectedDate) => {
+    const {onSuccess} = this.props;
+    const currentDate = selectedDate || this.state.date;
+    console.log('ketean', event.type);
+    if (event.type === 'set') {
+      this.setState(
+        {
           visible: Platform.OS === 'ios',
           date: currentDate,
-          dobValue:
-            selectedDate.getDate() +
-            '-' +
-            (selectedDate.getMonth() + 1) +
-            '-' +
-            selectedDate.getFullYear(),
-        });
-        this.props.onSuccess(this.state.dobValue);
+          dobValue: moment(selectedDate).format('DD-MM-YYYY'),
+        },
+        () => onSuccess(moment(selectedDate).format('DD-MM-YYYY')),
+      );
+    }
+    if (Platform.OS === 'ios') {
+      this.setState(
+        {
+          date: currentDate,
+          dobValue: moment(selectedDate).format('DD-MM-YYYY'),
+        },
+        () => onSuccess(moment(selectedDate).format('DD-MM-YYYY')),
+      );
+    }
+  };
+
+  showMode = (currentMode) => {
+    this.setState({
+      visible: true,
+      mode: currentMode,
+    });
+  };
+
+  showDatepicker = () => {
+    Keyboard.dismiss();
+    this.showMode('date');
+  };
+
+  showTimepicker = () => {
+    Keyboard.dismiss();
+    this.showMode('time');
+  };
+
+  hide = () => {
+    this.setState({visible: false}, () => {
+      if (this.state.dobValue === 'Date of birth') {
+        this.setState({dobValue: moment(new Date()).format('DD-MM-YYYY')});
       }
-    };
+    });
+  };
 
-    const showMode = (currentMode) => {
-      this.setState({
-        visible: true,
-        mode: currentMode,
-      });
-    };
-
-    const showDatepicker = () => {
-      Keyboard.dismiss();
-      showMode('date');
-    };
-
-    const showTimepicker = () => {
-      Keyboard.dismiss();
-      showMode('time');
-    };
+  render() {
+    const {date, mode, dobValue} = this.state;
+    const {minimumDate, maximumDate, isError, error_text} = this.props;
     return (
       <>
-        <Text style={styles.label}>Date of Birth</Text>
-        <Pressable onPress={() => showDatepicker()}>
-          <View style={styles.container}>
-            <Image
-              style={styles.image}
-              resizeMode="contain"
-              source={{uri: icon.calendar_filled}}
+        <View>
+          <Text style={styles.label}>Date of Birth</Text>
+          <Pressable onPress={() => this.showDatepicker()}>
+            <View style={styles.container}>
+              <Image
+                style={styles.image}
+                resizeMode="contain"
+                source={{uri: icon.calendar_filled}}
+              />
+              <Text style={styles.dob}>{dobValue}</Text>
+            </View>
+          </Pressable>
+          <Text style={commonStyle.errorStyle}>
+            {isError ? error_text : null}
+          </Text>
+        </View>
+        {this.state.visible && (
+          <>
+            {Platform.OS === 'ios' ? (
+              <Button title="OK" onPress={this.hide} />
+            ) : null}
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={date}
+              mode={mode}
+              is24Hour={true}
+              display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+              onChange={this.onChange}
+              minimumDate={minimumDate ? minimumDate : null}
+              maximumDate={maximumDate ? maximumDate : null}
             />
-
-            <Text style={styles.dob}>{this.state.dobValue}</Text>
-
-            {this.state.visible && (
-              <>
-                <DateTimePicker
-                  testID="dateTimePicker"
-                  value={this.state.date}
-                  mode={this.state.mode}
-                  is24Hour={true}
-                  display="default"
-                  onChange={onChange}
-                  minimumDate={
-                    this.props.minimumDate ? this.props.minimumDate : null
-                  }
-                  maximumDate={
-                    this.props.maximumDate ? this.props.maximumDate : null
-                  }
-                />
-              </>
-            )}
-          </View>
-        </Pressable>
-
-        <Text style={commonStyle.errorStyle}>
-          {this.props.isError ? this.props.error_text : null}
-        </Text>
+          </>
+        )}
       </>
     );
   }
@@ -105,7 +125,6 @@ export default class MyDatePicker extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     flexDirection: 'row',
     borderWidth: 1,
     borderRadius: 10,
@@ -115,9 +134,9 @@ const styles = StyleSheet.create({
   },
   dob: {
     marginLeft: 10,
+
     color: colors.gray,
     fontSize: 16,
-    textAlign: 'center',
   },
   label: {
     fontFamily: fontFamily.RobotoBold,

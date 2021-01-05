@@ -86,7 +86,6 @@ export default class MyTextInput extends Component {
             }}
             blurOnSubmit={false}
             ref={props.forwardRef}
-            pointerEvents="none"
             isInputValid={this.state.isInputValid}
             errorMessage={this.state.errorMessage}
             onFocus={this.handleOnFocus}

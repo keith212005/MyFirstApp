@@ -9,6 +9,7 @@ import {
   Alert,
   PermissionsAndroid,
   Linking,
+  Platform,
 } from 'react-native';
 
 import {IconButton, Button, Card, Title, Paragraph} from 'react-native-paper';
@@ -16,6 +17,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import {Avatar, Accessory} from 'react-native-elements';
 
 import {colors, fontFamily, responsiveHeight} from '@resource';
+import {DP} from '@services';
 
 export default class UploadImage extends Component {
   state = {
@@ -23,6 +25,7 @@ export default class UploadImage extends Component {
   };
 
   handleDeniedPermission = (e) => {
+    console.log(e);
     if (e.toString() === 'Error: Required permission missing') {
       Alert.alert(
         'Permission denied',
@@ -38,32 +41,65 @@ export default class UploadImage extends Component {
         ],
         {cancelable: false},
       );
+    } else if (e.toString() === 'Error: Cannot run camera on simulator') {
+      Alert.alert(
+        'This device does not have a camera.',
+        [{text: 'OK', onPress: () => {}}],
+        {cancelable: false},
+      );
     }
   };
 
   handleCamera = () => {
     this.props.dismiss();
-    ImagePicker.openCamera({
-      cropping: true,
-      width: 500,
-      height: 500,
-      cropperCircleOverlay: true,
-      compressImageMaxWidth: 640,
-      compressImageMaxHeight: 480,
-      freeStyleCropEnabled: true,
-      includeBase64: true,
-    })
-      .then((image) => {
-        var uri = image.path;
-        this.props.onSuccess(uri);
-      })
-      .catch((e) => {
-        this.handleDeniedPermission(e);
-      });
+    DP.reuestCameraPermission().then(
+      (result) => {
+        console.log(result);
+        ImagePicker.openCamera({
+          cropping: true,
+          width: 500,
+          height: 500,
+          cropperCircleOverlay: true,
+          compressImageMaxWidth: 640,
+          compressImageMaxHeight: 480,
+          freeStyleCropEnabled: true,
+          includeBase64: true,
+        })
+          .then((image) => {
+            var uri = image.path;
+            this.props.onSuccess(uri);
+          })
+          .catch((e) => {
+            this.handleDeniedPermission(e);
+          });
+      },
+      (error) => {
+        Alert.alert(
+          'Request Permission',
+          'Please grant access to camera to proceed furthur.',
+          [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel',
+            },
+            {
+              text: 'OK',
+              onPress: () => {
+                this.props.dismiss();
+                openSettings().catch(() =>
+                  console.warn('cannot open settings'),
+                );
+              },
+            },
+          ],
+          {cancelable: false},
+        );
+      },
+    );
   };
 
   handleGallery = () => {
-    this.props.dismiss();
     ImagePicker.openPicker({
       cropping: true,
       width: 300,
@@ -76,9 +112,11 @@ export default class UploadImage extends Component {
       .then((image) => {
         var uri = image.path;
         this.props.onSuccess(uri);
+        this.props.dismiss();
       })
       .catch((e) => {
         this.handleDeniedPermission(e);
+        this.props.dismiss();
       });
   };
 

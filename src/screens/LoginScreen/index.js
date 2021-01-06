@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as Animatable from 'react-native-animatable';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {CommonActions} from '@react-navigation/native';
 
 import {styles} from './style';
 import {actionCreaters} from '@actions';
@@ -97,7 +98,14 @@ class Login extends React.Component {
       // we get user data in object form as result, now you can store in reducer
       this.props.saveUserInfo(result);
       this.props.addAutoLogin();
-      this.props.navigation.replace('DrawerNavigator');
+      // this.props.navigation.replace('DrawerNavigator');
+      this.props.navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{name: 'DrawerNavigator'}],
+        }),
+      );
+      console.log(this.props.navigation);
     });
   };
 

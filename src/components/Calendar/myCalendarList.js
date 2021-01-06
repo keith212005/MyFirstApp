@@ -23,7 +23,13 @@ export default class MyCalendarList extends Component {
       <CalendarList
         current={'2020-03-01'}
         markingType={'custom'}
-        dayComponent={({date, state, marking}) => {
+        dayComponent={({date, state}) => {
+          var marked =
+            (date.day == 2 && date.month == 3) ||
+            (date.day == 31 && date.month == 3) ||
+            (date.day == 21 && date.month == 4)
+              ? true
+              : false;
           return (
             <View
               style={{
@@ -31,10 +37,10 @@ export default class MyCalendarList extends Component {
               }}>
               <View
                 style={{
-                  borderWidth: marking ? 1 : null,
-                  borderColor: marking ? 'red' : null,
-                  borderRadius: marking ? 50 : null,
-                  borderStyle: marking ? 'dotted' : null,
+                  borderWidth: marked ? 1 : null,
+                  borderColor: marked ? 'red' : null,
+                  borderRadius: marked ? 50 : null,
+                  borderStyle: marked ? 'dotted' : null,
                   paddingLeft: 8,
                   paddingRight: 8,
                   paddingTop: 5,
@@ -52,9 +58,7 @@ export default class MyCalendarList extends Component {
                   {date.day}
                 </Text>
               </View>
-              {(date.day == 2 && date.month == 3) ||
-              (date.day == 31 && date.month == 3) ||
-              (date.day == 21 && date.month == 4) ? (
+              {marked ? (
                 <Image
                   style={{
                     height: 15,

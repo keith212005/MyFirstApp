@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, SafeAreaView} from 'react-native';
 
 import {DrawerActions} from '@react-navigation/native';
 
@@ -13,7 +13,7 @@ export default class Tab3 extends React.Component {
   };
   render() {
     return (
-      <>
+      <SafeAreaView>
         <CustomHeader
           title="Tab 3 Screen"
           onPress={() =>
@@ -26,7 +26,7 @@ export default class Tab3 extends React.Component {
         <MyAgenda />
         <MyCalendar />
         */}
-      </>
+      </SafeAreaView>
     );
   }
 }

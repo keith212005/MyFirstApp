@@ -3,7 +3,7 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 
-import {colors} from '@resource';
+import {colors, fontFamily} from '@resource';
 import * as Utils from '@utils';
 
 import {
@@ -31,10 +31,10 @@ export default class MyCalendarList extends Component {
               }}>
               <View
                 style={{
-                  borderWidth: marking.marked ? 1 : null,
-                  borderColor: marking.marked ? 'red' : null,
-                  borderRadius: marking.marked ? 50 : null,
-                  borderStyle: marking.marked ? 'dotted' : null,
+                  borderWidth: marking ? 1 : null,
+                  borderColor: marking ? 'red' : null,
+                  borderRadius: marking ? 50 : null,
+                  borderStyle: marking ? 'dotted' : null,
                   paddingLeft: 8,
                   paddingRight: 8,
                   paddingTop: 5,
@@ -102,9 +102,9 @@ export default class MyCalendarList extends Component {
           disabledArrowColor: '#d9e1e8',
           monthTextColor: 'red',
           indicatorColor: 'blue',
-          textDayFontFamily: 'monospace',
-          textMonthFontFamily: 'monospace',
-          textDayHeaderFontFamily: 'monospace',
+          textDayFontFamily: fontFamily.RobotoRegular,
+          textMonthFontFamily: fontFamily.RobotoRegular,
+          textDayHeaderFontFamily: fontFamily.RobotoRegular,
           textDayFontWeight: '300',
           textMonthFontWeight: 'bold',
           textDayHeaderFontWeight: '300',

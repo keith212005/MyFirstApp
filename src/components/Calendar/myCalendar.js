@@ -10,6 +10,8 @@ import {
   LocaleConfig,
 } from 'react-native-calendars';
 
+import {fontFamily} from '@resource';
+
 export default class MyCalendar extends Component {
   render() {
     return (
@@ -43,9 +45,9 @@ export default class MyCalendar extends Component {
             disabledArrowColor: '#d9e1e8',
             monthTextColor: 'blue',
             indicatorColor: 'blue',
-            textDayFontFamily: 'monospace',
-            textMonthFontFamily: 'monospace',
-            textDayHeaderFontFamily: 'monospace',
+            textDayFontFamily: fontFamily.RobotoRegular,
+            textMonthFontFamily: fontFamily.RobotoRegular,
+            textDayHeaderFontFamily: fontFamily.RobotoRegular,
             textDayFontWeight: '300',
             textMonthFontWeight: 'bold',
             textDayHeaderFontWeight: '300',

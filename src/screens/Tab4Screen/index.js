@@ -73,27 +73,25 @@ export default class Tab4 extends React.Component {
 
   render() {
     return (
-      <>
+      <SafeAreaView>
         <Components.CustomHeader
           title="Tab 4 Screen"
           onPress={() =>
             this.props.navigation.dispatch(DrawerActions.toggleDrawer())
           }
         />
-        <SafeAreaView
-          style={{flex: 1, backgroundColor: Resource.colors.white, height: 50}}>
-          <Carousel
-            apparitionDelay={0}
-            layout={'default'}
-            ref={(c) => (this._carousel = c)}
-            data={this.state.carouselItems}
-            sliderWidth={Resource.deviceWidth}
-            itemWidth={Resource.deviceWidth}
-            renderItem={this._renderItem}
-            onSnapToItem={(index) => this.setState({activeIndex: index})}
-          />
-        </SafeAreaView>
-      </>
+
+        <Carousel
+          apparitionDelay={0}
+          layout={'default'}
+          ref={(c) => (this._carousel = c)}
+          data={this.state.carouselItems}
+          sliderWidth={Resource.deviceWidth}
+          itemWidth={Resource.deviceWidth}
+          renderItem={this._renderItem}
+          onSnapToItem={(index) => this.setState({activeIndex: index})}
+        />
+      </SafeAreaView>
     );
   }
 }

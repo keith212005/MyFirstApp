@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, FlatList} from 'react-native';
+import {View, Text, FlatList, SafeAreaView} from 'react-native';
 
 import {DrawerActions} from '@react-navigation/native';
 import {connect} from 'react-redux';
@@ -55,7 +55,7 @@ class Tab5 extends React.Component {
     const {quote} = this.state;
     const {insets} = this.props;
     return (
-      <View style={styles.container(insets)}>
+      <SafeAreaView>
         <CustomHeader
           title="Tab 5 Screen"
           onPress={() =>
@@ -71,7 +71,7 @@ class Tab5 extends React.Component {
           onRefresh={() => this.onRefresh()}
           refreshing={this.state.isFetching}
         />
-      </View>
+      </SafeAreaView>
     );
   }
 }

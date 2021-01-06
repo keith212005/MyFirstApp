@@ -6,10 +6,14 @@ import {
   Pressable,
   Text,
   Easing,
+  SafeAreaView,
 } from 'react-native';
 
 import Svg, {Path, Defs, Stop, LinearGradient, Ellipse} from 'react-native-svg';
 import * as Resource from '@resource';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {actionCreaters} from '@actions';
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 const anim = new Animated.Value(0);
@@ -36,7 +40,7 @@ const getInitialState2 = () => ({
   }),
 });
 
-export default class MyEllipse extends Component {
+class MyEllipse extends Component {
   constructor(props) {
     super(props);
     this.state = getInitialState2();
@@ -62,29 +66,39 @@ export default class MyEllipse extends Component {
   }
 
   render() {
+    const {insets} = this.props;
     return (
-      <>
-        <Svg style={{position: 'absolute'}}>
-          <Defs>
-            <LinearGradient id="prefix__b">
-              <Stop offset="5%" stopColor="#009284" />
-              <Stop offset="95%" stopColor="#32ded488" />
-            </LinearGradient>
-          </Defs>
-          <AnimatedPath
-            y="0"
-            opacity={0.7}
-            d={this.state.path1}
-            fill="url(#prefix__b)"
-          />
-          <AnimatedPath
-            y="0"
-            opacity={0.7}
-            d={this.state.path2}
-            fill="url(#prefix__b)"
-          />
-        </Svg>
-      </>
+      <Svg style={{position: 'absolute', marginTop: insets.top}}>
+        <Defs>
+          <LinearGradient id="prefix__b">
+            <Stop offset="5%" stopColor="#009284" />
+            <Stop offset="95%" stopColor="#32ded488" />
+          </LinearGradient>
+        </Defs>
+        <AnimatedPath
+          y="0"
+          opacity={0.7}
+          d={this.state.path1}
+          fill="url(#prefix__b)"
+        />
+        <AnimatedPath
+          y="0"
+          opacity={0.7}
+          d={this.state.path2}
+          fill="url(#prefix__b)"
+        />
+      </Svg>
     );
   }
 }
+
+const matchStateToProps = (state) => {
+  return {
+    insets: state.setSafeAreaInsets.insets,
+  };
+};
+
+const matchDispatchToProps = (dispatch) =>
+  bindActionCreators(actionCreaters, dispatch);
+
+export default connect(matchStateToProps, matchDispatchToProps)(MyEllipse);

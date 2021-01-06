@@ -109,9 +109,9 @@ class Home extends React.Component {
   }
 
   render() {
-    const {navigation, insets} = this.props;
+    const {navigation} = this.props;
     return (
-      <View style={styles.container(insets)}>
+      <SafeAreaView>
         <Components.MyEllipse
           toggle={this.state.toggle}
           activeIndex={this.state.activeIndex}
@@ -164,7 +164,7 @@ class Home extends React.Component {
           content="Are you sure you want to exit?"
           onSuccess={(value) => this.handleSuccess(value)}
         />
-      </View>
+      </SafeAreaView>
     );
   }
 }

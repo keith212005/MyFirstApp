@@ -1,5 +1,12 @@
 import React from 'react';
-import {View, Text, BackHandler, StyleSheet, Button} from 'react-native';
+import {
+  View,
+  Text,
+  BackHandler,
+  StyleSheet,
+  Button,
+  SafeAreaView,
+} from 'react-native';
 
 import {DrawerActions} from '@react-navigation/native';
 import {connect} from 'react-redux';
@@ -13,13 +20,13 @@ class Profile extends React.Component {
   render() {
     const {insets, navigation} = this.props;
     return (
-      <View style={styles.container(insets)}>
+      <SafeAreaView>
         <Components.CustomHeader
           title="Profile"
           onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
         />
         <Components.MyWave />
-      </View>
+      </SafeAreaView>
     );
   }
 }

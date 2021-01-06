@@ -3,7 +3,14 @@ import {View, StyleSheet, Animated, Pressable, Text} from 'react-native';
 
 import Svg, {Path, Defs, Stop, LinearGradient} from 'react-native-svg';
 
-import * as Resource from '@resource';
+import {
+  colors,
+  deviceHeight,
+  deviceWidth,
+  fontFamily,
+  responsiveHeight,
+  responsiveWidth,
+} from '@resource';
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 const anim = new Animated.Value(0);
@@ -62,13 +69,13 @@ export default class MyWave extends Component {
             </LinearGradient>
           </Defs>
           <AnimatedPath
-            y={Resource.deviceHeight / 1.5}
+            y={deviceHeight / 1.6}
             opacity={0.7}
             d={this.state.path1}
             fill="url(#prefix__b)"
           />
           <AnimatedPath
-            y={Resource.deviceHeight / 1.5}
+            y={deviceHeight / 1.6}
             opacity={0.7}
             d={this.state.path2}
             fill="url(#prefix__b)"
@@ -87,17 +94,17 @@ export default class MyWave extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    width: Resource.deviceWidth,
-    marginTop: Resource.deviceHeight / 1.22,
+    width: deviceWidth,
+    marginTop: deviceHeight / 1.22,
     position: 'absolute',
     alignItems: 'center',
   },
   title: {
-    color: Resource.colors.white,
+    color: colors.white,
   },
   button: {
-    color: Resource.colors.white,
+    color: colors.white,
     fontSize: 20,
-    fontFamily: Resource.fontFamily.RobotoBold,
+    fontFamily: fontFamily.RobotoBold,
   },
 });

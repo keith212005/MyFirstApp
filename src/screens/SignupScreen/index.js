@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, Keyboard, Alert} from 'react-native';
 
+import _ from 'lodash';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as Animatable from 'react-native-animatable';
@@ -10,7 +11,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {actionCreaters} from '@actions';
 import {styles} from './style';
 import {field_object_signup, signupRefs} from '@constants';
-import * as Utils from '@utils';
+import {getIcon, isValidEmail, isPhoneNumber, removeSpace} from '@utils';
 import * as Resource from '@resource';
 import * as Components from '@components';
 import {DB} from '@storage';
@@ -26,6 +27,8 @@ class Signup extends React.Component {
   }
 
   componentDidMount() {
+    console.log(_.isEqual('ketan', 'ketan'));
+
     if (this.props.route.params.user.email != null) {
       const user = this.props.route.params.user;
       this.setState((prevState) => ({
@@ -68,7 +71,7 @@ class Signup extends React.Component {
     switch (label) {
       case 'firstname':
         return {
-          iconName: Utils.getIcon(label),
+          iconName: getIcon(label),
           refs: signupRefs.firstNameRef,
           isError: this.state.firstname.isError,
           error_text: this.state.firstname.error_text,
@@ -76,7 +79,7 @@ class Signup extends React.Component {
         };
       case 'lastname':
         return {
-          iconName: Utils.getIcon(label),
+          iconName: getIcon(label),
           refs: signupRefs.lastNameRef,
           isError: this.state.lastname.isError,
           error_text: this.state.lastname.error_text,
@@ -84,7 +87,7 @@ class Signup extends React.Component {
         };
       case 'email':
         return {
-          iconName: Utils.getIcon(label),
+          iconName: getIcon(label),
           refs: signupRefs.emailRef,
           isError: this.state.email.isError,
           error_text: this.state.email.error_text,
@@ -93,7 +96,7 @@ class Signup extends React.Component {
         };
       case 'password':
         return {
-          iconName: Utils.getIcon(label),
+          iconName: getIcon(label),
           refs: signupRefs.passwordRef,
           isError: this.state.password.isError,
           error_text: this.state.password.error_text,
@@ -103,7 +106,7 @@ class Signup extends React.Component {
         };
       case 'confirmpassword':
         return {
-          iconName: Utils.getIcon(label),
+          iconName: getIcon(label),
           refs: signupRefs.confirmPasswordRef,
           isError: this.state.confirmpassword.isError,
           error_text: this.state.confirmpassword.error_text,
@@ -113,7 +116,7 @@ class Signup extends React.Component {
         };
       case 'phone':
         return {
-          iconName: Utils.getIcon(label),
+          iconName: getIcon(label),
           refs: signupRefs.phonenoRef,
           isError: this.state.phone.isError,
           error_text: this.state.phone.error_text,
@@ -122,7 +125,7 @@ class Signup extends React.Component {
         };
       case 'address':
         return {
-          iconName: Utils.getIcon(label),
+          iconName: getIcon(label),
           refs: signupRefs.addressRef,
           isError: this.state.address.isError,
           error_text: this.state.address.error_text,
@@ -153,7 +156,7 @@ class Signup extends React.Component {
         }
         break;
       case 'firstname':
-        if (Utils.isEmpty(this.state.firstname.value)) {
+        if (_.isEmpty(this.state.firstname.value)) {
           this.setState((prevState) => ({
             ...prevState,
             firstname: {
@@ -165,7 +168,7 @@ class Signup extends React.Component {
         }
         break;
       case 'lastname':
-        if (Utils.isEmpty(this.state.lastname.value)) {
+        if (_.isEmpty(this.state.lastname.value)) {
           this.setState((prevState) => ({
             ...prevState,
             lastname: {
@@ -177,7 +180,7 @@ class Signup extends React.Component {
         }
         break;
       case 'email':
-        if (Utils.isEmpty(this.state.email.value)) {
+        if (_.isEmpty(this.state.email.value)) {
           this.setState((prevState) => ({
             email: {
               ...prevState.email,
@@ -186,7 +189,7 @@ class Signup extends React.Component {
             },
           }));
         } else {
-          if (!Utils.isValidEmail(this.state.email.value)) {
+          if (!isValidEmail(this.state.email.value)) {
             this.setState((prevState) => ({
               email: {
                 ...prevState.email,
@@ -198,7 +201,7 @@ class Signup extends React.Component {
         }
         break;
       case 'password':
-        if (Utils.isEmpty(this.state.password.value)) {
+        if (_.isEmpty(this.state.password.value)) {
           this.setState((prevState) => ({
             ...prevState,
             password: {
@@ -222,7 +225,7 @@ class Signup extends React.Component {
         }
         break;
       case 'confirmpassword':
-        if (Utils.isEmpty(this.state.confirmpassword.value)) {
+        if (_.isEmpty(this.state.confirmpassword.value)) {
           this.setState((prevState) => ({
             ...prevState,
             confirmpassword: {
@@ -233,7 +236,7 @@ class Signup extends React.Component {
           }));
         } else {
           if (
-            !Utils.isSameString(
+            !_.isEqual(
               this.state.password.value,
               this.state.confirmpassword.value,
             )
@@ -250,7 +253,7 @@ class Signup extends React.Component {
         }
         break;
       case 'phone':
-        if (Utils.isEmpty(this.state.phone.value)) {
+        if (_.isEmpty(this.state.phone.value)) {
           this.setState((prevState) => ({
             ...prevState,
             phone: {
@@ -270,7 +273,7 @@ class Signup extends React.Component {
               },
             }));
           } else {
-            if (!Utils.isPhoneNumber(this.state.phone.value)) {
+            if (!isPhoneNumber(this.state.phone.value)) {
               this.setState((prevState) => ({
                 ...prevState,
                 phone: {
@@ -284,7 +287,7 @@ class Signup extends React.Component {
         }
         break;
       case 'address':
-        if (Utils.isEmpty(this.state.address.value)) {
+        if (_.isEmpty(this.state.address.value)) {
           this.setState((prevState) => ({
             ...prevState,
             address: {
@@ -296,7 +299,7 @@ class Signup extends React.Component {
         }
         break;
       case 'gender':
-        if (Utils.isEmpty(this.state.gender.value)) {
+        if (_.isEmpty(this.state.gender.value)) {
           this.setState((prevState) => ({
             ...prevState,
             gender: {
@@ -308,7 +311,7 @@ class Signup extends React.Component {
         }
         break;
       case 'dob':
-        if (Utils.isSameString(this.state.dob.value, 'Date of birth')) {
+        if (_.isEqual(this.state.dob.value, 'Date of birth')) {
           this.setState((prevState) => ({
             ...prevState,
             dob: {
@@ -594,15 +597,15 @@ class Signup extends React.Component {
     if (
       this.state.avatarSource.value !=
         'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg' &&
-      !Utils.isEmpty(state.firstname.value) &&
-      !Utils.isEmpty(state.lastname.value) &&
-      !Utils.isEmpty(state.email.value) &&
-      !Utils.isEmpty(state.password.value) &&
-      !Utils.isEmpty(state.confirmpassword.value) &&
-      !Utils.isEmpty(state.phone.value) &&
-      !Utils.isEmpty(state.address.value) &&
-      !Utils.isEmpty(state.gender.value) &&
-      !Utils.isEmpty(state.dob.value)
+      !_.isEmpty(state.firstname.value) &&
+      !_.isEmpty(state.lastname.value) &&
+      !_.isEmpty(state.email.value) &&
+      !_.isEmpty(state.password.value) &&
+      !_.isEmpty(state.confirmpassword.value) &&
+      !_.isEmpty(state.phone.value) &&
+      !_.isEmpty(state.address.value) &&
+      !_.isEmpty(state.gender.value) &&
+      !_.isEmpty(state.dob.value)
     ) {
       // if user is already logged in update userinfo in DB and reducer else insert in Db
       if (user.email != null) {
@@ -663,7 +666,7 @@ class Signup extends React.Component {
   };
 
   myTextInput = (props) => {
-    const labelInLowerCase = Utils.removeSpaces(props.label).toLowerCase();
+    const labelInLowerCase = removeSpace(props.label).toLowerCase();
     const data = this.getData(labelInLowerCase);
     return (
       <Components.MyTextInput

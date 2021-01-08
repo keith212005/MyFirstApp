@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 
 import {colors, fontFamily} from '@resource';
-import * as Utils from '@utils';
+import {getIcon} from '@utils';
 
 import {
   Calendar,
@@ -67,7 +67,7 @@ export default class MyCalendarList extends Component {
                     paddingLeft: 66,
                   }}
                   resizeMode="contain"
-                  source={{uri: Utils.getIcon('camera')}}
+                  source={{uri: getIcon('camera')}}
                 />
               ) : null}
             </View>

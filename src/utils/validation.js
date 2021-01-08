@@ -1,25 +1,10 @@
+import {replace} from 'lodash';
+
 export const isValidEmail = (email) => {
   let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,5})+$/;
-  if (reg.test(email) === false) {
-    return false;
-  } else {
-    return true;
-  }
+  return reg.test(email) === false ? false : true;
 };
 
-export const isSameString = (str1, str2) => {
-  return str1 === str2 ? true : false;
-};
+export const isPhoneNumber = (str) => /^\d+$/.test(str);
 
-export const isEmpty = (object) => {
-  return object.length == 0 ? true : false;
-};
-
-export const isPhoneNumber = (str) => {
-  return /^\d+$/.test(str);
-};
-
-export const removeSpaces = (originalText) => {
-  let removedSpaceText;
-  return (removedSpaceText = originalText.split(' ').join(''));
-};
+export const removeSpace = (str) => replace(str, /\s+/g, '');

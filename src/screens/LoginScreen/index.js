@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, Keyboard, Alert} from 'react-native';
 
+import {isEmpty, toLower, trim, replace} from 'lodash';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as Animatable from 'react-native-animatable';
@@ -10,9 +11,9 @@ import {CommonActions} from '@react-navigation/native';
 import {styles} from './style';
 import {actionCreaters} from '@actions';
 import {field_object_login} from '@constants';
-import * as Utils from '@utils';
+import {removeSpace, getIcon, isValidEmail} from '@utils';
 import * as Components from '@components';
-import * as Resource from '@resource';
+import {colors, fontFamily, responsiveHeight, commonStyle} from '@resource';
 import {checkConnectivity} from '@api';
 import {DB} from '@storage';
 
@@ -22,6 +23,7 @@ class Login extends React.Component {
     this.emailRef = React.createRef();
     this.passwordRef = React.createRef();
     this.state = {...field_object_login};
+    console.log(removeSpace('ketan sdfkjsd bsdf sdfsdf'));
   }
 
   // getting InputText data
@@ -29,7 +31,7 @@ class Login extends React.Component {
     switch (label) {
       case 'email':
         return {
-          iconName: Utils.getIcon(label),
+          iconName: getIcon(label),
           refs: this.emailRef,
           isError: this.state.email.isError,
           error_text: this.state.email.error_text,
@@ -37,7 +39,7 @@ class Login extends React.Component {
         };
       case 'password':
         return {
-          iconName: Utils.getIcon(label),
+          iconName: getIcon(label),
           refs: this.passwordRef,
           isError: this.state.password.isError,
           error_text: this.state.password.error_text,
@@ -55,7 +57,7 @@ class Login extends React.Component {
   validate = (fieldName) => {
     switch (fieldName) {
       case 'email':
-        if (Utils.isEmpty(this.state.email.value)) {
+        if (isEmpty(this.state.email.value)) {
           this.setState((prevState) => ({
             email: {
               ...prevState.email,
@@ -64,7 +66,7 @@ class Login extends React.Component {
             },
           }));
         } else {
-          if (!Utils.isValidEmail(this.state.email.value)) {
+          if (!isValidEmail(this.state.email.value)) {
             this.setState((prevState) => ({
               email: {
                 ...prevState.email,
@@ -76,7 +78,7 @@ class Login extends React.Component {
         }
         break;
       case 'password':
-        if (Utils.isEmpty(this.state.password.value)) {
+        if (isEmpty(this.state.password.value)) {
           this.setState((prevState) => ({
             password: {
               ...prevState.password,
@@ -153,7 +155,7 @@ class Login extends React.Component {
     if (
       this.state.email.value.length > 0 &&
       this.state.password.value.length > 0 &&
-      Utils.isValidEmail(this.state.email.value)
+      isValidEmail(this.state.email.value)
     ) {
       // this function return promise, if resolve go to home screen else display alert
       checkConnectivity()
@@ -225,7 +227,7 @@ class Login extends React.Component {
 
   // custom textinput function
   myTextInput = (props) => {
-    const labelInLowerCase = props.label.toLowerCase();
+    const labelInLowerCase = toLower(props.label);
     const data = this.getData(labelInLowerCase);
 
     return (
@@ -261,31 +263,19 @@ class Login extends React.Component {
   };
 
   myButton = (props) => {
-    const labelInLowerCase = Utils.removeSpaces(props.label.toLowerCase());
+    const labelInLowerCase = removeSpace(toLower(props.label));
     return (
       <Components.LinearGradientButton
         title={props.label}
-        height={Resource.responsiveHeight(14)}
+        height={responsiveHeight(14)}
         fontSize={15}
-        fontColor={Resource.colors.primary}
+        fontColor={colors.primary}
         borderRadius={10}
         borderWidth={1}
-        borderColor={
-          props.label === 'Sign In'
-            ? Resource.colors.white
-            : Resource.colors.primary
-        }
-        fillColor={
-          props.label === 'Sign In' ? Resource.colors.themeButton : null
-        }
-        fontColor={
-          props.label === 'Sign In'
-            ? Resource.colors.white
-            : Resource.colors.primary
-        }
-        fontFamily={
-          props.label === 'Sign In' ? Resource.fontFamily.RobotoBold : null
-        }
+        borderColor={props.label === 'Sign In' ? colors.white : colors.primary}
+        fillColor={props.label === 'Sign In' ? colors.themeButton : null}
+        fontColor={props.label === 'Sign In' ? colors.white : colors.primary}
+        fontFamily={props.label === 'Sign In' ? fontFamily.RobotoBold : null}
         onPress={() => this.handleMyButtonPress(labelInLowerCase)}
       />
     );
@@ -294,40 +284,34 @@ class Login extends React.Component {
   render() {
     const {email, password, failAlert, progressVisible} = this.state;
     return (
-      <>
-        <View style={styles.container}>
-          <View style={styles.header}>
-            <Text style={styles.headerTitleText}>Welcome!</Text>
-          </View>
-          <Animatable.View
-            style={styles.footer}
-            animation="fadeInUpBig"
-            duration={1000}>
-            <KeyboardAwareScrollView
-              style={styles.scrollView}
-              keyboardShouldPersistTaps="always">
-              {progressVisible ? <Components.SimpleActivityIndicator /> : null}
-              <Text
-                style={[
-                  Resource.commonStyle.errorStyle,
-                  {textAlign: 'center'},
-                ]}>
-                {failAlert ? 'Login Failed!' : null}
-              </Text>
-
-              {this.myTextInput({label: 'Email'})}
-              {this.myTextInput({label: 'Password'})}
-
-              <Text style={styles.forgotpasswordtext}>Forgot password?</Text>
-
-              {this.myButton({label: 'Sign In'})}
-              <View style={{marginTop: 10, marginBottom: 50}}>
-                {this.myButton({label: 'Sign Up'})}
-              </View>
-            </KeyboardAwareScrollView>
-          </Animatable.View>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.headerTitleText}>Welcome!</Text>
         </View>
-      </>
+        <Animatable.View
+          style={styles.footer}
+          animation="fadeInUpBig"
+          duration={1000}>
+          <KeyboardAwareScrollView
+            style={styles.scrollView}
+            keyboardShouldPersistTaps="always">
+            {progressVisible ? <Components.SimpleActivityIndicator /> : null}
+            <Text style={[commonStyle.errorStyle, {textAlign: 'center'}]}>
+              {failAlert ? 'Login Failed!' : null}
+            </Text>
+
+            {this.myTextInput({label: 'Email'})}
+            {this.myTextInput({label: 'Password'})}
+
+            <Text style={styles.forgotpasswordtext}>Forgot password?</Text>
+
+            {this.myButton({label: 'Sign In'})}
+            <View style={{marginTop: 10, marginBottom: 50}}>
+              {this.myButton({label: 'Sign Up'})}
+            </View>
+          </KeyboardAwareScrollView>
+        </Animatable.View>
+      </View>
     );
   }
 }
@@ -343,6 +327,3 @@ const matchDispatchToProps = (dispatch) =>
   bindActionCreators(actionCreaters, dispatch);
 
 export default connect(matchStateToProps, matchDispatchToProps)(Login);
-
-// this.props.addAutoLogin();
-// this.props.navigation.replace('DrawerNavigator');

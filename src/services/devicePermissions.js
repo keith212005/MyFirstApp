@@ -10,11 +10,21 @@ import {
   RESULTS,
   openSettings,
 } from 'react-native-permissions';
+import {isEqual} from 'lodash';
 
 import messaging from '@react-native-firebase/messaging';
 
 export default class DevicePermissions extends Component {
-  requestCameraPermission() {
+  requestCameraAccess() {
+    return new Promise((resolve, reject) => {
+      request(PERMISSIONS.IOS.CAMERA).then((result) => {
+        console.log(result);
+        isEqual(result, 'blocked') ? reject(result) : resolve(result);
+      });
+    });
+  }
+
+  checkCameraPermission() {
     return new Promise(function (resolve, reject) {
       if (Platform.OS === 'ios') {
         check(PERMISSIONS.IOS.CAMERA)
@@ -27,38 +37,23 @@ export default class DevicePermissions extends Component {
                 break;
               case RESULTS.DENIED:
                 console.log(RESULTS.DENIED);
+                Alert.alert('Camera access is denied.');
+                this.requestCameraAccess();
                 reject(RESULTS.DENIED);
                 break;
               case RESULTS.LIMITED:
                 console.log(RESULTS.LIMITED);
+                Alert.alert('Camera access is limited.');
                 reject(RESULTS.LIMITED);
                 break;
               case RESULTS.GRANTED:
                 console.log(RESULTS.GRANTED);
+                Alert.alert('Camera access granted.');
                 resolve(RESULTS.GRANTED);
                 break;
               case RESULTS.BLOCKED:
                 console.log(RESULTS.BLOCKED);
-                Alert.alert(
-                  'Requesting Camera Permission',
-                  'Please allow access to camera in the settings.',
-                  [
-                    {
-                      text: 'Cancel',
-                      onPress: () => console.log('Cancel Pressed'),
-                      style: 'cancel',
-                    },
-                    {
-                      text: 'OK',
-                      onPress: () => {
-                        this.props.dismiss();
-
-                        // openSettings().catch(() => console.warn('cannot open setting'));
-                      },
-                    },
-                  ],
-                  {cancelable: false},
-                );
+                // Alert.alert('Camera access is blocked.');
                 reject(RESULTS.BLOCKED);
                 break;
             }

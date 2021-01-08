@@ -20,10 +20,10 @@ export default class Tab3 extends React.Component {
             this.props.navigation.dispatch(DrawerActions.toggleDrawer())
           }
         />
-
-        <MyCalendarList />
-        {/*
         <MyAgenda />
+
+        {/*
+        <MyCalendarList />
         <MyCalendar />
         */}
       </SafeAreaView>

@@ -12,6 +12,7 @@ import {
   Platform,
 } from 'react-native';
 
+import {isEqual} from 'lodash';
 import {IconButton, Button, Card, Title, Paragraph} from 'react-native-paper';
 import ImagePicker from 'react-native-image-crop-picker';
 import {Avatar, Accessory} from 'react-native-elements';
@@ -58,35 +59,16 @@ export default class UploadImage extends Component {
 
   handleCamera = () => {
     this.props.dismiss();
-    var result = DP.requestCameraPermission();
-    DP.requestCameraPermission().then(
+    DP.checkCameraPermission().then(
       (result) => {
-        ImagePicker.openCamera({
-          cropping: true,
-          width: 500,
-          height: 500,
-          cropperCircleOverlay: true,
-          compressImageMaxWidth: 640,
-          compressImageMaxHeight: 480,
-          freeStyleCropEnabled: true,
-          includeBase64: true,
-        })
-          .then((image) => {
-            var uri = image.path;
-            this.props.onSuccess(uri);
-          })
-          .catch((e) => {
-            this.handleDeniedPermission(e);
-          });
+        console.log(result);
       },
       (error) => {
-        if (error === 'denied') {
-          request(PERMISSIONS.IOS.CAMERA).then().catch();
-        } else if (error === 'blocked') {
-          this.props.dismiss();
+        if (error === 'blocked') {
+          console.log('sdfsdf', error);
           Alert.alert(
             'Requesting Camera Permission',
-            'Please allow My First App to access camera.',
+            'Please allow access to camera in the settings.',
             [
               {
                 text: 'Cancel',
@@ -96,9 +78,9 @@ export default class UploadImage extends Component {
               {
                 text: 'OK',
                 onPress: () => {
-                  openSettings().catch(() =>
-                    console.warn('cannot open setting'),
-                  );
+                  this.props.dismiss();
+
+                  // openSettings().catch(() => console.warn('cannot open setting'));
                 },
               },
             ],
@@ -107,6 +89,54 @@ export default class UploadImage extends Component {
         }
       },
     );
+    // DP.checkCameraPermission().then(
+    //   (result) => {
+    //     ImagePicker.openCamera({
+    //       cropping: true,
+    //       width: 500,
+    //       height: 500,
+    //       cropperCircleOverlay: true,
+    //       compressImageMaxWidth: 640,
+    //       compressImageMaxHeight: 480,
+    //       freeStyleCropEnabled: true,
+    //       includeBase64: true,
+    //     })
+    //       .then((image) => {
+    //         var uri = image.path;
+    //         this.props.onSuccess(uri);
+    //       })
+    //       .catch((e) => {
+    //         this.handleDeniedPermission(e);
+    //       });
+    //   },
+    //   (error) => {
+    //     console.log('uploadimage.js', error);
+    //     if (error === 'denied') {
+    //       request(PERMISSIONS.IOS.CAMERA).then().catch();
+    //     } else if (error === 'blocked') {
+    //       Alert.alert(
+    //         'Requesting Camera Permission',
+    //         'Please allow My First App to access camera.',
+    //         [
+    //           {
+    //             text: 'Cancel',
+    //             onPress: () => console.log('Cancel Pressed'),
+    //             style: 'cancel',
+    //           },
+    //           {
+    //             text: 'OK',
+    //             onPress: () => {
+    //               openSettings().catch(() =>
+    //                 console.warn('cannot open setting'),
+    //               );
+    //             },
+    //           },
+    //         ],
+    //         {cancelable: false},
+    //       );
+    //     }
+    //   },
+    // );
   };
 
   handleGallery = () => {
@@ -140,7 +170,7 @@ export default class UploadImage extends Component {
             onRequestClose={() => this.props.onRequestClose(false)}
             visible={this.state.isVisible}
             presentationStyle="overFullScreen">
-            <TouchableWithoutFeedback onPress={this.props.dismiss}>
+            <TouchableWithoutFeedback>
               <View style={styles.modalContainer}>
                 <View style={styles.modalSubContainer}>
                   <View style={{padding: 10}}>

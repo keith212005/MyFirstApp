@@ -11,6 +11,7 @@ import isOpenFirstTime from './isOpenFirstTime';
 import saveUserInfo from './saveUserInfo';
 import setAppLanguage from './setAppLanguage';
 import setSafeAreaInsets from './setSafeAreaInsets';
+import storeFcmToken from './storeFcmToken';
 
 const logger = createLogger({collapsed: true});
 
@@ -21,6 +22,7 @@ const appReducer = combineReducers({
   saveUserInfo: saveUserInfo,
   setAppLanguage: setAppLanguage,
   setSafeAreaInsets: setSafeAreaInsets,
+  Fcm_Token: storeFcmToken,
 });
 
 const rootReducer = (state, action) => {

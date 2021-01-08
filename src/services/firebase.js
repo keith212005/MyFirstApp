@@ -9,21 +9,20 @@ var PushNotification = require('react-native-push-notification');
 
 export default class Firebase extends Component {
   checkPermission = async () => {
-    const enabled = await messaging().hasPermission();
-    if (enabled) {
-      this.getFcmToken();
-    } else {
-      this.requestPermission();
-    }
+    return new Promise(async (resolve, reject) => {
+      const authStatus = await messaging().requestPermission();
+      const enabled =
+        authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+        authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+      resolve(enabled);
+    });
   };
 
   getFcmToken = async () => {
-    const fcmToken = await messaging().getToken();
-    if (fcmToken) {
-      console.log('FCM TOKEN = ', fcmToken);
-    } else {
-      console.log('Failed No token received');
-    }
+    return new Promise(async (resolve, reject) => {
+      const fcmToken = await messaging().getToken();
+      resolve(fcmToken);
+    });
   };
 
   requestPermission = async () => {
@@ -34,6 +33,7 @@ export default class Firebase extends Component {
     }
   };
 
+  // called in Splash Screen
   async addNotificationListener(props) {
     this.checkPermission();
 

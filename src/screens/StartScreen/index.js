@@ -9,18 +9,35 @@ import {connect} from 'react-redux';
 import {styles} from './style';
 import {colors, getImageName, icon} from '@resource';
 import {actionCreaters} from '@actions';
+import {DP, FB} from '@services';
 
 class StartScreen extends React.Component {
   componentDidMount() {
     this.props.changeIsOpenFirstTime(false);
+    DP.requestNotificationPermission().then(
+      () => {},
+      (error) => {},
+    );
   }
 
   handleNext = () => {
+    this.getFcmToken();
     // if language is not set set language in reduceer
     this.props.navigation.navigate(
       this.props.language === '' ? 'Language' : 'Login',
     );
   };
+
+  // first check firebase permissions if enabled get token and store in reducer
+  getFcmToken() {
+    FB.checkPermission().then((enable) => {
+      if (enable) {
+        FB.getFcmToken().then((token) => {
+          this.props.storeFcmToken(token);
+        });
+      }
+    });
+  }
 
   render() {
     return (

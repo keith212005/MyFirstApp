@@ -1,7 +1,7 @@
 /* @flow */
 
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, Platform, Alert} from 'react-native';
+import {View, Text, StyleSheet, Platform, Alert, Linking} from 'react-native';
 
 import {
   request,
@@ -10,6 +10,8 @@ import {
   RESULTS,
   openSettings,
 } from 'react-native-permissions';
+
+import messaging from '@react-native-firebase/messaging';
 
 export default class DevicePermissions extends Component {
   requestCameraPermission() {
@@ -68,6 +70,28 @@ export default class DevicePermissions extends Component {
         resolve();
       }
     });
+  }
+
+  async requestNotificationPermission() {
+    const authorizationStatus = await messaging().requestPermission();
+    console.log('notification authorizationStatus = ', authorizationStatus);
+    if (authorizationStatus === messaging.AuthorizationStatus.AUTHORIZED) {
+      resolve();
+    } else {
+      Alert.alert(
+        'Notifications are dissabled. Please alllow in settings.',
+        'My Alert Msg',
+        [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {text: 'OK', onPress: () => Linking.openURL('app-settings://')},
+        ],
+        {cancelable: false},
+      );
+    }
   }
 
   render() {

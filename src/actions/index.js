@@ -8,6 +8,7 @@ import * as saveUserInfo from './saveUserInfo';
 import * as resetStore from './resetStore';
 import * as setAppLanguage from './setAppLanguage';
 import * as setSafeAreaInsets from './setSafeAreaInsets';
+import * as storeFcmToken from './storeFcmToken';
 
 export const actionCreaters = Object.assign(
   {},
@@ -18,4 +19,5 @@ export const actionCreaters = Object.assign(
   resetStore,
   setAppLanguage,
   setSafeAreaInsets,
+  storeFcmToken,
 );

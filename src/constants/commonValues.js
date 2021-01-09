@@ -1,5 +1,3 @@
-import {I18n} from '@languages';
-
 export const signupRefs = {
   firstNameRef: '',
   lastNameRef: '',
@@ -103,3 +101,9 @@ export const getLanguages = [
   {language: 'Spanish', code: 'es'},
   {language: 'French', code: 'fr'},
 ];
+
+export const constant = {
+  ENGLISH_LANG: 'english',
+  IOS: 'IOS',
+  ANDROID: 'ANDROID',
+};

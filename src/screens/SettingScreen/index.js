@@ -1,5 +1,12 @@
 import React from 'react';
-import {View, Text, BackHandler, FlatList, Pressable} from 'react-native';
+import {
+  View,
+  Text,
+  BackHandler,
+  FlatList,
+  Pressable,
+  SafeAreaView,
+} from 'react-native';
 
 import {RadioButton} from 'react-native-paper';
 import * as RNLocalize from 'react-native-localize';
@@ -48,21 +55,19 @@ class Setting extends React.Component {
 
   render() {
     return (
-      <>
-        <View style={styles.container}>
-          <Card containerStyle={{width: '90%'}}>
-            <Card.Title style={styles.screenTitle}>
-              {I18n.t('Setting')}
-            </Card.Title>
+      <SafeAreaView style={styles.container}>
+        <Card containerStyle={{width: '90%'}}>
+          <Card.Title style={styles.screenTitle}>
+            {I18n.t('Setting')}
+          </Card.Title>
 
-            {this.Item(I18n.t('ChangeLanguage'))}
+          {this.Item(I18n.t('ChangeLanguage'))}
 
-            <Card.Divider />
+          <Card.Divider />
 
-            {this.Item(I18n.t('OtherSettings'))}
-          </Card>
-        </View>
-      </>
+          {this.Item(I18n.t('OtherSettings'))}
+        </Card>
+      </SafeAreaView>
     );
   }
 }

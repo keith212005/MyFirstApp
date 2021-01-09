@@ -23,7 +23,6 @@ class Login extends React.Component {
     this.emailRef = React.createRef();
     this.passwordRef = React.createRef();
     this.state = {...field_object_login};
-    console.log(removeSpace('ketan sdfkjsd bsdf sdfsdf'));
   }
 
   // getting InputText data

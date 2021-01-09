@@ -9,6 +9,7 @@ export DrawerContent from './Drawer/DrawerContent';
 export UploadImage from './Modal/uploadImage';
 export CustomHeader from './Header/customHeader';
 export ExitAppDialog from './Dialogs/exitAppDialog';
+export AlertDialog from './Dialogs/alertDialog';
 export SimpleAlertDialog from './Dialogs/simpleAlertDialog';
 export SimpleActivityIndicator from './ActivityIndicator/simpleActivityIndicator';
 export MyCarousel from './Carousel/myCarousel';

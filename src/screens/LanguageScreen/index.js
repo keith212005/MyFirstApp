@@ -6,6 +6,7 @@ import {
   FlatList,
   TouchableHighlight,
   Image,
+  SafeAreaView,
 } from 'react-native';
 
 import {RadioButton} from 'react-native-paper';
@@ -66,19 +67,17 @@ class Language extends Component {
 
   render() {
     return (
-      <>
-        <View style={styles.container}>
-          <View style={styles.titleBar}>
-            <Text style={styles.titleText}>Select Language</Text>
-          </View>
-          <FlatList
-            data={Constant.getLanguages}
-            renderItem={this.renderItem}
-            keyExtractor={(item, index) => item.code}
-            ItemSeparatorComponent={ItemSeparator}
-          />
+      <SafeAreaView style={styles.container}>
+        <View style={styles.titleBar}>
+          <Text style={styles.titleText}>Select Language</Text>
         </View>
-      </>
+        <FlatList
+          data={Constant.getLanguages}
+          renderItem={this.renderItem}
+          keyExtractor={(item, index) => item.code}
+          ItemSeparatorComponent={ItemSeparator}
+        />
+      </SafeAreaView>
     );
   }
 }

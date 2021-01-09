@@ -24,11 +24,14 @@ import {
 } from 'react-native-permissions';
 
 import {colors, fontFamily, responsiveHeight} from '@resource';
+import * as Components from '@components';
 import {DP} from '@services';
 
 export default class UploadImage extends Component {
   state = {
     isVisible: this.props.isVisible,
+    shouldGoToSettings: false,
+    alertShow: false,
   };
 
   handleDeniedPermission = (e) => {
@@ -48,95 +51,69 @@ export default class UploadImage extends Component {
         ],
         {cancelable: false},
       );
-    } else if (e.toString() === 'Error: Cannot run camera on simulator') {
-      Alert.alert(
-        'This device does not have a camera.',
-        [{text: 'OK', onPress: () => {}}],
-        {cancelable: false},
-      );
+    } else {
+      Alert.alert('Something went wrong. Please try again');
     }
   };
 
+  openCamera() {
+    ImagePicker.openCamera({
+      cropping: true,
+      width: 500,
+      height: 500,
+      cropperCircleOverlay: true,
+      compressImageMaxWidth: 640,
+      compressImageMaxHeight: 480,
+      freeStyleCropEnabled: true,
+      includeBase64: true,
+    })
+      .then((image) => {
+        var uri = image.path;
+        this.props.onSuccess(uri);
+      })
+      .catch((e) => {
+        this.handleDeniedPermission(e);
+      });
+  }
+
   handleCamera = () => {
-    this.props.dismiss();
-    DP.checkCameraPermission().then(
-      (result) => {
+    if (isEqual(Platform.OS, 'ios')) {
+      DP.checkCameraPermission().then((result) => {
         console.log(result);
-      },
-      (error) => {
-        if (error === 'blocked') {
-          console.log('sdfsdf', error);
+        if (isEqual(result, RESULTS.DENIED)) {
+          DP.requestCameraAccess().then((result) => {
+            if (isEqual(result, RESULTS.GRANTED)) {
+              this.openCamera();
+            }
+          });
+        } else if (isEqual(result, RESULTS.GRANTED)) {
+          this.openCamera();
+        } else if (isEqual(result, RESULTS.BLOCKED || RESULTS.LIMITED)) {
+          console.log('opening camera from settings');
           Alert.alert(
-            'Requesting Camera Permission',
-            'Please allow access to camera in the settings.',
+            'Please allow camera permissions in the settings.',
+            '',
             [
               {
                 text: 'Cancel',
-                onPress: () => console.log('Cancel Pressed'),
+                onPress: () => this.props.dismiss(),
                 style: 'cancel',
               },
               {
                 text: 'OK',
-                onPress: () => {
-                  this.props.dismiss();
-
-                  // openSettings().catch(() => console.warn('cannot open setting'));
-                },
+                onPress: () =>
+                  openSettings().catch(() =>
+                    console.warn('cannot open settings'),
+                  ),
               },
             ],
             {cancelable: false},
           );
         }
-      },
-    );
-    // DP.checkCameraPermission().then(
-    //   (result) => {
-    //     ImagePicker.openCamera({
-    //       cropping: true,
-    //       width: 500,
-    //       height: 500,
-    //       cropperCircleOverlay: true,
-    //       compressImageMaxWidth: 640,
-    //       compressImageMaxHeight: 480,
-    //       freeStyleCropEnabled: true,
-    //       includeBase64: true,
-    //     })
-    //       .then((image) => {
-    //         var uri = image.path;
-    //         this.props.onSuccess(uri);
-    //       })
-    //       .catch((e) => {
-    //         this.handleDeniedPermission(e);
-    //       });
-    //   },
-    //   (error) => {
-    //     console.log('uploadimage.js', error);
-    //     if (error === 'denied') {
-    //       request(PERMISSIONS.IOS.CAMERA).then().catch();
-    //     } else if (error === 'blocked') {
-    //       Alert.alert(
-    //         'Requesting Camera Permission',
-    //         'Please allow My First App to access camera.',
-    //         [
-    //           {
-    //             text: 'Cancel',
-    //             onPress: () => console.log('Cancel Pressed'),
-    //             style: 'cancel',
-    //           },
-    //           {
-    //             text: 'OK',
-    //             onPress: () => {
-    //               openSettings().catch(() =>
-    //                 console.warn('cannot open setting'),
-    //               );
-    //             },
-    //           },
-    //         ],
-    //         {cancelable: false},
-    //       );
-    //     }
-    //   },
-    // );
+      });
+    } else {
+      this.openCamera();
+    }
   };
 
   handleGallery = () => {
@@ -162,7 +139,7 @@ export default class UploadImage extends Component {
 
   render() {
     return (
-      <>
+      <View>
         {this.state.isVisible ? (
           <Modal
             animationType={'fade'}
@@ -215,7 +192,7 @@ export default class UploadImage extends Component {
             </TouchableWithoutFeedback>
           </Modal>
         ) : null}
-      </>
+      </View>
     );
   }
 }

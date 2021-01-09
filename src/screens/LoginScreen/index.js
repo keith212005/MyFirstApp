@@ -9,6 +9,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {CommonActions} from '@react-navigation/native';
 
 import {styles} from './style';
+import {localize, changeLanguage} from '@languages';
 import {actionCreaters} from '@actions';
 import {field_object_login} from '@constants';
 import {removeSpace, getIcon, isValidEmail} from '@utils';
@@ -23,6 +24,7 @@ class Login extends React.Component {
     this.emailRef = React.createRef();
     this.passwordRef = React.createRef();
     this.state = {...field_object_login};
+    changeLanguage(this.props.language);
   }
 
   // getting InputText data
@@ -285,7 +287,7 @@ class Login extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.headerTitleText}>Welcome!</Text>
+          <Text style={styles.headerTitleText}>{localize('WELCOME')}</Text>
         </View>
         <Animatable.View
           style={styles.footer}
@@ -319,6 +321,7 @@ const matchStateToProps = (state) => {
   return {
     currentCount: state.autoLogin.autoLoginStatus,
     isOnline: state.connectionState.isOnline,
+    language: state.setAppLanguage.language,
   };
 };
 

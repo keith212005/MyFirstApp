@@ -103,7 +103,10 @@ export const getLanguages = [
 ];
 
 export const constant = {
-  ENGLISH_LANG: 'english',
   IOS: 'IOS',
   ANDROID: 'ANDROID',
+  ENGLISH_LANG: 'en',
+  SPANISH_LANG: 'es',
+  HINDI_LANG: 'hi',
+  FRENCH_LANG: 'fr',
 };

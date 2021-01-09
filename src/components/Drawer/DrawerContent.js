@@ -17,6 +17,7 @@ import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {DrawerActions} from '@react-navigation/native';
 
 import {DB} from '@storage';
+import {localize} from '@languages';
 import {icon} from '@resource';
 import {actionCreaters} from '@actions';
 
@@ -102,28 +103,25 @@ class DrawerContent extends React.Component {
   };
 
   handleOnPressNavItems = (label) => {
-    this.props.navigation.dispatch(DrawerActions.closeDrawer());
+    const {navigation} = this.props;
+    navigation.dispatch(DrawerActions.closeDrawer());
     switch (label) {
       case 'Home':
-        this.props.navigation.navigate(label);
-        break;
+        return navigation.navigate(label);
       case 'Profile':
         {
-          this.props.navigation.navigate('Signup', {
+          navigation.navigate('Signup', {
             user: this.props.userInfo,
           });
           DrawerActions.closeDrawer();
         }
         break;
-      case 'Setting':
-        this.props.navigation.navigate(label);
-        break;
+      case localize('SETTING'):
+        return navigation.navigate('Setting');
       case 'Delete account':
-        this.handleDeleteAccount();
-        break;
+        return this.handleDeleteAccount();
       case 'Sign out':
-        this.handleExitApp();
-        break;
+        return this.handleExitApp();
       default:
         break;
     }
@@ -190,7 +188,10 @@ class DrawerContent extends React.Component {
               {this.drawerItem({label: 'Home', icon: icon.home})}
               {this.drawerItem({label: 'Profile', icon: icon.user_outlined})}
               {this.drawerItem({label: 'Bookmarks', icon: icon.bookmark})}
-              {this.drawerItem({label: 'Setting', icon: icon.settings})}
+              {this.drawerItem({
+                label: localize('SETTING'),
+                icon: icon.settings,
+              })}
               {this.drawerItem({label: 'Support', icon: icon.tech_support})}
             </Drawer.Section>
 
@@ -266,7 +267,6 @@ const styles = StyleSheet.create({
 
 const matchStateToProps = (state) => {
   return {
-    autoLoginStatus: state.autoLogin.status,
     userInfo: state.saveUserInfo,
   };
 };
@@ -275,11 +275,3 @@ const matchDispatchToProps = (dispatch) =>
   bindActionCreators(actionCreaters, dispatch);
 
 export default connect(matchStateToProps, matchDispatchToProps)(DrawerContent);
-
-// <Avatar.Image
-//   source={{
-//     uri:
-//       'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQHCZuslFbn42wwA9qw6ywBERhtpr_yOFy3Cw&usqp=CAU',
-//   }}
-//   size={50}
-// />

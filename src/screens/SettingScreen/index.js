@@ -8,34 +8,26 @@ import {
   SafeAreaView,
 } from 'react-native';
 
-import {RadioButton} from 'react-native-paper';
-import * as RNLocalize from 'react-native-localize';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-
-import {I18n} from '@languages';
 import {Card, ListItem, Button, Icon} from 'react-native-elements';
+
+import {localize} from '@languages';
 import {styles} from './style';
 import {actionCreaters} from '@actions';
 import * as Constant from '@constants';
 
 class Setting extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      stateOfLocale: props.language,
-    };
-    I18n.locale = this.state.stateOfLocale;
-  }
+  state = {
+    stateOfLocale: this.props.language,
+  };
 
   handleOnClick = (label) => {
+    const {navigation} = this.props;
     switch (label) {
-      case I18n.t('ChangeLanguage'):
-        console.log('lang');
-        this.props.navigation.navigate('Language');
-        break;
-      case I18n.t('OtherSettings'):
-        console.log('other');
+      case localize('CHANGE_LANGUAGE'):
+        return navigation.navigate('Language');
+      case localize('OTHER_SETTINGS'):
         break;
       default:
     }
@@ -58,14 +50,14 @@ class Setting extends React.Component {
       <SafeAreaView style={styles.container}>
         <Card containerStyle={{width: '90%'}}>
           <Card.Title style={styles.screenTitle}>
-            {I18n.t('Setting')}
+            {localize('SETTING')}
           </Card.Title>
 
-          {this.Item(I18n.t('ChangeLanguage'))}
+          {this.Item(localize('CHANGE_LANGUAGE'))}
 
           <Card.Divider />
 
-          {this.Item(I18n.t('OtherSettings'))}
+          {this.Item(localize('OTHER_SETTINGS'))}
         </Card>
       </SafeAreaView>
     );

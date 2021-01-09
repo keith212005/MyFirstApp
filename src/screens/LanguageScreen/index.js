@@ -14,30 +14,28 @@ import {Button} from 'react-native-elements';
 
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import {isEmpty, isEqual} from 'lodash';
 
 import {styles} from './style';
-
-import {I18n} from '@languages';
+import {localize, changeLanguage} from '@languages';
 import {actionCreaters} from '@actions';
-import * as Constant from '@constants';
+import {getLanguages} from '@constants';
 import * as Components from '@components';
 import * as Resource from '@resource';
 
 const ItemSeparator = () => <View style={styles.itemSeparator} />;
 
 class Language extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedLanguage:
-        this.props.language === '' ? undefined : this.props.language,
-    };
-  }
+  state = {
+    selectedLanguage: isEmpty(this.props.language)
+      ? undefined
+      : this.props.language,
+  };
 
   handleLanguageChange = (newValue) => {
     this.setState({selectedLanguage: newValue}, () => {
       this.props.setAppLanguage(this.state.selectedLanguage);
-      I18n.locale = newValue;
+      changeLanguage(newValue);
       this.props.autoLoginStatus
         ? this.props.navigation.pop()
         : this.props.navigation.navigate('Login');
@@ -46,22 +44,20 @@ class Language extends Component {
 
   renderItem = ({item}) => {
     return (
-      <>
-        <TouchableHighlight
-          activeOpacity={0.6}
-          underlayColor="#DDDDDD"
-          onPress={() => this.handleLanguageChange(item.code)}>
-          <View style={styles.renderItemContainer}>
-            <Text style={{fontSize: 18}}>{item.language}</Text>
-            {this.state.selectedLanguage === item.code ? (
-              <Image
-                style={{width: 20, height: 20}}
-                source={{uri: Resource.icon.ok}}
-              />
-            ) : null}
-          </View>
-        </TouchableHighlight>
-      </>
+      <TouchableHighlight
+        activeOpacity={0.6}
+        underlayColor="#DDDDDD"
+        onPress={() => this.handleLanguageChange(item.code)}>
+        <View style={styles.renderItemContainer}>
+          <Text style={{fontSize: 18}}>{item.language}</Text>
+          {this.state.selectedLanguage === item.code ? (
+            <Image
+              style={{width: 20, height: 20}}
+              source={{uri: Resource.icon.ok}}
+            />
+          ) : null}
+        </View>
+      </TouchableHighlight>
     );
   };
 
@@ -72,7 +68,7 @@ class Language extends Component {
           <Text style={styles.titleText}>Select Language</Text>
         </View>
         <FlatList
-          data={Constant.getLanguages}
+          data={getLanguages}
           renderItem={this.renderItem}
           keyExtractor={(item, index) => item.code}
           ItemSeparatorComponent={ItemSeparator}

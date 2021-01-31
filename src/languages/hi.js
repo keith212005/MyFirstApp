@@ -9,4 +9,8 @@ export const hi = {
   FORGOT_PASSWORD: 'पासवर्ड रीसेट',
   SIGN_IN: 'साइन इन करें',
   SIGN_UP: 'साइन अप करें',
+  NAME: 'नाम',
+  EMAIL: 'ईमेल',
+  PHONE: 'फ़ोन',
+  SUBMIT: 'भेज दो',
 };

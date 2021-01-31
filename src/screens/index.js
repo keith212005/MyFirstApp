@@ -9,4 +9,5 @@ export Profile from './ProfileScreen';
 export Tab3 from './Tab3Screen';
 export Tab4 from './Tab4Screen';
 export Tab5 from './Tab5Screen';
+export Tab6 from './Tab6Screen';
 export Setting from './SettingScreen';

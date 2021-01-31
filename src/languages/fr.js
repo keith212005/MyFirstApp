@@ -9,4 +9,8 @@ export const fr = {
   FORGOT_PASSWORD: 'Mot de passe oublié?',
   SIGN_IN: 'Se connecter',
   SIGN_UP: "S'inscrire",
+  NAME: 'Nom',
+  EMAIL: 'Email',
+  PHONE: 'Téléphone',
+  SUBMIT: 'Soumettre',
 };

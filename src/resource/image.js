@@ -4,6 +4,7 @@ export const getImageName = {
   Tab3: 'calendar',
   Tab4: 'piechart',
   Tab5: 'dotchart',
+  Tab6: 'piechart'
 };
 
 export const icon = {

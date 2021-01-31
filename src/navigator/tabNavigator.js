@@ -17,7 +17,7 @@ export default class TabNavigator extends React.Component {
   render() {
     return (
       <Tab.Navigator
-        initialRouteName="Home"
+        initialRouteName="Tab6"
         activeColor={colors.white}
         backBehavior="history"
         labeled={true}
@@ -38,6 +38,7 @@ export default class TabNavigator extends React.Component {
         {this.tabs('Tab3')}
         {this.tabs('Tab4')}
         {this.tabs('Tab5')}
+        {this.tabs('Tab6')}
       </Tab.Navigator>
     );
   }

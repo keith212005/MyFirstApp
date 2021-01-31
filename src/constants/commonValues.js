@@ -110,3 +110,21 @@ export const constant = {
   HINDI_LANG: 'hi',
   FRENCH_LANG: 'fr',
 };
+
+export const users_field_object = {
+  Name: {
+    value: '',
+    isError: '',
+    error_text: '',
+  },
+  Email: {
+    value: '',
+    isError: '',
+    error_text: '',
+  },
+  Phone: {
+    value: '',
+    isError: '',
+    error_text: '',
+  },
+};
